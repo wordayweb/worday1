@@ -25,25 +25,20 @@
     <div style="width:42px"></div>
   </header>
 
-  <!-- ============================================
-       🔔 قسم الأذان
-       ============================================ -->
+  <!-- ========== قسم الأذان ========== -->
   <section class="settings-group">
 
-    <!-- تنبيه إذن الإشعارات -->
     <div class="adhan-permission-alert" id="permissionAlert">
       <span class="apa-ico">🔔</span>
       <span class="apa-txt">للحصول على تنبيهات الأذان، نحتاج إذن الإشعارات</span>
       <button class="apa-btn" id="requestPermissionBtn">السماح</button>
     </div>
 
-    <!-- تفعيل الأذان -->
     <div class="settings-item">
       <div class="item-info"><span class="ico">🕌</span><span>تشغيل الأذان تلقائيًا</span></div>
       <label class="switch"><input type="checkbox" id="adhanEnabled" checked><span class="slider"></span></label>
     </div>
 
-    <!-- المؤذن -->
     <div class="adhan-settings-card">
       <h4>🎵 المؤذن</h4>
       <div class="adhan-prayer-row">
@@ -53,39 +48,154 @@
         </div>
         <span style="font-size:12px;color:var(--green);font-weight:700;">✓ المختار</span>
       </div>
-      <button class="adhan-test-btn" id="testAdhanBtn">🔊 تجربة صوت الأذان</button>
+      <button class="adhan-test-btn" id="testAdhanBtn" type="button">🔊 تجربة صوت الأذان</button>
     </div>
 
-    <!-- الصلوات -->
     <div class="adhan-settings-card">
       <h4>🕌 الصلوات المشغَّلة</h4>
-
       <div class="adhan-prayer-row">
-        <div class="apr-info">
-          <span class="apr-ico">🌄</span>
-          <div>
-            <div>الفجر</div>
-            <div class="apr-time" id="fajrTime">—</div>
-          </div>
-        </div>
+        <div class="apr-info"><span class="apr-ico">🌄</span><span>الفجر</span></div>
         <label class="switch"><input type="checkbox" data-prayer="Fajr" checked><span class="slider"></span></label>
       </div>
-
       <div class="adhan-prayer-row">
-        <div class="apr-info">
-          <span class="apr-ico">🌞</span>
-          <div>
-            <div>الظهر</div>
-            <div class="apr-time" id="dhuhrTime">—</div>
-          </div>
-        </div>
+        <div class="apr-info"><span class="apr-ico">🌞</span><span>الظهر</span></div>
         <label class="switch"><input type="checkbox" data-prayer="Dhuhr" checked><span class="slider"></span></label>
       </div>
-
       <div class="adhan-prayer-row">
-        <div class="apr-info">
-          <span class="apr-ico">🌤️</span>
-          <div>
-            <div>العصر</div>
-            <div class="apr-time" id="asrTime">—</div>
-          </div
+        <div class="apr-info"><span class="apr-ico">🌤️</span><span>العصر</span></div>
+        <label class="switch"><input type="checkbox" data-prayer="Asr" checked><span class="slider"></span></label>
+      </div>
+      <div class="adhan-prayer-row">
+        <div class="apr-info"><span class="apr-ico">🌅</span><span>المغرب</span></div>
+        <label class="switch"><input type="checkbox" data-prayer="Maghrib" checked><span class="slider"></span></label>
+      </div>
+      <div class="adhan-prayer-row">
+        <div class="apr-info"><span class="apr-ico">🌙</span><span>العشاء</span></div>
+        <label class="switch"><input type="checkbox" data-prayer="Isha" checked><span class="slider"></span></label>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========== الموقع ========== -->
+  <section class="settings-group">
+    <h3 class="group-title">📍 الموقع</h3>
+
+    <div class="settings-item">
+      <div class="item-info"><span class="ico">📡</span><span>استخدام موقعي تلقائيًا</span></div>
+      <label class="switch"><input type="checkbox" id="useGeo" checked><span class="slider"></span></label>
+    </div>
+
+    <div class="settings-item column" id="manualBlock" style="display:none;">
+      <div class="item-info"><span class="ico">✏️</span><span>الإحداثيات يدويًا</span></div>
+      <div class="coord-row">
+        <input type="number" id="inpLat" placeholder="Lat" step="0.0001" />
+        <input type="number" id="inpLng" placeholder="Lng" step="0.0001" />
+      </div>
+      <input type="text" id="inpCity" placeholder="المدينة" class="text-input" />
+    </div>
+  </section>
+
+  <!-- ========== طريقة الحساب ========== -->
+  <section class="settings-group">
+    <h3 class="group-title">🧮 طريقة الحساب</h3>
+
+    <div class="settings-item column">
+      <div class="item-info"><span class="ico">🕌</span><span>الجهة</span></div>
+      <select id="methodSelect" class="select-input">
+        <option value="4">🏛️ أم القرى</option>
+        <option value="3">🌍 رابطة العالم الإسلامي</option>
+        <option value="5">🇪🇬 الجمعية المصرية</option>
+        <option value="2">🇺🇸 ISNA</option>
+      </select>
+    </div>
+
+    <div class="settings-item column">
+      <div class="item-info"><span class="ico">📐</span><span>مذهب العصر</span></div>
+      <div class="radio-group">
+        <label class="radio-opt"><input type="radio" name="school" value="0" checked><span>الجمهور</span></label>
+        <label class="radio-opt"><input type="radio" name="school" value="1"><span>الحنفي</span></label>
+      </div>
+    </div>
+  </section>
+
+  <div class="action-buttons">
+    <button class="btn primary" id="saveBtn">💾 حفظ الإعدادات</button>
+    <button class="btn" id="refreshBtn">🔄 تحديث المواقيت</button>
+  </div>
+</div>
+
+<!-- ========== السكربتات ========== -->
+<script src="assets/js/app.js"></script>
+<script src="assets/js/navbar.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/prayer-settings.js"></script>
+<script src="assets/js/seo.js"></script>
+<script src="assets/js/pwa.js"></script>
+<script src="assets/js/adhan.js"></script>
+
+<!-- ========== سكربت مستقل لزر تجربة الأذان ========== -->
+<script>
+(function () {
+  'use strict';
+
+  console.log('🚀 سكربت زر تجربة الأذان جاهز');
+
+  /* انتظر تحميل الصفحة */
+  function bindTestButton() {
+    const btn = document.getElementById('testAdhanBtn');
+
+    if (!btn) {
+      console.warn('⚠️ لم أجد زر testAdhanBtn');
+      return;
+    }
+
+    console.log('✅ وجدت الزر — جاهز للربط');
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      console.log('🎵 تم الضغط على الزر');
+
+      try {
+        /* قراءة الصوت من الإعدادات */
+        let volume = 0.8;
+        try {
+          const savedSettings = JSON.parse(localStorage.getItem('adhan_settings') || '{}');
+          if (savedSettings.volume) volume = savedSettings.volume;
+        } catch {}
+
+        /* تشغيل الصوت */
+        const audio = new Audio('assets/audio/adhan.mp3');
+        audio.volume = volume;
+
+        const promise = audio.play();
+
+        if (promise && promise.then) {
+          promise
+            .then(() => {
+              console.log('✅ الأذان يعمل بنجاح');
+            })
+            .catch(err => {
+              console.error('❌ فشل التشغيل:', err);
+              alert('⚠️ تعذّر تشغيل الأذان: ' + (err.message || err));
+            });
+        }
+      } catch (err) {
+        console.error('❌ خطأ:', err);
+        alert('⚠️ حدث خطأ: ' + err.message);
+      }
+    });
+  }
+
+  /* طريقتان للتحميل */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindTestButton);
+  } else {
+    bindTestButton();
+  }
+})();
+</script>
+
+</body>
+</html>
