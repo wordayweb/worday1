@@ -1,0 +1,452 @@
+/* ============ الهيدر الموحّد ============ */
+
+.main-header { width: 100%; }
+
+/* ============================================================
+   🖼️ الشعار
+   ============================================================ */
+.top-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 16px 0;
+}
+
+.top-logo img {
+  width: clamp(140px, 22vw, 220px);
+  height: auto;
+  display: block;
+  mix-blend-mode: multiply;
+  filter: contrast(1.15) saturate(1.25) brightness(0.94);
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 30%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 70%, transparent 88%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 30%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 70%, transparent 88%);
+  animation: logoGlow 3s ease-in-out infinite;
+}
+
+@keyframes logoGlow {
+  0%, 100% {
+    filter: contrast(1.15) saturate(1.25) brightness(0.94)
+            drop-shadow(0 4px 12px rgba(201, 162, 39, .08));
+  }
+  50% {
+    filter: contrast(1.15) saturate(1.25) brightness(0.94)
+            drop-shadow(0 8px 22px rgba(201, 162, 39, .22));
+  }
+}
+
+/* ============================================================
+   📝 كتلة العنوان
+   ============================================================ */
+.title-block {
+  text-align: center;
+  padding: 8px 16px 0;
+}
+
+.main-title {
+  font-family: 'Amiri', serif;
+  font-size: clamp(36px, 8vw, 56px);
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(201, 162, 39, .12);
+}
+
+.brand-tagline {
+  font-family: 'Amiri', serif;
+  font-size: clamp(15px, 3vw, 22px);
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: .5px;
+  line-height: 1.5;
+  margin: 4px 0 0;
+  opacity: .85;
+  text-shadow: 0 1px 2px rgba(201, 162, 39, .08);
+}
+
+/* خط زخرفي أنيق */
+.title-divider {
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  border-radius: 2px;
+  margin: 12px auto 0;
+  opacity: .65;
+}
+
+/* ============================================================
+   🌐 شريط اللغة
+   ============================================================ */
+.lang-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 14px 16px 8px;
+}
+
+.lang-sep {
+  color: var(--gold);
+  opacity: .5;
+  font-size: 14px;
+}
+
+.lang-btn {
+  padding: 7px 20px;
+  border-radius: 999px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--green);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.lang-btn:hover {
+  background: var(--green-light);
+  border-color: var(--green);
+}
+.lang-btn.active {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+  box-shadow: 0 4px 12px rgba(31, 78, 61, .25);
+}
+
+/* ============================================================
+   📅 التاريخ + الساعة
+   ============================================================ */
+.datetime-line {
+  text-align: center;
+  padding: 6px 16px 16px;
+}
+
+.date-line {
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.date-line .dot {
+  color: var(--gold);
+  margin: 0 8px;
+  font-size: 9px;
+  vertical-align: middle;
+}
+
+.clock-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-family: 'Tajawal', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green);
+  box-shadow: var(--shadow-sm);
+  direction: ltr;
+}
+.clock-line .clock-ico { font-size: 14px; opacity: .7; }
+#liveClock { letter-spacing: 1px; font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   🧭 شريط التنقل
+   ============================================================ */
+.top-nav {
+  padding: 8px 0 16px;
+  border-bottom: 1px dashed var(--line);
+  margin-bottom: 14px;
+}
+
+/* ============================================================
+   🎯 حالة الصفحات الداخلية
+   ============================================================ */
+.main-header.inner-page .top-logo { padding: 12px 16px 0; }
+.main-header.inner-page .top-logo img { width: clamp(90px, 14vw, 130px); }
+
+.main-header.inner-page .title-block { padding: 4px 16px 0; }
+.main-header.inner-page .main-title { font-size: clamp(28px, 5vw, 40px); }
+.main-header.inner-page .brand-tagline { font-size: clamp(13px, 2.2vw, 16px); }
+.main-header.inner-page .title-divider { width: 70px; margin: 8px auto 0; }
+
+.main-header.inner-page .lang-bar { padding: 10px 16px 6px; gap: 10px; }
+.main-header.inner-page .lang-btn { padding: 6px 16px; font-size: 12.5px; }
+
+.main-header.inner-page .datetime-line { padding: 4px 16px 12px; }
+.main-header.inner-page .date-line { font-size: 12px; margin-bottom: 6px; }
+.main-header.inner-page .clock-line { padding: 3px 12px; font-size: 13px; }
+
+.main-header.inner-page .chips { padding: 4px 0 12px; }
+.main-header.inner-page .chip { padding: 8px 16px; font-size: 13px; }
+
+.main-header.inner-page .top-nav {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+/* ============================================================
+   🌙 الوضع الليلي
+   ============================================================ */
+body.dark .top-logo img {
+  mix-blend-mode: screen;
+  filter: contrast(1.15) saturate(1.3) brightness(1.2);
+}
+
+body.dark .main-title,
+body.dark .brand-tagline {
+  color: var(--gold);
+}
+
+body.dark .lang-btn {
+  background: var(--white);
+  color: var(--gold);
+  border-color: var(--line);
+}
+body.dark .lang-btn:hover {
+  background: rgba(255, 255, 255, .06);
+  border-color: var(--gold);
+}
+body.dark .lang-btn.active {
+  background: var(--green);
+  color: #fff;
+}
+
+body.dark .clock-line {
+  background: var(--white);
+  border-color: var(--line);
+  color: var(--gold);
+}
+
+/* ============================================================
+   📱 استجابة كاملة
+   ============================================================ */
+
+/* ===== 📱 صغير جداً (320-359) ===== */
+@media (max-width: 359px) {
+  .top-logo { padding: 14px 12px 0; }
+  .top-logo img { width: clamp(100px, 35vw, 140px); }
+
+  .main-title { font-size: 28px; }
+  .brand-tagline { font-size: 13px; }
+  .title-divider { width: 70px; margin: 8px auto 0; }
+
+  .lang-bar { padding: 10px 12px 6px; gap: 8px; }
+  .lang-btn { padding: 6px 14px; font-size: 11.5px; }
+  .lang-sep { font-size: 12px; }
+
+  .datetime-line { padding: 4px 12px 12px; }
+  .date-line { font-size: 10.5px; }
+  .clock-line { padding: 3px 10px; font-size: 11.5px; }
+
+  .chips { padding: 3px 0 8px; gap: 5px; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
+  .chip { padding: 6px 10px; font-size: 11px; }
+  .top-nav { padding-bottom: 6px; margin-bottom: 6px; }
+
+  /* الصفحات الداخلية */
+  .main-header.inner-page .top-logo img { width: clamp(70px, 20vw, 100px); }
+  .main-header.inner-page .main-title { font-size: 24px; }
+  .main-header.inner-page .brand-tagline { font-size: 12px; }
+  .main-header.inner-page .lang-btn { padding: 5px 12px; font-size: 11px; }
+  .main-header.inner-page .date-line { font-size: 10px; }
+  .main-header.inner-page .clock-line { padding: 2px 10px; font-size: 11px; }
+  .main-header.inner-page .chip { padding: 6px 10px; font-size: 11px; }
+}
+
+/* ===== 📱 Galaxy S23, iPhone SE/mini (360-389) ===== */
+@media (min-width: 360px) and (max-width: 389px) {
+  .top-logo img { width: clamp(120px, 38vw, 160px); }
+
+  .main-title { font-size: 32px; }
+  .brand-tagline { font-size: 14.5px; }
+
+  .lang-btn { padding: 6px 16px; font-size: 12px; }
+
+  .date-line { font-size: 11.5px; }
+  .clock-line { font-size: 12.5px; }
+
+  .chip { padding: 7px 12px; font-size: 12px; }
+  .chips { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
+
+  .main-header.inner-page .top-logo img { width: clamp(80px, 22vw, 110px); }
+  .main-header.inner-page .main-title { font-size: 26px; }
+  .main-header.inner-page .brand-tagline { font-size: 13px; }
+}
+
+/* ===== 📱 iPhone 12-15 (390-411) ===== */
+@media (min-width: 390px) and (max-width: 411px) {
+  .top-logo img { width: clamp(130px, 35vw, 170px); }
+
+  .main-title { font-size: 36px; }
+  .brand-tagline { font-size: 15px; }
+
+  .lang-btn { padding: 7px 18px; font-size: 12.5px; }
+
+  .chip { padding: 7px 13px; font-size: 12.5px; }
+
+  .main-header.inner-page .top-logo img { width: clamp(85px, 20vw, 115px); }
+  .main-header.inner-page .main-title { font-size: 28px; }
+  .main-header.inner-page .brand-tagline { font-size: 14px; }
+}
+
+/* ===== 📱 iPhone Plus/Max, Samsung S24 (412-479) ===== */
+@media (min-width: 412px) and (max-width: 479px) {
+  .top-logo img { width: clamp(140px, 32vw, 180px); }
+
+  .main-title { font-size: 40px; }
+  .brand-tagline { font-size: 16px; }
+
+  .lang-btn { padding: 8px 20px; font-size: 13px; }
+  .chip { padding: 8px 15px; font-size: 13px; }
+
+  .main-header.inner-page .top-logo img { width: clamp(90px, 18vw, 120px); }
+  .main-header.inner-page .main-title { font-size: 30px; }
+  .main-header.inner-page .brand-tagline { font-size: 14.5px; }
+}
+
+/* ===== 📱 جوال كبير (480-767) ===== */
+@media (min-width: 480px) and (max-width: 767px) {
+  .top-logo img { width: clamp(160px, 28vw, 220px); }
+
+  .main-title { font-size: 46px; }
+  .brand-tagline { font-size: 18px; }
+  .title-divider { width: 120px; }
+
+  .lang-bar { gap: 16px; }
+  .lang-btn { padding: 8px 22px; font-size: 14px; }
+
+  .date-line { font-size: 14px; }
+  .clock-line { font-size: 15px; }
+  .chip { padding: 8px 16px; font-size: 13.5px; }
+
+  .main-header.inner-page .top-logo img { width: clamp(100px, 16vw, 140px); }
+  .main-header.inner-page .main-title { font-size: 34px; }
+  .main-header.inner-page .brand-tagline { font-size: 15.5px; }
+}
+
+/* ===== 📱 iPad mini (768-819) ===== */
+@media (min-width: 768px) and (max-width: 819px) {
+  .top-logo img { width: clamp(180px, 22vw, 240px); }
+
+  .main-title { font-size: 52px; }
+  .brand-tagline { font-size: 20px; }
+  .title-divider { width: 140px; }
+
+  .lang-btn { padding: 9px 24px; font-size: 15px; }
+  .chips { justify-content: center; flex-wrap: wrap; }
+  .chip { padding: 9px 18px; font-size: 13.5px; }
+
+  .main-header.inner-page .top-logo img { width: clamp(110px, 14vw, 150px); }
+  .main-header.inner-page .main-title { font-size: 38px; }
+  .main-header.inner-page .brand-tagline { font-size: 16px; }
+}
+
+/* ===== 📱 iPad Air (820-1023) ===== */
+@media (min-width: 820px) and (max-width: 1023px) {
+  .top-logo img { width: clamp(200px, 20vw, 260px); }
+
+  .main-title { font-size: 56px; }
+  .brand-tagline { font-size: 22px; }
+
+  .lang-btn { padding: 10px 26px; font-size: 15.5px; }
+  .chips { justify-content: center; flex-wrap: wrap; }
+  .chip { padding: 10px 20px; font-size: 14px; }
+
+  .main-header.inner-page .top-logo img { width: clamp(120px, 13vw, 160px); }
+  .main-header.inner-page .main-title { font-size: 42px; }
+  .main-header.inner-page .brand-tagline { font-size: 17px; }
+}
+
+/* ===== 💻 iPad Pro / لابتوب (1024-1279) ===== */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .top-logo img { width: clamp(220px, 18vw, 280px); }
+
+  .main-title { font-size: 60px; }
+  .brand-tagline { font-size: 24px; }
+
+  .lang-btn { padding: 10px 28px; font-size: 16px; }
+  .chip { padding: 10px 22px; font-size: 14.5px; }
+
+  .date-line { font-size: 14px; }
+  .clock-line { padding: 5px 16px; font-size: 15px; }
+
+  .main-header.inner-page .top-logo img { width: clamp(130px, 12vw, 170px); }
+  .main-header.inner-page .main-title { font-size: 46px; }
+  .main-header.inner-page .brand-tagline { font-size: 18px; }
+}
+
+/* ===== 💻 لابتوب (1280-1439) ===== */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .top-logo img { width: clamp(240px, 17vw, 300px); }
+
+  .main-title { font-size: 64px; }
+  .brand-tagline { font-size: 26px; }
+
+  .lang-btn { padding: 11px 30px; font-size: 17px; }
+  .chip { padding: 10px 24px; font-size: 15px; }
+
+  .main-header.inner-page .top-logo img { width: clamp(140px, 11vw, 180px); }
+  .main-header.inner-page .main-title { font-size: 50px; }
+  .main-header.inner-page .brand-tagline { font-size: 19px; }
+}
+
+/* ===== 🖥️ سطح مكتب (1440-1919) ===== */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .top-logo img { width: clamp(260px, 16vw, 320px); }
+
+  .main-title { font-size: 68px; }
+  .brand-tagline { font-size: 28px; }
+
+  .lang-btn { padding: 12px 32px; font-size: 18px; }
+  .chip { padding: 11px 26px; font-size: 15.5px; }
+
+  .main-header.inner-page .top-logo img { width: clamp(150px, 10vw, 190px); }
+  .main-header.inner-page .main-title { font-size: 54px; }
+  .main-header.inner-page .brand-tagline { font-size: 20px; }
+}
+
+/* ===== 🖥️ شاشة كبيرة (1920+) ===== */
+@media (min-width: 1920px) {
+  .top-logo img { width: clamp(280px, 15vw, 360px); }
+
+  .main-title { font-size: 76px; }
+  .brand-tagline { font-size: 32px; }
+  .title-divider { width: 180px; }
+
+  .lang-btn { padding: 13px 36px; font-size: 19px; }
+  .chip { padding: 12px 28px; font-size: 16px; }
+
+  .main-header.inner-page .top-logo img { width: clamp(160px, 9vw, 210px); }
+  .main-header.inner-page .main-title { font-size: 60px; }
+  .main-header.inner-page .brand-tagline { font-size: 22px; }
+}
+
+/* ===== 📱 شاشات أفقية قصيرة ===== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .top-logo { padding: 8px 12px 0; }
+  .top-logo img { width: 80px; }
+
+  .title-block { padding: 4px 12px 0; }
+  .main-title { font-size: 26px; }
+  .brand-tagline { font-size: 13px; }
+  .title-divider { width: 60px; margin: 6px auto 0; }
+
+  .lang-bar { padding: 6px 12px 4px; gap: 10px; }
+  .lang-btn { padding: 5px 14px; font-size: 11.5px; }
+
+  .datetime-line { display: none; }
+
+  .chips { padding: 3px 0 6px; }
+  .main-header.inner-page .top-logo img { width: 60px; }
+  .main-header.inner-page .main-title { font-size: 20px; }
+  .main-header.inner-page .brand-tagline { font-size: 11px; }
+  .main-header.inner-page .title-divider { display: none; }
+}

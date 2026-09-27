@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>الإعدادات — وِرْدِي</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="stylesheet" href="assets/css/settings.css" />
+</head>
+<body>
+
+<div class="app">
+  <div data-header-target></div>
+
+  <header class="athkar-header">
+    <button class="nav-btn" onclick="history.back()">↪</button>
+    <h2>الإعدادات</h2>
+    <div style="width:42px"></div>
+  </header>
+
+  <section class="settings-group">
+    <h3 class="group-title">المظهر</h3>
+    <div class="settings-item">
+      <div class="item-info"><span class="ico">🌙</span><span>الوضع الليلي</span></div>
+      <label class="switch"><input type="checkbox" id="setDark"><span class="slider"></span></label>
+    </div>
+  </section>
+
+  <section class="settings-group">
+    <h3 class="group-title">حول</h3>
+    <div class="settings-item" onclick="location.href='privacy.html'">
+      <div class="item-info"><span class="ico">📄</span><span>سياسة الاستخدام</span></div>
+      <span class="chev">‹</span>
+    </div>
+    <div class="settings-item" onclick="location.href='contact.html'">
+      <div class="item-info"><span class="ico">📬</span><span>تواصل معنا</span></div>
+      <span class="chev">‹</span>
+    </div>
+    <div class="settings-item" onclick="location.href='sources.html'">
+      <div class="item-info"><span class="ico">📚</span><span>المصادر</span></div>
+      <span class="chev">‹</span>
+    </div>
+  </section>
+
+  <p class="version">وِرْدِي · الإصدار 1.0.0</p>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/navbar.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/settings.js"></script>
+<script src="assets/js/seo.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+/* ============ مواقيت الصلاة ============ */
+
+.location-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+}
+.loc-left { display: flex; align-items: center; gap: 12px; }
+.loc-ico {
+  font-size: 24px;
+  width: 44px; height: 44px;
+  background: var(--green-light);
+  border-radius: 12px;
+  display: grid; place-items: center;
+}
+.loc-city { font-size: 15px; font-weight: 800; color: var(--green); }
+.loc-detail { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.loc-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--green);
+  background: transparent;
+  color: var(--green);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+}
+.loc-btn:hover { background: var(--green); color: #fff; }
+
+.next-prayer-card {
+  background: linear-gradient(160deg, #2C6B54, #1F4E3D);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(31, 78, 61, .28);
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.next-prayer-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(201, 162, 39, .35), transparent 70%);
+}
+.np-head { display: flex; justify-content: center; margin-bottom: 6px; position: relative; }
+.np-label { font-size: 13px; opacity: .9; font-weight: 600; }
+.np-name {
+  font-family: 'Amiri', serif;
+  font-size: 34px;
+  font-weight: 700;
+  margin: 6px 0 4px;
+  position: relative;
+}
+.np-time {
+  font-size: 16px;
+  font-weight: 700;
+  opacity: .95;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+  direction: ltr;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  position: relative;
+}
+.cd-box {
+  background: rgba(255, 255, 255, .12);
+  border-radius: 12px;
+  padding: 10px 14px;
+  min-width: 66px;
+}
+.cd-num {
+  display: block;
+  font-size: 26px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.cd-lbl { display: block; font-size: 11px; opacity: .85; margin-top: 2px; }
+.cd-sep { font-size: 24px; font-weight: 900; color: rgba(255, 255, 255, .5); padding: 0 4px; }
+
+.times-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.times-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.times-head h3 {
+  font-family: 'Amiri', serif;
+  color: var(--green);
+  font-size: 20px;
+  font-weight: 700;
+}
+.date-mini { font-size: 12px; color: var(--ink-soft); }
+
+.times-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 12px;
+  transition: background .2s;
+}
+.time-row:hover { background: var(--cream-2); }
+.time-row.current {
+  background: var(--green-light);
+  border: 1px solid rgba(31, 78, 61, .15);
+}
+.time-row.passed { opacity: .55; }
+
+.tr-left { display: flex; align-items: center; gap: 10px; }
+.tr-ico {
+  font-size: 20px;
+  width: 34px; height: 34px;
+  background: var(--cream-2);
+  border-radius: 10px;
+  display: grid; place-items: center;
+}
+.time-row.current .tr-ico { background: var(--green); }
+.tr-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+.tr-time {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--green);
+  direction: ltr;
+}
+
+.qibla-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.qibla-info { display: flex; align-items: center; gap: 12px; }
+.qibla-ico {
+  font-size: 26px;
+  width: 44px; height: 44px;
+  background: var(--cream-2);
+  border-radius: 12px;
+  display: grid; place-items: center;
+}
+.qibla-title { font-size: 14px; font-weight: 700; color: var(--green); }
+.qibla-deg { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.qibla-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.qibla-btn:hover { opacity: .9; }
+
+.jumua-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(160deg, #E4B94C, #C9A227);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(201, 162, 39, .3);
+}
+.jumua-note span { font-size: 22px; }
+.jumua-note p { font-size: 13.5px; font-weight: 700; line-height: 1.5; }
+
+body.dark .loc-ico { background: rgba(255,255,255,.05); }
+body.dark .tr-ico { background: rgba(255,255,255,.05); }
+body.dark .qibla-ico { background: rgba(255,255,255,.05); }

@@ -1,0 +1,867 @@
+/* ============ صفحات الأذكار ============ */
+
+/* ===== هيدر الصفحة ===== */
+.athkar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0 10px;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+.athkar-header h2 {
+  font-family: 'Amiri', serif;
+  font-size: 26px;
+  color: var(--green);
+  font-weight: 700;
+  flex: 1;
+  text-align: center;
+}
+.athkar-header .nav-btn {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--green);
+  font-size: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: var(--shadow-sm);
+  flex: 0 0 auto;
+}
+.athkar-header .nav-btn:hover {
+  background: var(--green-light);
+  border-color: var(--green);
+}
+.athkar-header .tashkeel-toggle {
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  font-weight: 700;
+  background: var(--cream-2);
+  color: var(--ink-soft);
+}
+.athkar-header .tashkeel-toggle.on {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+
+/* ===== مؤشر الفترة ===== */
+.period-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+.period-badge[data-period="morning"] {
+  background: linear-gradient(160deg, #E4B94C, #C9A227);
+  color: #fff;
+}
+.period-badge[data-period="evening"] {
+  background: linear-gradient(160deg, #2C4A6B, #1F3A52);
+  color: #fff;
+}
+.pb-ico { font-size: 22px; }
+.pb-txt { flex: 1; }
+
+/* ===== بطاقة الذكر ===== */
+.thikr {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 22px 20px;
+  margin-bottom: 16px;
+  position: relative;
+  border: 1px solid transparent;
+  transition: all .25s;
+}
+.thikr.done {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, #FFFDF5, var(--white));
+}
+.thikr.done::after {
+  content: '✓ أُكمل';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--green);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 2;
+}
+
+.thikr .row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 10px;
+}
+
+.thikr .actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.thikr .actions button {
+  width: 34px; height: 34px;
+  background: var(--cream-2);
+  border: none;
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 15px;
+  cursor: pointer;
+  transition: all .2s;
+  display: grid;
+  place-items: center;
+}
+.thikr .actions button:hover {
+  background: var(--gold-light);
+  color: #fff;
+}
+.thikr .actions .fav-btn.active {
+  background: var(--gold);
+  color: #fff;
+}
+
+.thikr .counter-ring {
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  background: conic-gradient(var(--gold) var(--p, 0%), var(--line) 0);
+  display: grid; place-items: center;
+  position: relative;
+  flex: 0 0 auto;
+}
+.thikr .counter-ring::after {
+  content: '';
+  position: absolute; inset: 5px;
+  background: var(--white);
+  border-radius: 50%;
+}
+.thikr .counter-ring span {
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+  direction: ltr;
+}
+
+.thikr .num-badge {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800;
+  font-size: 15px;
+  flex: 0 0 auto;
+}
+
+/* ⭐ شريط التلميح */
+.thikr-hint-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  margin: 0 0 14px;
+  background: linear-gradient(90deg, rgba(232, 240, 234, .7), rgba(232, 240, 234, .3));
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green);
+  position: relative;
+}
+
+.thikr-hint-bar .hint-ico {
+  font-size: 18px;
+  flex: 0 0 auto;
+  animation: hintBounce 1.8s ease-in-out infinite;
+}
+@keyframes hintBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
+}
+
+.thikr-hint-bar .hint-txt {
+  flex: 1;
+  letter-spacing: .2px;
+}
+
+.thikr-hint-bar .hint-count {
+  background: var(--gold);
+  color: #fff;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 800;
+  flex: 0 0 auto;
+  box-shadow: 0 2px 6px rgba(201, 162, 39, .35);
+}
+
+/* عند الإتمام */
+.thikr.done .thikr-hint-bar {
+  background: linear-gradient(90deg, rgba(201, 162, 39, .15), rgba(201, 162, 39, .05));
+  color: var(--green);
+}
+.thikr.done .thikr-hint-bar .hint-ico {
+  animation: none;
+  font-size: 0;
+}
+.thikr.done .thikr-hint-bar .hint-ico::before {
+  content: '✅';
+  font-size: 18px;
+}
+.thikr.done .thikr-hint-bar .hint-txt {
+  font-size: 0;
+}
+.thikr.done .thikr-hint-bar .hint-txt::before {
+  content: 'أتممت هذا الذكر — بارك الله فيك';
+  font-size: 14px;
+  font-weight: 700;
+}
+.thikr.done .thikr-hint-bar .hint-count {
+  background: var(--green);
+}
+
+/* ⭐ نص الذكر */
+.thikr .text {
+  font-family: 'Amiri Quran', 'Amiri', serif;
+  font-size: 26px;
+  line-height: 2.4;
+  text-align: center;
+  color: var(--ink);
+  padding: 12px 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: color .2s;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+.thikr .text:active { color: var(--green); }
+
+/* ⭐ نص الفضل */
+.thikr .fadl {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-top: 1px dashed var(--line);
+  font-size: 17px;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.9;
+  font-weight: 600;
+  background: linear-gradient(180deg, rgba(201, 162, 39, .06), transparent);
+  border-radius: 12px;
+  letter-spacing: .2px;
+}
+
+/* ===== شريط التقدم العام ===== */
+.progress-bar-wrap {
+  position: sticky;
+  bottom: 90px;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-top: 20px;
+  box-shadow: 0 -4px 20px rgba(31, 78, 61, .08);
+  border: 1px solid var(--line);
+  z-index: 10;
+}
+.pb-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.pb-track {
+  height: 8px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.pb-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--green-2));
+  border-radius: 999px;
+  transition: width .5s ease;
+}
+
+/* ===== عناوين الأقسام ===== */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+  margin: 8px 0 14px;
+  border-radius: var(--radius);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+.section-head::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 150px; height: 150px;
+  background: radial-gradient(circle, rgba(255,255,255,.15), transparent 70%);
+  pointer-events: none;
+}
+.morning-head { background: linear-gradient(160deg, #E4B94C, #A8871D); }
+.evening-head { background: linear-gradient(160deg, #2C4A6B, #16293A); }
+.section-head .sh-ico { font-size: 28px; position: relative; }
+.section-head .sh-title {
+  flex: 1;
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  position: relative;
+}
+.section-head .sh-count {
+  background: rgba(255, 255, 255, .22);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  position: relative;
+}
+
+/* ===== الفاصل ===== */
+.section-separator {
+  text-align: center;
+  padding: 22px 0;
+  color: var(--gold);
+  font-size: 18px;
+  letter-spacing: 8px;
+  opacity: .7;
+}
+
+/* ===== حالة فارغة ===== */
+.empty-athkar {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--ink-soft);
+}
+.empty-athkar .big-ico { font-size: 60px; opacity: .4; margin-bottom: 14px; }
+.empty-athkar h3 {
+  font-family: 'Amiri', serif;
+  color: var(--green);
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+/* ============ Hub ============ */
+.athkar-hub {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  padding-bottom: 20px;
+}
+@media (min-width: 700px) {
+  .athkar-hub { grid-template-columns: repeat(3, 1fr); }
+}
+.hub-card {
+  position: relative;
+  padding: 26px 22px;
+  border-radius: var(--radius);
+  color: #fff;
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform .25s, box-shadow .25s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 180px;
+}
+.hub-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(31, 78, 61, .22); }
+.hub-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,.18), transparent 70%);
+  pointer-events: none;
+}
+.hub-morning { background: linear-gradient(160deg, #E4B94C 0%, #C9A227 55%, #A8871D 100%); }
+.hub-evening { background: linear-gradient(160deg, #2C4A6B 0%, #1F3A52 60%, #16293A 100%); }
+.hub-daily   { background: linear-gradient(160deg, #2C6B54 0%, #1F4E3D 60%, #173A2D 100%); }
+.hub-ico { font-size: 44px; margin-bottom: 4px; position: relative; }
+.hub-title {
+  font-family: 'Amiri', serif;
+  font-size: 26px;
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 4px;
+}
+.hub-desc { font-size: 13.5px; opacity: .92; line-height: 1.6; position: relative; flex: 1; }
+.hub-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.25);
+  font-size: 12.5px;
+  font-weight: 700;
+  position: relative;
+}
+.hub-cta { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ============================================================
+   📿 عدّاد الأذكار — تجربة المسبحة
+   ============================================================ */
+
+.thikr.tapped { animation: thikrTap .35s ease; }
+@keyframes thikrTap {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
+
+.thikr.tapped .text { animation: textPulse .4s ease; }
+@keyframes textPulse {
+  0%   { color: var(--ink); }
+  50%  { color: var(--gold); }
+  100% { color: var(--ink); }
+}
+
+.thikr .count-txt { transition: color .25s, transform .15s; }
+.thikr .count-txt.pop { animation: countPop .3s ease; }
+@keyframes countPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.35); color: var(--gold); }
+  100% { transform: scale(1); }
+}
+
+.thikr.tapped .counter-ring { animation: ringPulse .4s ease; }
+@keyframes ringPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.1); box-shadow: 0 0 0 4px rgba(201, 162, 39, .2); }
+  100% { transform: scale(1); box-shadow: none; }
+}
+
+.thikr-progress {
+  height: 4px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 14px 0;
+  position: relative;
+}
+.thikr-progress-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--gold), var(--green-2));
+  border-radius: 999px;
+  transition: width .35s cubic-bezier(.4, 0, .2, 1);
+  position: relative;
+}
+.thikr-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 20px; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5));
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 1; }
+}
+.thikr.done .thikr-progress-fill {
+  background: linear-gradient(90deg, var(--green), var(--green-2));
+}
+
+/* ===== زر التسبيح ===== */
+.thikr-tap-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 20px;
+  margin: 8px 0 0;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow:
+    0 6px 16px rgba(31, 78, 61, .25),
+    inset 0 -3px 6px rgba(0, 0, 0, .1),
+    inset 0 3px 6px rgba(255, 255, 255, .1);
+  transition: transform .08s ease, box-shadow .2s;
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.thikr-tap-btn:active {
+  transform: scale(.97);
+  box-shadow:
+    0 3px 8px rgba(31, 78, 61, .3),
+    inset 0 -2px 4px rgba(0, 0, 0, .15);
+}
+.thikr-tap-btn .tap-ico { font-size: 20px; transition: transform .2s; }
+.thikr-tap-btn:active .tap-ico { transform: rotate(-15deg) scale(1.15); }
+.thikr-tap-btn .tap-lbl { letter-spacing: .3px; }
+.thikr-tap-btn .tap-ripple {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,.4) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+.thikr-tap-btn.pulse .tap-ripple { animation: tapRipple .5s ease-out; }
+@keyframes tapRipple {
+  0%   { opacity: .9; transform: scale(.6); }
+  100% { opacity: 0;  transform: scale(1.4); }
+}
+
+.thikr.done .thikr-tap-btn {
+  background: linear-gradient(160deg, var(--gold), var(--gold-light));
+  box-shadow:
+    0 6px 16px rgba(201, 162, 39, .3),
+    inset 0 -3px 6px rgba(0, 0, 0, .1),
+    inset 0 3px 6px rgba(255, 255, 255, .2);
+}
+.thikr.done .thikr-tap-btn .tap-ico { font-size: 0; }
+.thikr.done .thikr-tap-btn .tap-ico::before {
+  content: '✓';
+  font-size: 22px;
+  font-weight: 900;
+}
+.thikr.done .thikr-tap-btn .tap-lbl { font-size: 0; }
+.thikr.done .thikr-tap-btn .tap-lbl::before {
+  content: 'تم — اضغط للإعادة';
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.thikr.done { animation: celebrateIn .5s cubic-bezier(.3, 1.4, .5, 1); }
+@keyframes celebrateIn {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.03); box-shadow: 0 0 0 0 rgba(201, 162, 39, .5); }
+  60%  { transform: scale(.98); box-shadow: 0 0 0 12px rgba(201, 162, 39, 0); }
+  100% { transform: scale(1); box-shadow: var(--shadow-sm); }
+}
+
+.thikr.done .counter-ring {
+  background: conic-gradient(var(--green) 100%, var(--line) 0) !important;
+  animation: ringGlow 2s ease-in-out infinite;
+}
+@keyframes ringGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(31, 78, 61, .3); }
+  50%      { box-shadow: 0 0 0 6px rgba(31, 78, 61, 0); }
+}
+
+.thikr.done .text { color: var(--green); }
+
+/* ============================================================
+   الوضع الليلي
+   ============================================================ */
+body.dark .thikr .counter-ring::after { background: var(--white); }
+body.dark .thikr.done {
+  background: linear-gradient(180deg, rgba(201, 162, 39, .08), var(--white));
+}
+body.dark .section-head::before {
+  background: radial-gradient(circle, rgba(255,255,255,.1), transparent 70%);
+}
+body.dark .thikr-progress { background: rgba(255, 255, 255, .08); }
+body.dark .thikr-tap-btn {
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, .3),
+    inset 0 -3px 6px rgba(0, 0, 0, .3),
+    inset 0 3px 6px rgba(255, 255, 255, .05);
+}
+body.dark .thikr .fadl {
+  background: linear-gradient(180deg, rgba(201, 162, 39, .1), transparent);
+}
+body.dark .thikr-hint-bar {
+  background: linear-gradient(90deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+  color: var(--gold);
+}
+body.dark .thikr.done .thikr-hint-bar {
+  background: linear-gradient(90deg, rgba(201, 162, 39, .1), transparent);
+}
+body.dark .athkar-header .tashkeel-toggle {
+  background: rgba(255, 255, 255, .05);
+  color: var(--ink-soft);
+}
+body.dark .athkar-header .tashkeel-toggle.on {
+  background: var(--green);
+  color: #fff;
+}
+
+/* ============================================================
+   📱 استجابة كاملة
+   ============================================================ */
+
+/* 📱 صغير جداً (320-359) */
+@media (max-width: 359px) {
+  .thikr { padding: 14px 16px 16px; margin-bottom: 12px; }
+  .thikr .row-top { margin-bottom: 10px; }
+  .thikr .text { font-size: 20px; line-height: 2.15; padding: 8px 2px; }
+  .thikr .fadl { font-size: 13.5px; padding: 10px 12px; margin-top: 12px; }
+  .thikr .counter-ring { width: 46px; height: 46px; }
+  .thikr .counter-ring span { font-size: 10.5px; }
+  .thikr .num-badge { width: 28px; height: 28px; font-size: 12px; }
+  .thikr .actions button { width: 28px; height: 28px; font-size: 12px; }
+  .thikr-hint-bar { font-size: 11.5px; padding: 7px 10px; margin-bottom: 10px; gap: 6px; }
+  .thikr-hint-bar .hint-ico { font-size: 14px; }
+  .thikr-hint-bar .hint-count { font-size: 10.5px; padding: 2px 8px; }
+  .thikr.done .thikr-hint-bar .hint-txt::before { font-size: 11.5px; }
+  .thikr-tap-btn { padding: 11px 14px; font-size: 12.5px; gap: 6px; }
+  .thikr-tap-btn .tap-ico { font-size: 16px; }
+  .thikr.done .thikr-tap-btn .tap-lbl::before { font-size: 12px; }
+  .thikr-progress { height: 3px; margin: 10px 0; }
+  .athkar-header h2 { font-size: 20px; }
+  .athkar-header .nav-btn { width: 34px; height: 34px; font-size: 16px; }
+  .athkar-header .tashkeel-toggle { font-size: 15px; }
+  .progress-bar-wrap { padding: 10px 12px; bottom: 78px; }
+  .pb-info { font-size: 11.5px; }
+  .pb-track { height: 6px; }
+}
+
+/* 📱 Galaxy S23, iPhone SE (360-389) */
+@media (min-width: 360px) and (max-width: 389px) {
+  .thikr { padding: 16px 18px 18px; }
+  .thikr .text { font-size: 22px; line-height: 2.2; }
+  .thikr .fadl { font-size: 14.5px; padding: 12px 14px; }
+  .thikr .counter-ring { width: 50px; height: 50px; }
+  .thikr .counter-ring span { font-size: 11.5px; }
+  .thikr .num-badge { width: 30px; height: 30px; font-size: 13px; }
+  .thikr .actions button { width: 30px; height: 30px; font-size: 13px; }
+  .thikr-hint-bar { font-size: 12.5px; padding: 8px 12px; }
+  .thikr-hint-bar .hint-ico { font-size: 15px; }
+  .thikr-hint-bar .hint-count { font-size: 11px; padding: 2px 10px; }
+  .thikr-tap-btn { padding: 12px 16px; font-size: 13.5px; }
+  .thikr-tap-btn .tap-ico { font-size: 18px; }
+}
+
+/* 📱 iPhone 12-15 (390-411) */
+@media (min-width: 390px) and (max-width: 411px) {
+  .thikr .text { font-size: 24px; line-height: 2.25; }
+  .thikr .fadl { font-size: 15.5px; padding: 13px 15px; }
+  .thikr .counter-ring { width: 54px; height: 54px; }
+  .thikr .num-badge { width: 32px; height: 32px; font-size: 14px; }
+  .thikr .actions button { width: 32px; height: 32px; font-size: 14px; }
+  .thikr-hint-bar { font-size: 13px; }
+  .thikr-hint-bar .hint-count { font-size: 11.5px; }
+  .thikr-tap-btn { padding: 13px 18px; font-size: 14px; }
+  .thikr-tap-btn .tap-ico { font-size: 19px; }
+}
+
+/* 📱 iPhone Plus/Max, Samsung S24 (412-479) */
+@media (min-width: 412px) and (max-width: 479px) {
+  .thikr { padding: 18px 20px 20px; }
+  .thikr .text { font-size: 25px; line-height: 2.3; }
+  .thikr .fadl { font-size: 16.5px; padding: 14px 16px; }
+  .thikr .counter-ring { width: 56px; height: 56px; }
+  .thikr .num-badge { width: 34px; height: 34px; font-size: 14px; }
+  .thikr .actions button { width: 34px; height: 34px; font-size: 15px; }
+  .thikr-hint-bar { font-size: 13.5px; padding: 9px 14px; }
+  .thikr-hint-bar .hint-count { font-size: 12px; padding: 3px 12px; }
+  .thikr-tap-btn { padding: 14px 20px; font-size: 14.5px; }
+  .thikr-tap-btn .tap-ico { font-size: 20px; }
+}
+
+/* 📱 جوال كبير (480-767) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .thikr { padding: 22px 26px 24px; margin-bottom: 18px; }
+  .thikr .text { font-size: 27px; line-height: 2.35; }
+  .thikr .fadl { font-size: 18px; padding: 16px 18px; margin-top: 18px; }
+  .thikr .counter-ring { width: 64px; height: 64px; }
+  .thikr .counter-ring span { font-size: 13.5px; }
+  .thikr .num-badge { width: 38px; height: 38px; font-size: 16px; }
+  .thikr .actions button { width: 38px; height: 38px; font-size: 17px; }
+  .thikr-hint-bar { font-size: 15px; padding: 11px 16px; gap: 10px; }
+  .thikr-hint-bar .hint-ico { font-size: 20px; }
+  .thikr-hint-bar .hint-count { font-size: 13.5px; padding: 4px 14px; }
+  .thikr.done .thikr-hint-bar .hint-txt::before { font-size: 15px; }
+  .thikr-tap-btn { padding: 16px 26px; font-size: 16px; }
+  .thikr-tap-btn .tap-ico { font-size: 22px; }
+  .thikr.done .thikr-tap-btn .tap-lbl::before { font-size: 16px; }
+}
+
+/* 📱 iPad mini (768-819) */
+@media (min-width: 768px) and (max-width: 819px) {
+  .thikr { padding: 24px 30px 26px; }
+  .thikr .text { font-size: 30px; line-height: 2.4; }
+  .thikr .fadl { font-size: 19px; padding: 18px 20px; }
+  .thikr .counter-ring { width: 70px; height: 70px; }
+  .thikr .counter-ring span { font-size: 15px; }
+  .thikr .num-badge { width: 42px; height: 42px; font-size: 17px; }
+  .thikr .actions button { width: 42px; height: 42px; font-size: 18px; }
+  .thikr { max-width: 720px; margin-left: auto; margin-right: auto; }
+  .section-head, .section-separator, .progress-bar-wrap { max-width: 720px; margin-left: auto; margin-right: auto; }
+  .athkar-hub { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .hub-card { min-height: 200px; padding: 28px 24px; }
+  .hub-ico { font-size: 48px; }
+  .hub-title { font-size: 24px; }
+  .thikr-hint-bar { font-size: 16px; padding: 12px 18px; }
+  .thikr-hint-bar .hint-ico { font-size: 22px; }
+  .thikr-hint-bar .hint-count { font-size: 14px; padding: 4px 16px; }
+  .thikr-tap-btn { padding: 18px 30px; font-size: 17px; }
+  .thikr-tap-btn .tap-ico { font-size: 24px; }
+  .thikr-progress { height: 5px; margin: 16px 0; }
+}
+
+/* 📱 iPad Air (820-1023) */
+@media (min-width: 820px) and (max-width: 1023px) {
+  .thikr { padding: 26px 32px 28px; }
+  .thikr .text { font-size: 32px; line-height: 2.45; }
+  .thikr .fadl { font-size: 20px; padding: 20px 22px; }
+  .thikr .counter-ring { width: 74px; height: 74px; }
+  .thikr .counter-ring span { font-size: 16px; }
+  .thikr .num-badge { width: 44px; height: 44px; font-size: 18px; }
+  .thikr .actions button { width: 44px; height: 44px; font-size: 19px; }
+  .thikr { max-width: 780px; margin-left: auto; margin-right: auto; }
+  .section-head, .section-separator, .progress-bar-wrap { max-width: 780px; margin-left: auto; margin-right: auto; }
+  .athkar-hub { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .hub-card { min-height: 210px; padding: 30px 26px; }
+  .hub-ico { font-size: 52px; }
+  .hub-title { font-size: 26px; }
+  .thikr-hint-bar { font-size: 17px; padding: 13px 20px; }
+  .thikr-hint-bar .hint-count { font-size: 15px; padding: 5px 18px; }
+  .thikr-tap-btn { padding: 20px 34px; font-size: 18px; }
+  .thikr-tap-btn .tap-ico { font-size: 26px; }
+}
+
+/* 💻 iPad Pro / لابتوب (1024-1279) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .thikr { padding: 30px 38px 32px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+  .thikr .text { font-size: 34px; line-height: 2.5; }
+  .thikr .fadl { font-size: 21px; padding: 20px 24px; margin-top: 20px; }
+  .thikr .counter-ring { width: 80px; height: 80px; }
+  .thikr .counter-ring span { font-size: 17px; }
+  .thikr .num-badge { width: 46px; height: 46px; font-size: 19px; }
+  .thikr .actions button { width: 46px; height: 46px; font-size: 20px; }
+  .section-head, .section-separator, .progress-bar-wrap { max-width: 1000px; margin-left: auto; margin-right: auto; }
+  .athkar-hub { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .hub-card { min-height: 230px; padding: 32px 28px; }
+  .hub-ico { font-size: 56px; }
+  .hub-title { font-size: 28px; }
+  .thikr-hint-bar { font-size: 18px; padding: 14px 22px; }
+  .thikr-hint-bar .hint-ico { font-size: 24px; }
+  .thikr-hint-bar .hint-count { font-size: 16px; padding: 5px 20px; }
+  .thikr-tap-btn { padding: 22px 40px; font-size: 19px; }
+  .thikr-tap-btn .tap-ico { font-size: 28px; }
+  .thikr-tap-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 24px rgba(31, 78, 61, .3),
+      inset 0 -3px 6px rgba(0, 0, 0, .1),
+      inset 0 3px 6px rgba(255, 255, 255, .15);
+  }
+}
+
+/* 💻 لابتوب (1280-1439) */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .thikr { padding: 34px 46px 36px; max-width: 1100px; margin-left: auto; margin-right: auto; }
+  .thikr .text { font-size: 36px; line-height: 2.55; }
+  .thikr .fadl { font-size: 22px; padding: 22px 26px; }
+  .thikr .counter-ring { width: 86px; height: 86px; }
+  .thikr .counter-ring span { font-size: 18px; }
+  .thikr .num-badge { width: 50px; height: 50px; font-size: 20px; }
+  .thikr .actions button { width: 50px; height: 50px; font-size: 22px; }
+  .section-head, .section-separator, .progress-bar-wrap { max-width: 1100px; margin-left: auto; margin-right: auto; }
+  .athkar-hub { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .hub-card { min-height: 240px; padding: 34px 30px; }
+  .hub-title { font-size: 29px; }
+  .thikr-hint-bar { font-size: 19px; padding: 15px 24px; }
+  .thikr-hint-bar .hint-count { font-size: 17px; padding: 6px 22px; }
+  .thikr-tap-btn { padding: 24px 46px; font-size: 20px; }
+  .thikr-tap-btn .tap-ico { font-size: 30px; }
+}
+
+/* 🖥️ سطح مكتب (1440-1919) */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .thikr { padding: 38px 54px 40px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+  .thikr .text { font-size: 38px; line-height: 2.6; }
+  .thikr .fadl { font-size: 23px; padding: 22px 26px; margin-top: 24px; }
+  .thikr .counter-ring { width: 92px; height: 92px; }
+  .thikr .counter-ring span { font-size: 19px; }
+  .thikr .num-badge { width: 54px; height: 54px; font-size: 22px; }
+  .thikr .actions button { width: 54px; height: 54px; font-size: 24px; }
+  .section-head, .section-separator, .progress-bar-wrap { max-width: 1200px; margin-left: auto; margin-right: auto; }
+  .athkar-hub { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .hub-card { min-height: 260px; padding: 36px 32px; }
+  .hub-title { font-size: 30px; }
+  .hub-desc { font-size: 15px; }
+  .thikr-hint-bar { font-size: 20px; padding: 16px 26px; }
+  .thikr-hint-bar .hint-ico { font-size: 26px; }
+  .thikr-hint-bar .hint-count { font-size: 18px; padding: 6px 24px; }
+  .thikr-tap-btn { padding: 24px 50px; font-size: 21px; }
+  .thikr-tap-btn .tap-ico { font-size: 32px; }
+}
+
+/* 🖥️ شاشة كبيرة (1920+) */
+@media (min-width: 1920px) {
+  .thikr { padding: 42px 62px 44px; max-width: 1300px; margin-left: auto; margin-right: auto; }
+  .thikr .text { font-size: 42px; line-height: 2.65; }
+  .thikr .fadl { font-size: 24px; padding: 24px 28px; }
+  .thikr .counter-ring { width: 98px; height: 98px; }
+  .thikr .counter-ring span { font-size: 20px; }
+  .thikr .num-badge { width: 58px; height: 58px; font-size: 24px; }
+  .thikr .actions button { width: 58px; height: 58px; font-size: 26px; }
+  .section-head, .section-separator, .progress-bar-wrap { max-width: 1300px; margin-left: auto; margin-right: auto; }
+  .athkar-hub { grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .hub-card { min-height: 280px; }
+  .thikr-hint-bar { font-size: 21px; padding: 17px 28px; }
+  .thikr-hint-bar .hint-ico { font-size: 28px; }
+  .thikr-hint-bar .hint-count { font-size: 19px; padding: 7px 26px; }
+  .thikr-tap-btn { padding: 26px 54px; font-size: 22px; }
+  .thikr-tap-btn .tap-ico { font-size: 34px; }
+}
+
+/* 📱 شاشات أفقية قصيرة */
+@media (max-height: 600px) and (orientation: landscape) {
+  .thikr { padding: 14px 18px 16px; margin-bottom: 12px; }
+  .thikr .text { font-size: 20px; line-height: 2.1; }
+  .thikr .fadl { font-size: 14px; padding: 10px 14px; margin-top: 10px; }
+  .thikr .counter-ring { width: 50px; height: 50px; }
+  .thikr .num-badge { width: 32px; height: 32px; font-size: 13px; }
+  .thikr-hint-bar { font-size: 12.5px; padding: 7px 12px; margin-bottom: 10px; }
+  .thikr-tap-btn { padding: 10px 16px; font-size: 13px; }
+  .thikr-tap-btn .tap-ico { font-size: 17px; }
+  .thikr-progress { margin: 8px 0; }
+  .section-head { padding: 12px 16px; margin-bottom: 10px; }
+  .section-separator { padding: 12px 0; }
+  .hub-card { min-height: 130px; padding: 18px 20px; }
+  .hub-ico { font-size: 32px; }
+  .hub-title { font-size: 20px; }
+}
+
+/* تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+  .thikr.tapped,
+  .thikr.tapped .text,
+  .thikr .count-txt.pop,
+  .thikr.tapped .counter-ring,
+  .thikr.done,
+  .thikr.done .counter-ring,
+  .thikr-progress-fill::after,
+  .thikr-tap-btn.pulse .tap-ripple,
+  .thikr-hint-bar .hint-ico {
+    animation: none !important;
+  }
+}

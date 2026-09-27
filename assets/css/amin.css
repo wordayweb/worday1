@@ -1,0 +1,392 @@
+/* ============ وِرْدِي الأمين ============ */
+
+.amin-app { padding-bottom: 160px; }
+
+/* ===== بطاقة اليوم ===== */
+.hero-wird {
+  background: linear-gradient(160deg, #2C6B54 0%, #1F4E3D 60%, #173A2D 100%);
+  border-radius: var(--radius);
+  padding: 26px 22px 22px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 14px 36px rgba(31, 78, 61, .32);
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-wird::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: -60px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(201, 162, 39, .35), transparent 70%);
+  pointer-events: none;
+  animation: heroRotate 20s linear infinite;
+}
+@keyframes heroRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.hw-ico {
+  font-size: 40px;
+  margin-bottom: 4px;
+  animation: heroFloat 3s ease-in-out infinite;
+  display: inline-block;
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+.hw-greet {
+  font-family: 'Amiri', serif;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 2px 0;
+  position: relative;
+}
+.hw-date {
+  font-size: 13px;
+  opacity: .85;
+  margin-top: 2px;
+  position: relative;
+}
+
+.hw-progress {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.2);
+  position: relative;
+}
+
+.hw-ring {
+  width: 70px; height: 70px;
+  position: relative;
+  flex: 0 0 auto;
+}
+.hw-ring svg {
+  transform: rotate(-90deg);
+  width: 100%; height: 100%;
+}
+.hw-ring .ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,.15);
+  stroke-width: 4;
+}
+.hw-ring .ring-fg {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 163.36;
+  stroke-dashoffset: 163.36;
+  transition: stroke-dashoffset .6s ease;
+}
+.hw-pct {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.hw-stats { flex: 1; text-align: right; position: relative; }
+.hw-done {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.hw-done span { color: var(--gold); }
+.hw-streak {
+  font-size: 13px;
+  opacity: .9;
+  font-weight: 600;
+}
+
+/* ===== محتوى الورد ===== */
+.wird-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.wird-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  border-right: 4px solid transparent;
+  transition: all .3s;
+  overflow: hidden;
+}
+.wird-card.done {
+  border-right-color: var(--green);
+  background: linear-gradient(180deg, #F8FBF8, var(--white));
+}
+.wird-card.done::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--green-2));
+}
+
+.wc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--line);
+  gap: 10px;
+}
+.wc-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--green);
+}
+.wc-ico {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--green-light);
+  display: grid; place-items: center;
+  font-size: 18px;
+  flex: 0 0 auto;
+}
+.wird-card.done .wc-ico {
+  background: var(--green);
+  color: #fff;
+}
+
+.wc-check {
+  appearance: none;
+  width: 28px; height: 28px;
+  border: 2px solid var(--green);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: all .2s;
+  flex: 0 0 auto;
+}
+.wc-check:checked {
+  background: var(--green);
+}
+.wc-check:checked::after {
+  content: '✓';
+  color: #fff;
+  font-size: 17px;
+  font-weight: 900;
+  position: absolute;
+  inset: 0;
+  display: grid; place-items: center;
+  line-height: 1;
+}
+
+.wc-body {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  line-height: 2.2;
+  text-align: center;
+  color: var(--ink);
+  padding: 6px 4px;
+}
+.wc-body.ayah {
+  font-size: 24px;
+  color: var(--green);
+}
+
+.wc-ref {
+  text-align: center;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 800;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+.wc-ref::before { content: '﴿ '; }
+.wc-ref::after  { content: ' ﴾'; }
+
+.wc-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+.wc-actions button {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--green);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.wc-actions button:hover {
+  background: var(--green-light);
+  border-color: var(--green-light);
+}
+
+/* ===== زر الإتمام ===== */
+.finish-wrap {
+  position: fixed;
+  bottom: 75px;
+  left: clamp(16px, 4vw, 60px);
+  right: clamp(16px, 4vw, 60px);
+  max-width: 1400px;
+  margin: 0 auto;
+  z-index: 15;
+  background: linear-gradient(180deg, transparent, var(--cream) 30%);
+  padding-top: 20px;
+}
+.finish-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+  color: #fff;
+  border: none;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(31, 78, 61, .32);
+  transition: all .25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.finish-btn:disabled {
+  background: var(--line);
+  color: var(--ink-soft);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.finish-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(31, 78, 61, .4);
+}
+.finish-btn.completed {
+  background: linear-gradient(160deg, #E4B94C, #C9A227);
+  box-shadow: 0 10px 26px rgba(201, 162, 39, .4);
+}
+.fb-ico { font-size: 20px; }
+.fb-txt { letter-spacing: .3px; }
+
+.finish-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* ===== رسالة الاحتفال ===== */
+.celebrate {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+  animation: fadeIn .3s ease;
+}
+.celebrate.show { display: flex; }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.celebrate-box {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 32px 24px;
+  text-align: center;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  animation: popIn .4s cubic-bezier(.3, 1.4, .5, 1);
+}
+@keyframes popIn {
+  0%   { transform: scale(.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.cb-ico {
+  font-size: 60px;
+  margin-bottom: 12px;
+  animation: celebrateBounce 1s ease infinite;
+}
+@keyframes celebrateBounce {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50%      { transform: translateY(-10px) rotate(5deg); }
+}
+
+.celebrate-box h3 {
+  font-family: 'Amiri', serif;
+  font-size: 26px;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.celebrate-box p {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.cb-streak {
+  color: var(--gold) !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  margin-top: 10px !important;
+  margin-bottom: 18px !important;
+}
+.cb-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+  color: #fff;
+  border: none;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(31, 78, 61, .28);
+}
+
+/* الوضع الليلي */
+body.dark .wird-card {
+  background: var(--white);
+}
+body.dark .wird-card.done {
+  background: linear-gradient(180deg, rgba(31, 78, 61, .15), var(--white));
+}
+body.dark .finish-wrap {
+  background: linear-gradient(180deg, transparent, var(--cream) 30%);
+}
+body.dark .celebrate-box {
+  background: var(--white);
+}

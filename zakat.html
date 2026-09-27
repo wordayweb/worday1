@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1F4E3D" />
+<title>حساب الزكاة — وِرْدِي</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="stylesheet" href="assets/css/zakat.css" />
+</head>
+<body>
+
+<div class="app">
+  <div data-header-target></div>
+
+  <header class="athkar-header">
+    <button class="nav-btn" onclick="history.back()">↪</button>
+    <h2>💰 حساب الزكاة</h2>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="zakat-intro">
+    <p>🕌 أدخل ما تملكه من أموال لحساب مقدار الزكاة الواجبة عليك (٢.٥٪)</p>
+  </div>
+
+  <section class="zakat-section">
+    <h3 class="zs-title">الأصول</h3>
+    <div class="zakat-item"><label>💰 النقود والحسابات البنكية</label><input type="number" class="zinput" id="zCash" value="0" min="0" step="100"></div>
+    <div class="zakat-item"><label>🥇 الذهب (بالجرام)</label><div class="zakat-row"><input type="number" class="zinput" id="zGoldG" value="0" min="0" step="1"><input type="number" class="zinput small" id="zGoldPrice" value="280" min="0" step="1"></div></div>
+    <div class="zakat-item"><label>🥈 الفضة (بالجرام)</label><div class="zakat-row"><input type="number" class="zinput" id="zSilverG" value="0" min="0" step="1"><input type="number" class="zinput small" id="zSilverPrice" value="3" min="0" step="0.1"></div></div>
+    <div class="zakat-item"><label>📈 الأسهم والاستثمارات</label><input type="number" class="zinput" id="zStocks" value="0" min="0" step="100"></div>
+    <div class="zakat-item"><label>🏠 عروض التجارة</label><input type="number" class="zinput" id="zTrade" value="0" min="0" step="100"></div>
+    <div class="zakat-item"><label>💵 الديون المرجوّة</label><input type="number" class="zinput" id="zReceivable" value="0" min="0" step="100"></div>
+  </section>
+
+  <section class="zakat-section">
+    <h3 class="zs-title">الخصوم</h3>
+    <div class="zakat-item"><label>🔻 الديون الحالّة عليك</label><input type="number" class="zinput" id="zDebts" value="0" min="0" step="100"></div>
+  </section>
+
+  <section class="zakat-section">
+    <h3 class="zs-title">النصاب</h3>
+    <div class="zakat-item">
+      <label>اختر أساس النصاب</label>
+      <div class="nisaab-options">
+        <button data-base="gold" class="active">🥇 ٨٥ جرام ذهب</button>
+        <button data-base="silver">🥈 ٥٩٥ جرام فضة</button>
+      </div>
+      <p class="hint">الفضة أدنى للنصاب فتكون أحفظ للفقير.</p>
+    </div>
+  </section>
+
+  <section class="zakat-result">
+    <div class="zr-head"><span>النتيجة</span><span class="zr-badge" id="zrBadge">—</span></div>
+    <div class="zr-rows">
+      <div class="zr-row"><span>إجمالي الأصول</span><span id="zTotalAssets">0</span></div>
+      <div class="zr-row"><span>الخصوم</span><span id="zTotalDebts">0</span></div>
+      <div class="zr-row"><span>المال الخاضع للزكاة</span><span id="zNetWorth">0</span></div>
+      <div class="zr-row"><span>النصاب الحالي</span><span id="zNisaab">0</span></div>
+    </div>
+    <div class="zr-final"><span>💚 الزكاة المستحقة</span><strong id="zZakat">0</strong></div>
+    <button class="zr-reset" id="zReset">↺ تصفير الحقول</button>
+  </section>
+
+  <p class="zakat-note">⚠️ هذه الأداة تقديرية، وللفتوى الدقيقة راجع أهل العلم.</p>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/navbar.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/zakat.js"></script>
+<script src="assets/js/seo.js"></script>
+</body>
+</html>

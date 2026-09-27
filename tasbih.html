@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1F4E3D" />
+<title>المسبحة الإلكترونية — وِرْدِي</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="stylesheet" href="assets/css/tasbih.css" />
+</head>
+<body>
+
+<div class="app tasbih-app">
+  <div data-header-target></div>
+
+  <header class="athkar-header">
+    <button class="nav-btn" onclick="history.back()">↪</button>
+    <h2>📿 التسبيح</h2>
+    <button class="nav-btn" id="manageBtn">☰</button>
+  </header>
+
+  <div class="dhikr-picker" id="dhikrPicker"></div>
+
+  <div class="current-dhikr">
+    <div class="cd-header">
+      <h3 id="dhikrTitle">سبحان الله</h3>
+      <button class="cd-edit" id="editCurrentBtn">✎</button>
+    </div>
+    <p id="dhikrText">سُبْحَانَ اللهِ</p>
+  </div>
+
+  <div class="counter-wrap">
+    <svg class="ring-svg" viewBox="0 0 280 280">
+      <defs>
+        <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#E4B94C"/>
+          <stop offset="50%" stop-color="#C9A227"/>
+          <stop offset="100%" stop-color="#A8871D"/>
+        </linearGradient>
+        <linearGradient id="ringGradDone" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#2C6B54"/>
+          <stop offset="100%" stop-color="#1F4E3D"/>
+        </linearGradient>
+      </defs>
+      <circle cx="140" cy="140" r="105" class="ring-bg"/>
+      <circle cx="140" cy="140" r="105" class="ring-fg" id="ringFg"/>
+      <g class="beads-group" id="beadsGroup"></g>
+    </svg>
+
+    <div class="counter-core">
+      <span class="counter-num" id="counter">0</span>
+      <span class="counter-target" id="target">/ 33</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="resetBtn"><span class="ctrl-ico">↺</span><span>تصفير</span></button>
+    <button class="tap-btn" id="tapBtn"><span class="tap-pulse"></span><span class="tap-txt">سبّح</span></button>
+    <button class="ctrl-btn" id="vibrateBtn"><span class="ctrl-ico" id="vibIco">📳</span><span>اهتزاز</span></button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><span class="stat-lbl">اليوم</span><span class="stat-val" id="todayTotal">0</span></div>
+    <div class="stat"><span class="stat-lbl">الدورات</span><span class="stat-val" id="cycles">0</span></div>
+    <div class="stat"><span class="stat-lbl">الإجمالي</span><span class="stat-val" id="allTotal">0</span></div>
+  </div>
+
+  <div class="goal-card">
+    <div class="goal-head"><span>🎯 هدف اليوم</span><span id="goalValue">100</span></div>
+    <div class="goal-bar"><span id="goalFill" style="width:0%"></span></div>
+    <p class="goal-note" id="goalNote">أكمل 100 تسبيحة اليوم</p>
+  </div>
+</div>
+
+<div class="tasbih-modal-backdrop" id="modalBackdrop"></div>
+<div class="tasbih-modal" id="editModal">
+  <div class="tm-head">
+    <h3 id="modalTitle">إضافة ذكر جديد</h3>
+    <button class="tm-close" id="modalClose">✕</button>
+  </div>
+  <div class="tm-body">
+    <label class="tm-field"><span>📌 العنوان</span><input type="text" id="editTitle" placeholder="مثال: سبحان الله" maxlength="40"></label>
+    <label class="tm-field"><span>📝 النص الكامل</span><textarea id="editText" rows="3" placeholder="اكتب نص الذكر كاملاً..."></textarea></label>
+    <label class="tm-field"><span>🔢 عدد التسبيحات</span><input type="number" id="editCount" min="1" max="1000" value="33"></label>
+    <p class="tm-hint" id="modalCounter">عدد الأذكار: ٠ / ٢٠</p>
+  </div>
+  <div class="tm-foot">
+    <button class="tm-btn danger" id="modalDelete" style="display:none;">🗑️ حذف</button>
+    <button class="tm-btn cancel" id="modalCancel">إلغاء</button>
+    <button class="tm-btn save" id="modalSave">💾 حفظ</button>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/navbar.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/tasbih.js"></script>
+<script src="assets/js/seo.js"></script>
+</body>
+</html>

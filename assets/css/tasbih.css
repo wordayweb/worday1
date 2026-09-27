@@ -1,0 +1,657 @@
+/* ============ المسبحة الإلكترونية ============ */
+
+.tasbih-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 110px;
+  overflow-x: hidden;
+}
+
+/* ===== شرائح اختيار الذكر ===== */
+.dhikr-picker {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px 0 14px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.dhikr-picker::-webkit-scrollbar { display: none; }
+
+.dhikr-chip {
+  flex: 0 0 auto;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .22s ease;
+}
+.dhikr-chip:hover { border-color: var(--green); }
+.dhikr-chip.active {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+  box-shadow: 0 6px 14px rgba(31, 78, 61, .25);
+}
+.dhikr-chip.add {
+  background: linear-gradient(160deg, var(--gold-light), var(--gold));
+  color: #fff;
+  border-color: var(--gold);
+  font-weight: 800;
+  padding: 9px 18px;
+  font-size: 16px;
+}
+.dhikr-chip.add:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(201, 162, 39, .35);
+}
+
+/* ===== نص الذكر الحالي ===== */
+.current-dhikr {
+  text-align: center;
+  padding: 16px 16px 4px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cd-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  max-width: 100%;
+}
+.cd-header h3 {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: .3px;
+}
+.cd-edit {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--green);
+  font-size: 14px;
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: all .2s;
+  flex: 0 0 auto;
+}
+.cd-edit:hover {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.current-dhikr p {
+  font-family: 'Amiri', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.9;
+  transition: opacity .3s, transform .3s;
+  max-height: 120px;
+  overflow-y: auto;
+  padding: 4px 10px;
+  max-width: 600px;
+  scrollbar-width: thin;
+}
+.current-dhikr p::-webkit-scrollbar { width: 4px; }
+.current-dhikr p::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+.current-dhikr p.changing { opacity: 0; transform: translateY(-6px); }
+
+/* ===== العداد الدائري (مسبحة) ===== */
+.counter-wrap {
+  position: relative;
+  width: clamp(240px, 62vw, 300px);
+  height: clamp(240px, 62vw, 300px);
+  margin: 12px auto 12px;
+  display: grid;
+  place-items: center;
+}
+
+.ring-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 10px 24px rgba(201, 162, 39, .12));
+}
+
+.ring-bg { fill: none; stroke: var(--line); stroke-width: 6; opacity: .6; }
+
+.ring-fg {
+  fill: none;
+  stroke: url(#ringGrad);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 660;
+  stroke-dashoffset: 660;
+  transition: stroke-dashoffset .45s cubic-bezier(.4, 0, .2, 1);
+  filter: drop-shadow(0 0 6px rgba(201, 162, 39, .5));
+}
+.ring-fg.complete {
+  stroke: url(#ringGradDone);
+  filter: drop-shadow(0 0 10px rgba(31, 78, 61, .6));
+}
+
+.bead {
+  fill: var(--cream-2);
+  stroke: var(--line);
+  stroke-width: 1.5;
+  transition: all .3s cubic-bezier(.4, 1.4, .5, 1);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.bead.filled {
+  fill: url(#ringGrad);
+  stroke: var(--gold-light);
+  filter: drop-shadow(0 0 4px rgba(201, 162, 39, .8));
+  animation: beadPop .4s ease;
+}
+.bead.current {
+  fill: var(--green);
+  stroke: var(--green-2);
+  stroke-width: 1.8;
+  filter: drop-shadow(0 0 6px rgba(31, 78, 61, .6));
+  animation: beadCurrent 1.4s ease-in-out infinite;
+}
+@keyframes beadPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.6); }
+  100% { transform: scale(1); }
+}
+@keyframes beadCurrent {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.35); opacity: .85; }
+}
+.ring-svg.complete .bead {
+  fill: url(#ringGrad);
+  stroke: var(--gold-light);
+  filter: drop-shadow(0 0 8px rgba(201, 162, 39, .9));
+  animation: beadWave 1.5s ease-in-out infinite;
+}
+@keyframes beadWave {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .6; }
+}
+
+.counter-core {
+  position: relative;
+  z-index: 1;
+  width: 74%; height: 74%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #FFFFFF 0%, #FBF8F1 45%, #F5F1E8 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(201, 162, 39, .18),
+    inset 0 -3px 12px rgba(201, 162, 39, .06),
+    0 12px 32px rgba(31, 78, 61, .1),
+    0 0 0 10px rgba(255, 255, 255, .55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all .3s;
+}
+.counter-num {
+  font-family: 'Tajawal', sans-serif;
+  font-size: clamp(58px, 16vw, 76px);
+  font-weight: 800;
+  color: var(--green);
+  line-height: 1;
+  transition: transform .15s ease-out, color .3s;
+  font-variant-numeric: tabular-nums;
+}
+.counter-num.pop { transform: scale(1.15); color: var(--gold); }
+.counter-target {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--ink-soft);
+  margin-top: 8px;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+.ring-svg.complete + .counter-core {
+  box-shadow:
+    inset 0 0 0 1px rgba(201, 162, 39, .35),
+    inset 0 -3px 12px rgba(201, 162, 39, .12),
+    0 12px 32px rgba(31, 78, 61, .18),
+    0 0 0 10px rgba(201, 162, 39, .12);
+}
+.ring-svg.complete + .counter-core .counter-num { color: var(--gold); }
+
+/* ===== أزرار التحكم ===== */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  padding: 12px 20px 4px;
+}
+.ctrl-btn {
+  background: transparent;
+  border: none;
+  color: var(--green);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: .75;
+  transition: opacity .2s, transform .2s;
+}
+.ctrl-btn:hover { opacity: 1; }
+.ctrl-btn:active { transform: scale(.94); }
+.ctrl-ico {
+  font-size: 22px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  display: grid; place-items: center;
+}
+.ctrl-btn.off .ctrl-ico { opacity: .45; }
+
+.tap-btn {
+  position: relative;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  box-shadow:
+    0 12px 26px rgba(31, 78, 61, .35),
+    inset 0 -4px 8px rgba(0, 0, 0, .15),
+    inset 0 4px 8px rgba(255, 255, 255, .15);
+  transition: transform .08s ease, box-shadow .2s;
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+.tap-btn:active {
+  transform: scale(.94);
+  box-shadow:
+    0 6px 14px rgba(31, 78, 61, .35),
+    inset 0 -2px 6px rgba(0, 0, 0, .18);
+}
+.tap-btn .tap-txt { position: relative; z-index: 2; letter-spacing: .5px; }
+.tap-btn .tap-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.35) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+.tap-btn.pulse .tap-pulse { animation: tapPulse .5s ease-out; }
+@keyframes tapPulse {
+  0%   { opacity: .9; transform: scale(.6); }
+  100% { opacity: 0;  transform: scale(1.4); }
+}
+
+/* ===== الإحصائيات ===== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 22px 0 12px;
+}
+.stat {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 12px 6px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.stat-lbl { display: block; font-size: 12px; color: var(--ink-soft); font-weight: 600; margin-bottom: 4px; }
+.stat-val { display: block; font-size: 20px; font-weight: 800; color: var(--green); }
+
+/* ===== بطاقة الهدف ===== */
+.goal-card {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.goal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.goal-head span:last-child { color: var(--gold); }
+.goal-bar { height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.goal-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--green-2));
+  border-radius: 999px;
+  transition: width .5s ease;
+}
+.goal-note {
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* ============ نافذة التعديل/الإضافة ============ */
+.tasbih-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+  z-index: 100;
+}
+.tasbih-modal-backdrop.open { opacity: 1; pointer-events: auto; }
+
+.tasbih-modal {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: 24px 24px 0 0;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+  z-index: 110;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, .2);
+}
+.tasbih-modal.open { transform: translateY(0); }
+
+.tm-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+  flex: 0 0 auto;
+}
+.tm-head h3 { font-family: 'Amiri', serif; color: var(--green); font-size: 20px; font-weight: 700; }
+.tm-close {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--cream-2);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+}
+.tm-close:hover { background: var(--line); }
+
+.tm-body { padding: 18px 20px; overflow-y: auto; flex: 1; }
+.tm-field { display: block; margin-bottom: 14px; }
+.tm-field > span {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.tm-field input,
+.tm-field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--cream-2);
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s;
+  resize: vertical;
+}
+.tm-field textarea {
+  font-family: 'Amiri', serif;
+  font-size: 17px;
+  line-height: 1.9;
+  min-height: 70px;
+}
+.tm-field input:focus,
+.tm-field textarea:focus { border-color: var(--green); background: var(--white); }
+.tm-hint { font-size: 12px; color: var(--ink-soft); text-align: center; padding-top: 6px; }
+
+.tm-foot {
+  display: flex;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--line);
+  flex: 0 0 auto;
+}
+.tm-btn {
+  flex: 1;
+  padding: 13px;
+  border-radius: 12px;
+  border: none;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.tm-btn.cancel { background: var(--cream-2); color: var(--ink); }
+.tm-btn.save {
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(31, 78, 61, .25);
+}
+.tm-btn.danger { flex: 0 0 auto; padding: 13px 16px; background: #FDECEC; color: #B33A3A; }
+.tm-btn:hover { opacity: .92; }
+
+/* ===== الوضع الليلي ===== */
+body.dark .counter-core { background: radial-gradient(circle at 32% 28%, #22312B 0%, #1A241F 50%, #16211C 100%); }
+body.dark .bead { fill: rgba(255,255,255,.05); stroke: rgba(255,255,255,.1); }
+body.dark .tap-btn {
+  box-shadow: 0 12px 26px rgba(0,0,0,.4), inset 0 -4px 8px rgba(0,0,0,.3), inset 0 4px 8px rgba(255,255,255,.06);
+}
+body.dark .tasbih-modal { background: var(--white); }
+body.dark .tm-close { background: rgba(255,255,255,.05); }
+body.dark .tm-field input,
+body.dark .tm-field textarea { background: rgba(255,255,255,.04); }
+
+/* ============================================================
+   استجابة المسبحة
+   ============================================================ */
+
+/* 📱 صغير جداً (320-359) */
+@media (max-width: 359px) {
+  .counter-wrap { width: clamp(180px, 65vw, 220px); height: clamp(180px, 65vw, 220px); }
+  .counter-num { font-size: clamp(42px, 14vw, 54px); }
+  .counter-target { font-size: 12px; margin-top: 5px; }
+  .tap-btn { width: 72px; height: 72px; font-size: 14px; }
+  .ctrl-ico { width: 36px; height: 36px; font-size: 16px; }
+  .ctrl-btn { font-size: 10px; }
+  .controls { gap: 14px; padding: 8px 8px 4px; }
+  .stats { gap: 5px; margin: 14px 0 8px; }
+  .stat { padding: 8px 3px; }
+  .stat-val { font-size: 15px; }
+  .stat-lbl { font-size: 10px; }
+  .dhikr-chip { padding: 6px 10px; font-size: 11px; }
+  .dhikr-chip.add { padding: 6px 14px; font-size: 14px; }
+  .current-dhikr { min-height: 70px; padding: 10px 10px 4px; }
+  .current-dhikr p { font-size: 17px; max-height: 90px; }
+  .cd-header h3 { font-size: 16px; }
+  .cd-edit { width: 24px; height: 24px; font-size: 12px; }
+  .goal-card { padding: 12px 14px; }
+  .goal-head { font-size: 13px; }
+  .goal-note { font-size: 11px; }
+}
+
+/* 📱 Galaxy S23, iPhone SE/mini (360-389) */
+@media (min-width: 360px) and (max-width: 389px) {
+  .counter-wrap { width: clamp(200px, 62vw, 260px); height: clamp(200px, 62vw, 260px); }
+  .counter-num { font-size: clamp(48px, 15vw, 62px); }
+  .counter-target { font-size: 13px; }
+  .tap-btn { width: 82px; height: 82px; font-size: 15px; }
+  .ctrl-ico { width: 38px; height: 38px; font-size: 18px; }
+  .ctrl-btn { font-size: 11px; }
+  .controls { gap: 18px; padding: 10px 12px 4px; }
+  .dhikr-chip { padding: 7px 12px; font-size: 12px; }
+  .current-dhikr p { font-size: 19px; }
+  .cd-header h3 { font-size: 18px; }
+}
+
+/* 📱 iPhone 12-15 (390-411) */
+@media (min-width: 390px) and (max-width: 411px) {
+  .counter-wrap { width: clamp(220px, 60vw, 280px); height: clamp(220px, 60vw, 280px); }
+  .counter-num { font-size: clamp(52px, 15vw, 68px); }
+  .tap-btn { width: 88px; height: 88px; font-size: 16px; }
+  .ctrl-ico { width: 40px; height: 40px; font-size: 19px; }
+  .controls { gap: 22px; padding: 11px 14px 4px; }
+  .current-dhikr p { font-size: 21px; }
+}
+
+/* 📱 iPhone Plus/Max, Samsung S24 (412-479) */
+@media (min-width: 412px) and (max-width: 479px) {
+  .counter-wrap { width: clamp(240px, 58vw, 300px); height: clamp(240px, 58vw, 300px); }
+  .counter-num { font-size: clamp(58px, 15vw, 72px); }
+  .counter-target { font-size: 15px; }
+  .tap-btn { width: 94px; height: 94px; font-size: 17px; }
+  .ctrl-ico { width: 44px; height: 44px; font-size: 21px; }
+  .controls { gap: 26px; padding: 12px 16px 4px; }
+  .current-dhikr p { font-size: 23px; }
+}
+
+/* 📱 جوال كبير (480-767) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .counter-wrap { width: clamp(260px, 50vw, 340px); height: clamp(260px, 50vw, 340px); }
+  .counter-num { font-size: clamp(64px, 14vw, 84px); }
+  .counter-target { font-size: 16px; }
+  .tap-btn { width: 100px; height: 100px; font-size: 18px; }
+  .ctrl-ico { width: 46px; height: 46px; font-size: 22px; }
+  .controls { gap: 30px; padding: 14px 20px 5px; }
+  .current-dhikr p { font-size: 25px; }
+  .cd-header h3 { font-size: 23px; }
+  .dhikr-chip { padding: 9px 16px; font-size: 13.5px; }
+}
+
+/* 📱 iPad mini (768-819) */
+@media (min-width: 768px) and (max-width: 819px) {
+  .counter-wrap { width: 340px; height: 340px; }
+  .counter-num { font-size: 88px; }
+  .counter-target { font-size: 18px; }
+  .tap-btn { width: 106px; height: 106px; font-size: 19px; }
+  .ctrl-ico { width: 50px; height: 50px; font-size: 24px; }
+  .controls { gap: 34px; padding: 16px 20px 6px; }
+  .current-dhikr p { font-size: 26px; max-height: 140px; }
+  .cd-header h3 { font-size: 24px; }
+  .dhikr-chip { padding: 10px 18px; font-size: 14px; }
+  .stats { max-width: 720px; margin: 24px auto 12px; }
+  .goal-card { max-width: 720px; margin: 0 auto; }
+  .dhikr-picker { justify-content: center; }
+  .controls { justify-content: center; }
+}
+
+/* 📱 iPad Air (820-1023) */
+@media (min-width: 820px) and (max-width: 1023px) {
+  .counter-wrap { width: 360px; height: 360px; }
+  .counter-num { font-size: 94px; }
+  .counter-target { font-size: 19px; }
+  .tap-btn { width: 112px; height: 112px; font-size: 20px; }
+  .ctrl-ico { width: 52px; height: 52px; font-size: 25px; }
+  .controls { gap: 38px; padding: 18px 20px 6px; }
+  .current-dhikr p { font-size: 27px; }
+  .cd-header h3 { font-size: 25px; }
+  .stats { max-width: 780px; margin: 24px auto 12px; }
+  .goal-card { max-width: 780px; margin: 0 auto; }
+  .dhikr-picker { justify-content: center; }
+}
+
+/* 💻 iPad Pro / لابتوب (1024-1279) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .counter-wrap { width: 380px; height: 380px; }
+  .counter-num { font-size: 100px; }
+  .counter-target { font-size: 20px; }
+  .tap-btn { width: 120px; height: 120px; font-size: 22px; }
+  .ctrl-ico { width: 54px; height: 54px; font-size: 26px; }
+  .controls { gap: 44px; padding: 20px 20px 8px; }
+  .current-dhikr p { font-size: 28px; }
+  .cd-header h3 { font-size: 26px; }
+  .stats { max-width: 700px; margin: 24px auto 12px; }
+  .goal-card { max-width: 700px; margin: 0 auto; }
+  .dhikr-picker { justify-content: center; }
+  .controls { justify-content: center; }
+}
+
+/* 💻 لابتوب (1280-1439) */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .counter-wrap { width: 400px; height: 400px; }
+  .counter-num { font-size: 105px; }
+  .tap-btn { width: 126px; height: 126px; font-size: 23px; }
+  .ctrl-ico { width: 56px; height: 56px; font-size: 27px; }
+  .controls { gap: 48px; }
+  .stats { max-width: 750px; margin: 26px auto 12px; }
+  .goal-card { max-width: 750px; margin: 0 auto; }
+  .dhikr-picker { justify-content: center; }
+  .controls { justify-content: center; }
+}
+
+/* 🖥️ سطح مكتب (1440-1919) */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .counter-wrap { width: 420px; height: 420px; }
+  .counter-num { font-size: 110px; }
+  .tap-btn { width: 132px; height: 132px; font-size: 24px; }
+  .ctrl-ico { width: 58px; height: 58px; font-size: 28px; }
+  .controls { gap: 52px; }
+  .stats { max-width: 800px; margin: 28px auto 14px; }
+  .goal-card { max-width: 800px; margin: 0 auto; }
+  .dhikr-picker { justify-content: center; }
+  .controls { justify-content: center; }
+}
+
+/* 🖥️ شاشة كبيرة (1920+) */
+@media (min-width: 1920px) {
+  .counter-wrap { width: 440px; height: 440px; }
+  .counter-num { font-size: 116px; }
+  .tap-btn { width: 140px; height: 140px; font-size: 26px; }
+  .ctrl-ico { width: 62px; height: 62px; font-size: 30px; }
+  .controls { gap: 56px; }
+  .stats { max-width: 850px; margin: 30px auto 14px; }
+  .goal-card { max-width: 850px; margin: 0 auto; }
+  .dhikr-picker { justify-content: center; }
+  .controls { justify-content: center; }
+}
+
+/* 📱 شاشات أفقية قصيرة (Landscape) */
+@media (max-height: 600px) and (orientation: landscape) {
+  .counter-wrap { width: 200px; height: 200px; margin: 8px auto; }
+  .counter-num { font-size: 50px; }
+  .counter-target { font-size: 13px; }
+  .tap-btn { width: 72px; height: 72px; font-size: 14px; }
+  .ctrl-ico { width: 40px; height: 40px; font-size: 18px; }
+  .controls { gap: 20px; padding: 6px 12px 2px; }
+  .current-dhikr { min-height: 60px; padding: 8px 12px; }
+  .current-dhikr p { font-size: 18px; max-height: 80px; }
+  .stats { margin: 10px 0 6px; }
+  .goal-card { padding: 10px 14px; }
+  .dhikr-picker { padding: 4px 0 8px; }
+}

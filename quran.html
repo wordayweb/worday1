@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1F4E3D" />
+<title>القرآن الكريم — وِرْدِي</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="stylesheet" href="assets/css/quran.css" />
+</head>
+<body>
+
+<div class="app">
+  <div data-header-target></div>
+
+  <header class="athkar-header">
+    <button class="nav-btn" onclick="history.back()">↪</button>
+    <h2>القرآن الكريم</h2>
+    <button class="nav-btn" id="bookmarksBtn">🔖</button>
+  </header>
+
+  <section class="continue-card" id="continueCard" style="display:none;">
+    <div class="cc-info">
+      <span class="cc-ico">📖</span>
+      <div>
+        <p class="cc-lbl">واصل القراءة</p>
+        <p class="cc-val" id="ccValue">—</p>
+      </div>
+    </div>
+    <button class="cc-btn" id="continueBtn">متابعة</button>
+  </section>
+
+  <div class="search-box">
+    <span class="s-ico">🔍</span>
+    <input type="text" id="searchInput" placeholder="ابحث عن سورة…" autocomplete="off" />
+    <button class="s-clear" id="clearSearch" style="display:none;">✕</button>
+  </div>
+
+  <div class="filter-tabs">
+    <button class="ft active" data-filter="all">الكل</button>
+    <button class="ft" data-filter="Meccan">مكية</button>
+    <button class="ft" data-filter="Medinan">مدنية</button>
+  </div>
+
+  <div class="surah-list" id="surahList">
+    <div class="loading">⏳ جارٍ تحميل السور…</div>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/navbar.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/quran.js"></script>
+<script src="assets/js/seo.js"></script>
+</body>
+</html>

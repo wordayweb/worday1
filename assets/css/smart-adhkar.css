@@ -1,0 +1,281 @@
+/* ============ الأذكار الذكية — بطاقة Hero المتغيرة ============ */
+
+#smartHero {
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+  border-radius: var(--radius);
+  padding: 22px 22px 20px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(31, 78, 61, .28);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 14px;
+  transition: all .5s ease;
+}
+
+/* الصباح — ذهبي دافئ */
+#smartHero[data-period="morning"] {
+  background: linear-gradient(160deg, #E4B94C 0%, #C9A227 55%, #A8871D 100%);
+  box-shadow: 0 12px 32px rgba(201, 162, 39, .38);
+}
+
+/* المساء — أزرق داكن */
+#smartHero[data-period="evening"] {
+  background: linear-gradient(160deg, #2C4A6B 0%, #1F3A52 60%, #16293A 100%);
+  box-shadow: 0 12px 32px rgba(31, 58, 82, .42);
+}
+
+#smartHero::before {
+  content: '';
+  position: absolute;
+  top: -70px; left: -70px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(255,255,255,.16), transparent 70%);
+  pointer-events: none;
+  animation: heroGlow 6s ease-in-out infinite;
+}
+@keyframes heroGlow {
+  0%, 100% { transform: scale(1); opacity: .8; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+
+/* ===== القسم العلوي ===== */
+.hero-top {
+  position: relative;
+}
+.hero-icon {
+  font-size: 40px;
+  margin-bottom: 2px;
+  animation: heroFloat 3s ease-in-out infinite;
+  display: inline-block;
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+.hero-title {
+  font-family: 'Amiri', serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  margin: 2px 0;
+}
+.hero-sub {
+  font-size: 14px;
+  opacity: .9;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* ===== سطر الوقت ===== */
+.hero-time {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 14px 0 12px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,.2);
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  font-size: 13px;
+  font-weight: 700;
+  position: relative;
+}
+.hero-time span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.hero-time .time-hint {
+  opacity: .9;
+}
+
+/* ===== قسم الأذكار ===== */
+.hero-adhkar {
+  background: rgba(255, 255, 255, .12);
+  border-radius: 14px;
+  padding: 10px 10px 6px;
+  margin-bottom: 14px;
+  position: relative;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  max-height: 420px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.3) transparent;
+}
+
+.hero-adhkar::-webkit-scrollbar {
+  width: 4px;
+}
+.hero-adhkar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.hero-adhkar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.3);
+  border-radius: 4px;
+}
+.hero-adhkar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,.5);
+}
+
+.hero-adhkar-head {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, .08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: .9;
+  margin: -10px -10px 8px;
+  padding: 8px 14px;
+  border-radius: 14px 14px 0 0;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+/* ===== عنصر ذكر ===== */
+.hero-adhkar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 6px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  transition: background .2s;
+  cursor: pointer;
+}
+.hero-adhkar-item:hover {
+  background: rgba(255, 255, 255, .1);
+}
+.hero-adhkar-item:nth-child(even) {
+  background: rgba(255, 255, 255, .04);
+}
+.hero-adhkar-item:not(:last-child) {
+  border-bottom: 1px dashed rgba(255,255,255,.1);
+}
+
+.ha-num {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .22);
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+}
+.hero-adhkar-item:first-child .ha-num {
+  background: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201, 162, 39, .35);
+}
+
+.ha-text {
+  flex: 1;
+  font-family: 'Amiri', serif;
+  font-size: 13.5px;
+  line-height: 1.5;
+  text-align: right;
+  color: #fff;
+  opacity: .97;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.ha-count {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .2);
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #fff;
+  direction: rtl;
+}
+
+/* ===== زر CTA ===== */
+.hero-cta {
+  display: inline-block;
+  background: #fff;
+  color: var(--green);
+  padding: 11px 30px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 14.5px;
+  text-decoration: none;
+  transition: all .22s;
+  box-shadow: 0 8px 20px rgba(0,0,0,.18);
+  position: relative;
+}
+#smartHero[data-period="morning"] .hero-cta { color: #A07810; }
+#smartHero[data-period="evening"] .hero-cta { color: #1F3A52; }
+.hero-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.25);
+}
+
+/* ===== تمييز الشرائح ===== */
+.chip[data-period] {
+  position: relative;
+  transition: all .3s;
+}
+.chip.active-period {
+  background: linear-gradient(160deg, #E4B94C, #C9A227);
+  color: #fff;
+  border-color: #C9A227;
+  font-weight: 700;
+  animation: chipPulse 2.4s ease-in-out infinite;
+}
+@keyframes chipPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, .55); }
+  50%      { box-shadow: 0 0 0 10px rgba(201, 162, 39, 0); }
+}
+
+.chip[data-period="evening"].active-period {
+  background: linear-gradient(160deg, #2C4A6B, #1F3A52);
+  border-color: #1F3A52;
+  animation: chipPulseBlue 2.4s ease-in-out infinite;
+}
+@keyframes chipPulseBlue {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(31, 58, 82, .55); }
+  50%      { box-shadow: 0 0 0 10px rgba(31, 58, 82, 0); }
+}
+
+/* ===== تمييز بطاقات الأقسام ===== */
+.sec-card[data-period].active-period {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+  transform: translateY(-4px);
+}
+.sec-card[data-period="evening"].active-period {
+  outline-color: #2C4A6B;
+}
+
+/* ===== استجابة للشاشات الكبيرة ===== */
+@media (min-width: 768px) {
+  .hero-adhkar-item {
+    padding: 8px 8px;
+  }
+  .ha-text {
+    font-size: 14.5px;
+  }
+  .hero-adhkar {
+    max-height: 480px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-adhkar {
+    max-height: 520px;
+  }
+}

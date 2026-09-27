@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>لوحة تحكم وِرْدِي</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/admin.css" />
+</head>
+<body>
+
+<div class="app admin-app">
+  <div data-header-target></div>
+
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <div class="login-logo">🔐</div>
+      <h2>لوحة تحكم وِرْدِي</h2>
+      <p class="login-hint">أدخل رمز الوصول لإدارة الأذكار</p>
+      <input type="password" id="adminPin" placeholder="الرمز السري" autocomplete="off" />
+      <button id="loginBtn">دخول</button>
+      <p class="login-error" id="loginError"></p>
+      <p class="login-note">💡 الرمز الافتراضي: <strong>1234</strong></p>
+    </div>
+  </div>
+
+  <div class="admin-panel" id="adminPanel" style="display:none;">
+    <header class="admin-header">
+      <button class="nav-btn" onclick="location.href='more.html'">↪</button>
+      <h2>لوحة التحكم</h2>
+      <button class="nav-btn" id="logoutBtn" title="خروج">🚪</button>
+    </header>
+
+    <div class="stats-strip">
+      <div class="stat-box"><span class="stat-num" id="statMorning">0</span><span class="stat-lbl">الصباح</span></div>
+      <div class="stat-box"><span class="stat-num" id="statEvening">0</span><span class="stat-lbl">المساء</span></div>
+      <div class="stat-box"><span class="stat-num" id="statHearts">0</span><span class="stat-lbl">زاد القلوب</span></div>
+      <div class="stat-box"><span class="stat-num" id="statSleep">0</span><span class="stat-lbl">النوم</span></div>
+    </div>
+
+    <nav class="tabs">
+      <button class="tab active" data-cat="morning">🌅 أذكار الصباح</button>
+      <button class="tab" data-cat="evening">🌆 أذكار المساء</button>
+      <button class="tab" data-cat="hearts">💚 زاد القلوب</button>
+      <button class="tab" data-cat="sleep">🌙 أذكار النوم</button>
+    </nav>
+
+    <div class="action-bar">
+      <button class="action-btn primary" id="addThikrBtn">➕ إضافة ذكر جديد</button>
+      <button class="action-btn" id="importBtn">📥 استيراد</button>
+      <button class="action-btn" id="exportBtn">📤 تصدير</button>
+      <button class="action-btn danger" id="resetBtn">🗑️ إعادة تعيين</button>
+    </div>
+    <input type="file" id="importFile" accept=".json" hidden />
+
+    <div class="thikr-list" id="thikrList"></div>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal" id="editModal">
+    <div class="modal-head">
+      <h3 id="modalTitle">إضافة ذكر جديد</h3>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="field"><span>النص</span><textarea id="editText" rows="4" placeholder="اكتب نص الذكر هنا..."></textarea></label>
+      <div class="field-row">
+        <label class="field"><span>عدد التكرارات</span><input type="number" id="editCount" min="1" value="1" /></label>
+        <label class="field"><span>الترتيب</span><input type="number" id="editOrder" min="1" value="1" /></label>
+      </div>
+      <label class="field"><span>الفضل / الملاحظة (اختياري)</span><textarea id="editFadl" rows="2"></textarea></label>
+      <label class="field"><span>التصنيف</span>
+        <select id="editCategory">
+          <option value="morning">أذكار الصباح</option>
+          <option value="evening">أذكار المساء</option>
+          <option value="hearts">زاد القلوب</option>
+          <option value="sleep">أذكار النوم</option>
+        </select>
+      </label>
+    </div>
+    <div class="modal-foot">
+      <button class="modal-btn cancel" id="modalCancel">إلغاء</button>
+      <button class="modal-btn save" id="modalSave">حفظ</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

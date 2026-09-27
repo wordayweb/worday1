@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1F4E3D" />
+<meta name="description" content="موقع وِرْدِي: أذكار الصباح والمساء، القرآن الكريم بمصحف المدينة، مواقيت الصلاة، التسبيح، وِرْدِي الأمين." />
+<meta name="keywords" content="أذكار, أذكار الصباح, أذكار المساء, ورد يومي, القرآن الكريم, تسبيح, مواقيت الصلاة" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="وِرْدِي — رفيقك اليومي لذكر الله" />
+<meta property="og:description" content="أذكار، قرآن، مواقيت صلاة، تسابيح — في تطبيق واحد." />
+<title>وِرْدِي — رفيقك اليومي لذكر الله</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="stylesheet" href="assets/css/smart-adhkar.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <div data-header-target></div>
+
+  <section id="smartHero" class="fade-in"></section>
+
+  <section class="card resume fade-in">
+    <button class="btn-play" onclick="location.href='quran.html'">
+      <span class="tri"></span> انتقال
+    </button>
+    <div class="info">
+      <div class="lbl">واصل القراءة</div>
+      <div class="val" id="lastRead">سورة الجن — آية ٢٢</div>
+    </div>
+    <div class="thumb">📖</div>
+  </section>
+
+  <section class="card fade-in">
+    <div class="tracker-head">
+      <div class="progress-ring" id="progressRing">
+        <span id="progressTxt">٠٪</span>
+      </div>
+      <div class="headline">
+        <h3 id="dayGreeting">🌙 ليلة هادئة بذكر الله</h3>
+        <p>🔥 أنت ملتزم لليوم الـ <span id="streak">١</span> على التوالي</p>
+      </div>
+    </div>
+
+    <div class="tasks" id="tasks">
+      <label class="task"><span>الفجر</span><input type="checkbox" data-k="fajr"></label>
+      <label class="task"><span>الصباح</span><input type="checkbox" data-k="morning"></label>
+      <label class="task"><span>الصلوات</span><input type="checkbox" data-k="prayers"></label>
+      <label class="task"><span>المساء</span><input type="checkbox" data-k="evening"></label>
+      <label class="task"><span>الورد</span><input type="checkbox" data-k="wird"></label>
+      <label class="task"><span>النوم</span><input type="checkbox" data-k="sleep"></label>
+    </div>
+
+    <hr>
+
+    <div class="goal-row" onclick="setGoal()">
+      <span class="plus">+</span>
+      <span class="txt" id="goalTxt">لم يتم تحديد هدف بعد</span>
+      <span class="sq"></span>
+    </div>
+  </section>
+
+  <section class="sections">
+    <a href="quran.html" class="sec-card fade-in">
+      <div class="bg" style="background:linear-gradient(160deg,#4a6b52,#1a2b22);"></div>
+      <div class="overlay"><h4>📖 القرآن الكريم</h4><div class="underline"></div></div>
+    </a>
+    <a href="amin.html" class="sec-card fade-in">
+      <div class="bg" style="background:linear-gradient(160deg,#6b5b3a,#2a1f10);"></div>
+      <div class="overlay"><h4>👑 وِرْدِي الأمين</h4><div class="underline"></div></div>
+    </a>
+    <a href="athkar-morning.html" class="sec-card fade-in" data-period="morning">
+      <div class="bg" style="background:linear-gradient(160deg,#E4B94C,#A8871D);"></div>
+      <div class="overlay"><h4>🌅 أذكار الصباح</h4><div class="underline"></div></div>
+    </a>
+    <a href="athkar-evening.html" class="sec-card fade-in" data-period="evening">
+      <div class="bg" style="background:linear-gradient(160deg,#2C4A6B,#16293A);"></div>
+      <div class="overlay"><h4>🌆 أذكار المساء</h4><div class="underline"></div></div>
+    </a>
+    <a href="prayer.html" class="sec-card fade-in">
+      <div class="bg" style="background:linear-gradient(160deg,#3a5c4a,#132019);"></div>
+      <div class="overlay"><h4>🕌 مواقيت الصلاة</h4><div class="underline"></div></div>
+    </a>
+    <a href="tasbih.html" class="sec-card fade-in">
+      <div class="bg" style="background:linear-gradient(160deg,#3e6b58,#0f1c16);"></div>
+      <div class="overlay"><h4>📿 التسبيح</h4><div class="underline"></div></div>
+    </a>
+    <a href="calendar.html" class="sec-card fade-in">
+      <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
+      <div class="overlay"><h4>📅 التقويم</h4><div class="underline"></div></div>
+    </a>
+    <a href="zakat.html" class="sec-card fade-in">
+      <div class="bg" style="background:linear-gradient(160deg,#7a4a2c,#2a1408);"></div>
+      <div class="overlay"><h4>💰 حساب الزكاة</h4><div class="underline"></div></div>
+    </a>
+  </section>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/navbar.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/smart-adhkar.js"></script>
+<script src="assets/js/seo.js"></script>
+</body>
+</html>

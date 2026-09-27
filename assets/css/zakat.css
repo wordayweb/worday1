@@ -1,0 +1,204 @@
+/* ============ حساب الزكاة ============ */
+
+.zakat-intro {
+  margin: 0 0 12px;
+  padding: 14px 16px;
+  background: var(--green-light);
+  border-radius: var(--radius-sm);
+  color: var(--green);
+  font-size: 13.5px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.zakat-section {
+  margin: 0 0 18px;
+}
+.zs-title {
+  font-family: 'Amiri', serif;
+  font-size: 17px;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding-right: 8px;
+  position: relative;
+}
+.zs-title::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 3px; height: 16px;
+  background: var(--gold);
+  border-radius: 2px;
+  transform: translateY(-50%);
+}
+
+.zakat-item {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  box-shadow: var(--shadow-sm);
+}
+.zakat-item label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.zakat-row {
+  display: flex;
+  gap: 8px;
+}
+.zinput {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--cream-2);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--green);
+  text-align: left;
+  direction: ltr;
+  outline: none;
+  transition: border-color .2s;
+}
+.zinput.small { max-width: 40%; }
+.zinput:focus {
+  border-color: var(--green);
+  background: var(--white);
+}
+
+.nisaab-options {
+  display: flex;
+  gap: 8px;
+}
+.nisaab-options button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--cream-2);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: .2s;
+}
+.nisaab-options button.active {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.hint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+/* النتيجة */
+.zakat-result {
+  margin: 0 0 16px;
+  background: linear-gradient(160deg, #E8F0EA, #D7E7DD);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow-md);
+}
+.zr-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.zr-head > span:first-child {
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--green);
+}
+.zr-badge {
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--green);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+.zr-badge.no { background: #B33A3A; }
+
+.zr-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.zr-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--ink);
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, .6);
+  border-radius: 10px;
+  font-weight: 500;
+}
+.zr-row span:last-child {
+  font-weight: 800;
+  color: var(--green);
+  direction: ltr;
+}
+
+.zr-final {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: var(--green);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+.zr-final span {
+  font-size: 15px;
+  font-weight: 600;
+}
+.zr-final strong {
+  font-size: 22px;
+  font-weight: 900;
+  direction: ltr;
+}
+
+.zr-reset {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px dashed var(--green);
+  color: var(--green);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.zr-reset:hover { background: rgba(31, 78, 61, .05); }
+
+.zakat-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-soft);
+  padding: 0 24px 20px;
+  line-height: 1.7;
+}
+
+body.dark .zakat-result {
+  background: linear-gradient(160deg, #1C3229, #142621);
+}
+body.dark .zr-row {
+  background: rgba(0, 0, 0, .2);
+}

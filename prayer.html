@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1F4E3D" />
+<title>مواقيت الصلاة — وِرْدِي</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="stylesheet" href="assets/css/prayer.css" />
+</head>
+<body>
+
+<div class="app">
+  <div data-header-target></div>
+
+  <header class="athkar-header">
+    <button class="nav-btn" onclick="history.back()">↪</button>
+    <h2>مواقيت الصلاة</h2>
+    <button class="nav-btn" onclick="location.href='prayer-settings.html'">⚙️</button>
+  </header>
+
+  <section class="location-card">
+    <div class="loc-left">
+      <span class="loc-ico">📍</span>
+      <div>
+        <p class="loc-city" id="cityName">جارٍ التحديد…</p>
+        <p class="loc-detail" id="cityDetail">—</p>
+      </div>
+    </div>
+    <button class="loc-btn" id="changeLocation">تغيير</button>
+  </section>
+
+  <section class="next-prayer-card">
+    <div class="np-head"><span class="np-label">🕌 الصلاة القادمة</span></div>
+    <h3 class="np-name" id="nextPrayerName">—</h3>
+    <p class="np-time" id="nextPrayerTime">—</p>
+
+    <div class="countdown">
+      <div class="cd-box"><span class="cd-num" id="cdH">٠٠</span><span class="cd-lbl">ساعة</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-box"><span class="cd-num" id="cdM">٠٠</span><span class="cd-lbl">دقيقة</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-box"><span class="cd-num" id="cdS">٠٠</span><span class="cd-lbl">ثانية</span></div>
+    </div>
+  </section>
+
+  <section class="times-card">
+    <div class="times-head">
+      <h3>مواقيت اليوم</h3>
+      <span class="date-mini" id="timesDate">…</span>
+    </div>
+    <ul class="times-list" id="timesList"></ul>
+  </section>
+
+  <section class="qibla-card">
+    <div class="qibla-info">
+      <span class="qibla-ico">🕋</span>
+      <div>
+        <p class="qibla-title">اتجاه القبلة</p>
+        <p class="qibla-deg" id="qiblaDeg">—</p>
+      </div>
+    </div>
+    <button class="qibla-btn" id="openQibla">عرض البوصلة</button>
+  </section>
+
+  <section class="jumua-note" id="jumuaNote" style="display:none;">
+    <span>🕌</span>
+    <p>اليوم الجمعة — لا تنسَ صلاة الجمعة وقراءة سورة الكهف.</p>
+  </section>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/navbar.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/prayer.js"></script>
+<script src="assets/js/seo.js"></script>
+</body>
+</html>
