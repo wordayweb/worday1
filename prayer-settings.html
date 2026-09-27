@@ -5,11 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>إعدادات الصلاة — وِرْدِي</title>
 <link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="manifest" href="manifest.json" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/header.css" />
 <link rel="stylesheet" href="assets/css/prayer-settings.css" />
+<link rel="stylesheet" href="assets/css/pwa.css" />
+<link rel="stylesheet" href="assets/css/adhan.css" />
 </head>
 <body>
 
@@ -22,6 +25,146 @@
     <div style="width:42px"></div>
   </header>
 
+  <!-- ============================================
+       🔔 قسم الأذان
+       ============================================ -->
+  <section class="settings-group">
+
+    <!-- تنبيه إذن الإشعارات -->
+    <div class="adhan-permission-alert" id="permissionAlert">
+      <span class="apa-ico">🔔</span>
+      <span class="apa-txt">للحصول على تنبيهات الأذان، نحتاج إذن الإشعارات</span>
+      <button class="apa-btn" id="requestPermissionBtn">السماح</button>
+    </div>
+
+    <!-- تفعيل الأذان -->
+    <div class="settings-item">
+      <div class="item-info"><span class="ico">🕌</span><span>تشغيل الأذان تلقائيًا</span></div>
+      <label class="switch"><input type="checkbox" id="adhanEnabled" checked><span class="slider"></span></label>
+    </div>
+
+    <!-- المؤذن -->
+    <div class="adhan-settings-card">
+      <h4>🎵 المؤذن</h4>
+      <div class="adhan-prayer-row">
+        <div class="apr-info">
+          <span class="apr-ico">🎤</span>
+          <span>ناصر القطامي</span>
+        </div>
+        <span style="font-size:12px;color:var(--green);font-weight:700;">✓ المختار</span>
+      </div>
+      <button class="adhan-test-btn" id="testAdhanBtn">🔊 تجربة صوت الأذان</button>
+    </div>
+
+    <!-- الصلوات -->
+    <div class="adhan-settings-card">
+      <h4>🕌 الصلوات المشغَّلة</h4>
+
+      <div class="adhan-prayer-row">
+        <div class="apr-info">
+          <span class="apr-ico">🌄</span>
+          <div>
+            <div>الفجر</div>
+            <div class="apr-time" id="fajrTime">—</div>
+          </div>
+        </div>
+        <label class="switch"><input type="checkbox" data-prayer="Fajr" checked><span class="slider"></span></label>
+      </div>
+
+      <div class="adhan-prayer-row">
+        <div class="apr-info">
+          <span class="apr-ico">🌞</span>
+          <div>
+            <div>الظهر</div>
+            <div class="apr-time" id="dhuhrTime">—</div>
+          </div>
+        </div>
+        <label class="switch"><input type="checkbox" data-prayer="Dhuhr" checked><span class="slider"></span></label>
+      </div>
+
+      <div class="adhan-prayer-row">
+        <div class="apr-info">
+          <span class="apr-ico">🌤️</span>
+          <div>
+            <div>العصر</div>
+            <div class="apr-time" id="asrTime">—</div>
+          </div>
+        </div>
+        <label class="switch"><input type="checkbox" data-prayer="Asr" checked><span class="slider"></span></label>
+      </div>
+
+      <div class="adhan-prayer-row">
+        <div class="apr-info">
+          <span class="apr-ico">🌅</span>
+          <div>
+            <div>المغرب</div>
+            <div class="apr-time" id="maghribTime">—</div>
+          </div>
+        </div>
+        <label class="switch"><input type="checkbox" data-prayer="Maghrib" checked><span class="slider"></span></label>
+      </div>
+
+      <div class="adhan-prayer-row">
+        <div class="apr-info">
+          <span class="apr-ico">🌙</span>
+          <div>
+            <div>العشاء</div>
+            <div class="apr-time" id="ishaTime">—</div>
+          </div>
+        </div>
+        <label class="switch"><input type="checkbox" data-prayer="Isha" checked><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <!-- التنبيه المسبق -->
+    <div class="adhan-settings-card">
+      <h4>⏰ التنبيه المسبق</h4>
+
+      <div class="adhan-prayer-row">
+        <div class="apr-info">
+          <span class="apr-ico">🔔</span>
+          <span>تنبيه قبل الأذان</span>
+        </div>
+        <label class="switch"><input type="checkbox" id="preAlertEnabled" checked><span class="slider"></span></label>
+      </div>
+
+      <div class="adhan-volume-row">
+        <span class="avr-ico">⏱️</span>
+        <input type="range" id="preAlertMinutes" min="1" max="30" step="1" value="5">
+        <span class="avr-val" id="preAlertVal">٥ دقائق</span>
+      </div>
+    </div>
+
+    <!-- الصوت -->
+    <div class="adhan-settings-card">
+      <h4>🔊 إعدادات الصوت</h4>
+
+      <div class="adhan-volume-row">
+        <span class="avr-ico">🔉</span>
+        <input type="range" id="volumeRange" min="0" max="100" step="5" value="80">
+        <span class="avr-val" id="volumeVal">٨٠٪</span>
+      </div>
+
+      <div class="adhan-prayer-row">
+        <div class="apr-info">
+          <span class="apr-ico">📳</span>
+          <span>الاهتزاز عند الأذان</span>
+        </div>
+        <label class="switch"><input type="checkbox" id="vibrateEnabled" checked><span class="slider"></span></label>
+      </div>
+
+      <div class="adhan-prayer-row">
+        <div class="apr-info">
+          <span class="apr-ico">🔔</span>
+          <span>إشعارات المتصفح</span>
+        </div>
+        <label class="switch"><input type="checkbox" id="notificationsEnabled" checked><span class="slider"></span></label>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- الموقع -->
   <section class="settings-group">
     <h3 class="group-title">📍 الموقع</h3>
 
@@ -60,6 +203,7 @@
     </div>
   </section>
 
+  <!-- طريقة الحساب -->
   <section class="settings-group">
     <h3 class="group-title">🧮 طريقة الحساب</h3>
 
@@ -92,25 +236,6 @@
     </div>
   </section>
 
-  <section class="settings-group">
-    <h3 class="group-title">🔔 التنبيهات</h3>
-
-    <div class="settings-item">
-      <div class="item-info"><span class="ico">🔔</span><span>تنبيه قبل الصلاة بـ 15 دقيقة</span></div>
-      <label class="switch"><input type="checkbox" id="notifBefore"><span class="slider"></span></label>
-    </div>
-
-    <div class="settings-item">
-      <div class="item-info"><span class="ico">🔊</span><span>صوت الأذان عند دخول الوقت</span></div>
-      <label class="switch"><input type="checkbox" id="adhanSound"><span class="slider"></span></label>
-    </div>
-
-    <div class="settings-item">
-      <div class="item-info"><span class="ico">📳</span><span>اهتزاز عند التنبيه</span></div>
-      <label class="switch"><input type="checkbox" id="notifVibrate" checked><span class="slider"></span></label>
-    </div>
-  </section>
-
   <div class="action-buttons">
     <button class="btn primary" id="saveBtn">💾 حفظ الإعدادات</button>
     <button class="btn" id="refreshBtn">🔄 تحديث المواقيت</button>
@@ -128,5 +253,114 @@
 <script src="assets/js/logo.js"></script>
 <script src="assets/js/prayer-settings.js"></script>
 <script src="assets/js/seo.js"></script>
+<script src="assets/js/pwa.js"></script>
+<script src="assets/js/adhan.js"></script>
+<script>
+  /* ============ ربط إعدادات الأذان ============ */
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!window.AdhanSystem) return;
+
+    const settings = window.AdhanSystem.getSettings();
+
+    /* الحقول */
+    const adhanEnabled = document.getElementById('adhanEnabled');
+    const preAlertEnabled = document.getElementById('preAlertEnabled');
+    const preAlertMinutes = document.getElementById('preAlertMinutes');
+    const preAlertVal = document.getElementById('preAlertVal');
+    const volumeRange = document.getElementById('volumeRange');
+    const volumeVal = document.getElementById('volumeVal');
+    const vibrateEnabled = document.getElementById('vibrateEnabled');
+    const notificationsEnabled = document.getElementById('notificationsEnabled');
+    const permissionAlert = document.getElementById('permissionAlert');
+    const requestBtn = document.getElementById('requestPermissionBtn');
+    const testBtn = document.getElementById('testAdhanBtn');
+
+    const toArLocal = (n) => {
+      const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+      return String(n).replace(/[0-9]/g, d => ar[d]);
+    };
+
+    /* تحميل القيم */
+    adhanEnabled.checked = settings.enabled;
+    preAlertEnabled.checked = settings.preAlertMinutes > 0;
+    preAlertMinutes.value = settings.preAlertMinutes || 5;
+    preAlertVal.textContent = toArLocal(settings.preAlertMinutes || 5) + ' دقائق';
+    volumeRange.value = (settings.volume || 0.8) * 100;
+    volumeVal.textContent = toArLocal(Math.round((settings.volume || 0.8) * 100)) + '٪';
+    vibrateEnabled.checked = settings.vibrate;
+    notificationsEnabled.checked = settings.showNotification;
+
+    /* الصلوات */
+    document.querySelectorAll('input[data-prayer]').forEach(input => {
+      const key = input.dataset.prayer;
+      input.checked = settings.prayers[key]?.enabled !== false;
+    });
+
+    /* إذن الإشعارات */
+    if ('Notification' in window && Notification.permission === 'granted') {
+      permissionAlert.style.display = 'none';
+    } else {
+      permissionAlert.style.display = 'flex';
+    }
+
+    requestBtn.addEventListener('click', async () => {
+      const granted = await window.AdhanSystem.requestPermission();
+      if (granted) {
+        permissionAlert.style.display = 'none';
+      }
+    });
+
+    /* الأحداث */
+    adhanEnabled.addEventListener('change', () => {
+      settings.enabled = adhanEnabled.checked;
+    });
+
+    preAlertEnabled.addEventListener('change', () => {
+      settings.preAlertMinutes = preAlertEnabled.checked ? parseInt(preAlertMinutes.value, 10) : 0;
+    });
+
+    preAlertMinutes.addEventListener('input', () => {
+      preAlertVal.textContent = toArLocal(preAlertMinutes.value) + ' دقائق';
+      settings.preAlertMinutes = parseInt(preAlertMinutes.value, 10);
+    });
+
+    volumeRange.addEventListener('input', () => {
+      volumeVal.textContent = toArLocal(volumeRange.value) + '٪';
+      settings.volume = parseInt(volumeRange.value, 10) / 100;
+    });
+
+    vibrateEnabled.addEventListener('change', () => {
+      settings.vibrate = vibrateEnabled.checked;
+    });
+
+    notificationsEnabled.addEventListener('change', () => {
+      settings.showNotification = notificationsEnabled.checked;
+    });
+
+    document.querySelectorAll('input[data-prayer]').forEach(input => {
+      input.addEventListener('change', () => {
+        const key = input.dataset.prayer;
+        settings.prayers[key].enabled = input.checked;
+      });
+    });
+
+    /* زر تجربة */
+    testBtn.addEventListener('click', () => {
+      window.AdhanSystem.saveSettings(settings);
+      window.AdhanSystem.play('Fajr');
+    });
+
+    /* حفظ عند أي تغيير */
+    const saveAdhan = () => window.AdhanSystem.saveSettings(settings);
+    [adhanEnabled, preAlertEnabled, volumeRange, vibrateEnabled, notificationsEnabled]
+      .forEach(el => el.addEventListener('change', saveAdhan));
+
+    /* حفظ عند حفظ الإعدادات العام */
+    const origSaveBtn = document.getElementById('saveBtn');
+    if (origSaveBtn) {
+      origSaveBtn.addEventListener('click', saveAdhan);
+    }
+  });
+</script>
 </body>
 </html>

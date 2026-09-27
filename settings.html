@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>الإعدادات — وِرْدِي</title>
 <link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="manifest" href="manifest.json" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/header.css" />
 <link rel="stylesheet" href="assets/css/settings.css" />
+<link rel="stylesheet" href="assets/css/pwa.css" />
 </head>
 <body>
 
@@ -22,14 +24,170 @@
     <div style="width:42px"></div>
   </header>
 
+  <!-- ============================================
+       🌟 قسم PWA — تثبيت التطبيق
+       ============================================ -->
+  <section class="settings-group pwa-section">
+    <h3 class="group-title">📲 تثبيت التطبيق</h3>
+
+    <!-- بطاقة الترحيب -->
+    <div class="pwa-hero">
+      <div class="pwa-hero-icon">✨</div>
+      <h4>وِرْدِي كتطبيق حقيقي</h4>
+      <p>ثبّت وِرْدِي على جهازك ليعمل <strong>بدون إنترنت</strong> ويفتح <strong>بسرعة البرق</strong> مثل أي تطبيق آخر.</p>
+      <button class="pwa-install-cta" id="pwaInstallCta">
+        📲 ثبّت التطبيق الآن
+      </button>
+      <p class="pwa-install-note" id="pwaInstallNote">أو اتبع الخطوات أدناه حسب جهازك</p>
+    </div>
+
+    <!-- مزايا PWA -->
+    <div class="pwa-benefits">
+      <div class="pwa-benefit">
+        <span class="pb-icon">📴</span>
+        <span class="pb-title">بدون إنترنت</span>
+        <span class="pb-desc">الأذكار والقرآن متاحة دائمًا</span>
+      </div>
+      <div class="pwa-benefit">
+        <span class="pb-icon">⚡</span>
+        <span class="pb-title">فتح فوري</span>
+        <span class="pb-desc">لا انتظار، لا تحميل</span>
+      </div>
+      <div class="pwa-benefit">
+        <span class="pb-icon">🏠</span>
+        <span class="pb-title">أيقونة على الشاشة</span>
+        <span class="pb-desc">مثل أي تطبيق آخر</span>
+      </div>
+      <div class="pwa-benefit">
+        <span class="pb-icon">💾</span>
+        <span class="pb-title">صغير الحجم</span>
+        <span class="pb-desc">لا يأخذ مساحة</span>
+      </div>
+    </div>
+
+    <!-- الخطوات حسب الجهاز -->
+    <div class="pwa-steps">
+
+      <!-- أندرويد -->
+      <details class="pwa-step">
+        <summary>
+          <span class="ps-ico">🤖</span>
+          <span class="ps-title">أندرويد (Chrome)</span>
+          <span class="ps-arrow">›</span>
+        </summary>
+        <ol class="pwa-ol">
+          <li>افتح موقع وِرْدِي في متصفح Chrome</li>
+          <li>سيظهر إشعار <strong>"📲 ثبّت التطبيق"</strong> في الأسفل</li>
+          <li>اضغط عليه → سيُثبَّت التطبيق فورًا</li>
+          <li>إذا لم يظهر، اضغط قائمة Chrome (⋮) → <strong>"تثبيت التطبيق"</strong></li>
+        </ol>
+      </details>
+
+      <!-- آيفون -->
+      <details class="pwa-step">
+        <summary>
+          <span class="ps-ico">🍎</span>
+          <span class="ps-title">آيفون / آيباد (Safari)</span>
+          <span class="ps-arrow">›</span>
+        </summary>
+        <ol class="pwa-ol">
+          <li>افتح موقع وِرْدِي في متصفح <strong>Safari</strong></li>
+          <li>اضغط زر المشاركة <strong>□↗</strong> في الأسفل</li>
+          <li>انزل واختر <strong>"إضافة إلى الشاشة الرئيسية"</strong></li>
+          <li>اضغط <strong>"إضافة"</strong> في الأعلى</li>
+          <li>ستظهر أيقونة وِرْدِي على شاشتك ✨</li>
+        </ol>
+      </details>
+
+      <!-- ويندوز -->
+      <details class="pwa-step">
+        <summary>
+          <span class="ps-ico">💻</span>
+          <span class="ps-title">ويندوز (Edge / Chrome)</span>
+          <span class="ps-arrow">›</span>
+        </summary>
+        <ol class="pwa-ol">
+          <li>افتح موقع وِرْدِي في Edge أو Chrome</li>
+          <li>ابحث عن أيقونة <strong>⊕</strong> أو <strong>📥</strong> في شريط العنوان</li>
+          <li>اضغطها → <strong>"تثبيت وِرْدِي"</strong></li>
+          <li>أو من قائمة المتصفح: <strong>تطبيقات → تثبيت هذا الموقع كتطبيق</strong></li>
+        </ol>
+      </details>
+
+      <!-- ماك -->
+      <details class="pwa-step">
+        <summary>
+          <span class="ps-ico">🍏</span>
+          <span class="ps-title">ماك (Safari / Chrome)</span>
+          <span class="ps-arrow">›</span>
+        </summary>
+        <ol class="pwa-ol">
+          <li><strong>Safari:</strong> من قائمة <em>File → Add to Dock</em></li>
+          <li><strong>Chrome:</strong> من قائمة <em>⋮ → Cast, save, and share → Install page as app</em></li>
+        </ol>
+      </details>
+
+    </div>
+
+    <!-- مقارنة -->
+    <div class="pwa-compare">
+      <h5>⚖️ لماذا PWA أفضل؟</h5>
+      <div class="pwa-compare-table">
+        <div class="pwa-compare-row header">
+          <span>الميزة</span>
+          <span>PWA</span>
+          <span>تطبيق المتجر</span>
+        </div>
+        <div class="pwa-compare-row">
+          <span>التكلفة</span>
+          <span class="ok">مجاني</span>
+          <span class="no">$25+</span>
+        </div>
+        <div class="pwa-compare-row">
+          <span>الحجم</span>
+          <span class="ok">صغير جدًا</span>
+          <span class="no">20-100 MB</span>
+        </div>
+        <div class="pwa-compare-row">
+          <span>الموافقة</span>
+          <span class="ok">فورية</span>
+          <span class="no">أيام</span>
+        </div>
+        <div class="pwa-compare-row">
+          <span>التحديث</span>
+          <span class="ok">تلقائي</span>
+          <span class="no">يدوي</span>
+        </div>
+        <div class="pwa-compare-row">
+          <span>بدون إنترنت</span>
+          <span class="ok">يعمل</span>
+          <span class="ok">يعمل</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- حالة التثبيت -->
+    <div class="pwa-status" id="pwaStatus">
+      <span class="pwa-status-ico">ℹ️</span>
+      <span class="pwa-status-txt">جاري التحقق من حالة التثبيت...</span>
+    </div>
+
+  </section>
+
+  <!-- ============================================
+       المظهر
+       ============================================ -->
   <section class="settings-group">
-    <h3 class="group-title">المظهر</h3>
+    <h3 class="group-title">🎨 المظهر</h3>
     <div class="settings-item">
       <div class="item-info"><span class="ico">🌙</span><span>الوضع الليلي</span></div>
       <label class="switch"><input type="checkbox" id="setDark"><span class="slider"></span></label>
     </div>
   </section>
 
+  <!-- ============================================
+       حول
+       ============================================ -->
   <section class="settings-group">
     <h3 class="group-title">حول</h3>
     <div class="settings-item" onclick="location.href='privacy.html'">
@@ -55,5 +213,7 @@
 <script src="assets/js/logo.js"></script>
 <script src="assets/js/settings.js"></script>
 <script src="assets/js/seo.js"></script>
+<script src="assets/js/pwa.js"></script>
+<script src="assets/js/adhan.js"></script>
 </body>
 </html>

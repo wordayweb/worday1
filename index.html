@@ -4,28 +4,53 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1F4E3D" />
-<meta name="description" content="موقع وِرْدِي: أذكار الصباح والمساء، القرآن الكريم بمصحف المدينة، مواقيت الصلاة، التسبيح، وِرْدِي الأمين." />
-<meta name="keywords" content="أذكار, أذكار الصباح, أذكار المساء, ورد يومي, القرآن الكريم, تسبيح, مواقيت الصلاة" />
-<meta name="robots" content="index, follow" />
+<meta name="description" content="موقع وِرْدِي: أذكار الصباح والمساء، القرآن الكريم بمصحف المدينة، مواقيت الصلاة، التسبيح، وِرْدِي الأمين. رفيقك اليومي لذكر الله." />
+<meta name="keywords" content="أذكار, أذكار الصباح, أذكار المساء, ورد يومي, القرآن الكريم, تسبيح, مواقيت الصلاة, وِرْدِي" />
+<meta name="author" content="وِرْدِي" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+
+<!-- ===== Open Graph ===== -->
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content="وِرْدِي" />
 <meta property="og:title" content="وِرْدِي — رفيقك اليومي لذكر الله" />
-<meta property="og:description" content="أذكار، قرآن، مواقيت صلاة، تسابيح — في تطبيق واحد." />
+<meta property="og:description" content="أذكار، قرآن، مواقيت صلاة، تسابيح، وِرْدِي الأمين — كل ما يحتاجه المسلم في تطبيق واحد." />
+<meta property="og:locale" content="ar_SA" />
+
+<!-- ===== Twitter ===== -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="وِرْدِي — رفيقك اليومي لذكر الله" />
+<meta name="twitter:description" content="أذكار، قرآن، مواقيت صلاة، تسابيح، وِرْدِي الأمين." />
+
 <title>وِرْدِي — رفيقك اليومي لذكر الله</title>
+
+<!-- ===== Favicon + PWA ===== -->
 <link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="apple-touch-icon" href="assets/img/icon-192.png" />
+<link rel="manifest" href="manifest.json" />
+
+<!-- ===== Preconnect ===== -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://api.quran.com" />
+<link rel="preconnect" href="https://api.aladhan.com" />
+
+<!-- ===== Stylesheets ===== -->
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/header.css" />
 <link rel="stylesheet" href="assets/css/smart-adhkar.css" />
+<link rel="stylesheet" href="assets/css/pwa.css" />
 </head>
 <body>
 
 <div class="app">
 
+  <!-- ===== الهيدر الموحّد ===== -->
   <div data-header-target></div>
 
+  <!-- ===== بطاقة الأذكار الذكية ===== -->
   <section id="smartHero" class="fade-in"></section>
 
+  <!-- ===== واصل القراءة ===== -->
   <section class="card resume fade-in">
     <button class="btn-play" onclick="location.href='quran.html'">
       <span class="tri"></span> انتقال
@@ -37,6 +62,7 @@
     <div class="thumb">📖</div>
   </section>
 
+  <!-- ===== بطاقة الالتزام ===== -->
   <section class="card fade-in">
     <div class="tracker-head">
       <div class="progress-ring" id="progressRing">
@@ -66,48 +92,61 @@
     </div>
   </section>
 
+  <!-- ===== شبكة الأقسام ===== -->
   <section class="sections">
+
     <a href="quran.html" class="sec-card fade-in">
       <div class="bg" style="background:linear-gradient(160deg,#4a6b52,#1a2b22);"></div>
       <div class="overlay"><h4>📖 القرآن الكريم</h4><div class="underline"></div></div>
     </a>
+
     <a href="amin.html" class="sec-card fade-in">
       <div class="bg" style="background:linear-gradient(160deg,#6b5b3a,#2a1f10);"></div>
       <div class="overlay"><h4>👑 وِرْدِي الأمين</h4><div class="underline"></div></div>
     </a>
+
     <a href="athkar-morning.html" class="sec-card fade-in" data-period="morning">
       <div class="bg" style="background:linear-gradient(160deg,#E4B94C,#A8871D);"></div>
       <div class="overlay"><h4>🌅 أذكار الصباح</h4><div class="underline"></div></div>
     </a>
+
     <a href="athkar-evening.html" class="sec-card fade-in" data-period="evening">
       <div class="bg" style="background:linear-gradient(160deg,#2C4A6B,#16293A);"></div>
       <div class="overlay"><h4>🌆 أذكار المساء</h4><div class="underline"></div></div>
     </a>
+
     <a href="prayer.html" class="sec-card fade-in">
       <div class="bg" style="background:linear-gradient(160deg,#3a5c4a,#132019);"></div>
       <div class="overlay"><h4>🕌 مواقيت الصلاة</h4><div class="underline"></div></div>
     </a>
+
     <a href="tasbih.html" class="sec-card fade-in">
       <div class="bg" style="background:linear-gradient(160deg,#3e6b58,#0f1c16);"></div>
       <div class="overlay"><h4>📿 التسبيح</h4><div class="underline"></div></div>
     </a>
+
     <a href="calendar.html" class="sec-card fade-in">
       <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
       <div class="overlay"><h4>📅 التقويم</h4><div class="underline"></div></div>
     </a>
+
     <a href="zakat.html" class="sec-card fade-in">
       <div class="bg" style="background:linear-gradient(160deg,#7a4a2c,#2a1408);"></div>
       <div class="overlay"><h4>💰 حساب الزكاة</h4><div class="underline"></div></div>
     </a>
+
   </section>
 
 </div>
 
+<!-- ===== السكربتات ===== -->
 <script src="assets/js/app.js"></script>
 <script src="assets/js/navbar.js"></script>
 <script src="assets/js/header.js"></script>
 <script src="assets/js/logo.js"></script>
 <script src="assets/js/smart-adhkar.js"></script>
 <script src="assets/js/seo.js"></script>
+<script src="assets/js/pwa.js"></script>
+<script src="assets/js/adhan.js"></script>
 </body>
 </html>

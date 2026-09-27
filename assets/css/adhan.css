@@ -1,0 +1,267 @@
+/* ============ نظام الأذان — التصميم ============ */
+
+/* ===== شريط "جاري الأذان" ===== */
+.adhan-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+  color: #fff;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 6px 20px rgba(31, 78, 61, .3);
+  z-index: 99999;
+  transform: translateY(-100%);
+  transition: transform .4s cubic-bezier(.4, 0, .2, 1);
+  max-width: 480px;
+  margin: 0 auto;
+}
+.adhan-bar.show {
+  transform: translateY(0);
+}
+
+.adhan-bar .ab-ico {
+  font-size: 26px;
+  animation: adhanPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes adhanPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+
+.adhan-bar .ab-content {
+  flex: 1;
+}
+
+.adhan-bar .ab-title {
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.adhan-bar .ab-sub {
+  font-size: 12px;
+  opacity: .9;
+}
+
+.adhan-bar .ab-stop {
+  background: rgba(255, 255, 255, .2);
+  border: none;
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+  transition: background .2s;
+}
+
+.adhan-bar .ab-stop:hover {
+  background: rgba(255, 255, 255, .35);
+}
+
+/* ===== بطاقة إعدادات الأذان ===== */
+.adhan-settings-card {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.adhan-settings-card h4 {
+  font-family: 'Amiri', serif;
+  font-size: 17px;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===== كل صلاة ===== */
+.adhan-prayer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.adhan-prayer-row:last-child {
+  border-bottom: none;
+}
+
+.adhan-prayer-row .apr-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.adhan-prayer-row .apr-ico {
+  width: 34px;
+  height: 34px;
+  background: var(--green-light);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+}
+
+.adhan-prayer-row .apr-time {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* ===== إشعار إذن مطلوب ===== */
+.adhan-permission-alert {
+  background: linear-gradient(160deg, rgba(201, 162, 39, .15), rgba(201, 162, 39, .05));
+  border: 1px solid rgba(201, 162, 39, .3);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.adhan-permission-alert .apa-ico {
+  font-size: 24px;
+  flex: 0 0 auto;
+}
+
+.adhan-permission-alert .apa-txt {
+  flex: 1;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.adhan-permission-alert .apa-btn {
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity .2s;
+  flex: 0 0 auto;
+}
+.adhan-permission-alert .apa-btn:hover {
+  opacity: .9;
+}
+
+/* ===== حجم الصوت ===== */
+.adhan-volume-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.adhan-volume-row .avr-ico {
+  font-size: 20px;
+  flex: 0 0 auto;
+}
+
+.adhan-volume-row input[type="range"] {
+  flex: 1;
+  appearance: none;
+  height: 6px;
+  background: var(--line);
+  border-radius: 999px;
+  outline: none;
+}
+
+.adhan-volume-row input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--green);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(31, 78, 61, .3);
+}
+
+.adhan-volume-row .avr-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  min-width: 45px;
+  text-align: center;
+}
+
+/* ===== زر تجربة الأذان ===== */
+.adhan-test-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--cream-2);
+  border: 1px dashed var(--green);
+  color: var(--green);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  margin-top: 12px;
+}
+
+.adhan-test-btn:hover {
+  background: var(--green-light);
+}
+
+/* ===== الوضع الليلي ===== */
+body.dark .adhan-bar {
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+}
+body.dark .adhan-settings-card {
+  background: var(--white);
+}
+body.dark .adhan-prayer-row .apr-ico {
+  background: rgba(255, 255, 255, .05);
+}
+body.dark .adhan-permission-alert {
+  background: rgba(201, 162, 39, .1);
+}
+body.dark .adhan-test-btn {
+  background: rgba(255, 255, 255, .03);
+}
+
+/* ===== استجابة ===== */
+@media (max-width: 359px) {
+  .adhan-bar { padding: 12px 16px; }
+  .adhan-bar .ab-ico { font-size: 22px; }
+  .adhan-bar .ab-title { font-size: 16px; }
+  .adhan-bar .ab-sub { font-size: 11px; }
+  .adhan-bar .ab-stop { width: 34px; height: 34px; font-size: 14px; }
+  .adhan-settings-card { padding: 14px; }
+  .adhan-settings-card h4 { font-size: 15px; }
+  .adhan-prayer-row .apr-info { font-size: 13px; }
+  .adhan-prayer-row .apr-ico { width: 30px; height: 30px; font-size: 15px; }
+}
+
+@media (min-width: 480px) {
+  .adhan-bar { max-width: 520px; padding: 16px 24px; }
+  .adhan-bar .ab-title { font-size: 20px; }
+  .adhan-bar .ab-sub { font-size: 13px; }
+}

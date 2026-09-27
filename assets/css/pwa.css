@@ -1,0 +1,174 @@
+/* ============ PWA — زر التثبيت والإشعارات ============ */
+
+.pwa-install-btn {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(31, 78, 61, .35);
+  transition: all .35s cubic-bezier(.4, 0, .2, 1);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pwa-install-btn.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pwa-install-btn:hover {
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 16px 40px rgba(31, 78, 61, .45);
+}
+
+.pwa-install-ico {
+  font-size: 20px;
+  animation: pwaBounce 2s ease-in-out infinite;
+}
+
+@keyframes pwaBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+.pwa-install-close {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .25);
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  margin-right: -4px;
+}
+
+.pwa-install-close:hover { background: rgba(255, 255, 255, .4); }
+
+.pwa-installed-msg {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: var(--white);
+  color: var(--green);
+  border-radius: 16px;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 12px 32px rgba(31, 78, 61, .25);
+  border: 1px solid rgba(201, 162, 39, .3);
+  z-index: 10000;
+  transition: all .35s cubic-bezier(.4, 1.4, .5, 1);
+  opacity: 0;
+}
+
+.pwa-installed-msg.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.pwa-installed-msg span:first-child { font-size: 22px; }
+
+.pwa-update-notification {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: var(--white);
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 12px 32px rgba(31, 78, 61, .25);
+  border: 1px solid rgba(201, 162, 39, .3);
+  z-index: 9998;
+  transition: all .35s cubic-bezier(.4, 0, .2, 1);
+  opacity: 0;
+  max-width: 92vw;
+}
+
+.pwa-update-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.pwa-update-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.pwa-update-ico { font-size: 24px; }
+
+.pwa-update-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--green);
+  margin: 0;
+}
+
+.pwa-update-text {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+}
+
+.pwa-update-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: linear-gradient(160deg, var(--green-2), var(--green));
+  color: #fff;
+  border: none;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+body.is-offline::before {
+  content: '⚠️ لا يوجد اتصال';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #B33A3A;
+  color: #fff;
+  text-align: center;
+  padding: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 9999;
+}
+
+body.dark .pwa-installed-msg,
+body.dark .pwa-update-notification {
+  background: var(--white);
+  color: var(--gold);
+  border-color: rgba(201, 162, 39, .4);
+}
+
+body.dark .pwa-update-title { color: var(--gold); }
