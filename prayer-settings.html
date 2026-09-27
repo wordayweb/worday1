@@ -125,74 +125,129 @@
   </div>
 </div>
 
-<!-- ========== السكربتات ========== -->
+<!-- ========== السكربتات (بدون prayer-settings.js) ========== -->
 <script src="assets/js/app.js"></script>
 <script src="assets/js/navbar.js"></script>
 <script src="assets/js/header.js"></script>
 <script src="assets/js/logo.js"></script>
-<script src="assets/js/prayer-settings.js"></script>
 <script src="assets/js/seo.js"></script>
 <script src="assets/js/pwa.js"></script>
 <script src="assets/js/adhan.js"></script>
 
-<!-- ========== سكربت مستقل لزر تجربة الأذان ========== -->
+<!-- ========== سكربت مستقل لصفحة الإعدادات ========== -->
 <script>
 (function () {
   'use strict';
 
-  console.log('🚀 سكربت زر تجربة الأذان جاهز');
+  const PS_KEY = 'prayer_settings';
+  const PS_DEFAULTS = {
+    method: 4,
+    school: 0,
+    lat: 24.7136,
+    lng: 46.6753,
+    cityName: 'الرياض',
+    cityDetail: 'السعودية',
+    manualLocation: false,
+  };
 
-  /* انتظر تحميل الصفحة */
-  function bindTestButton() {
-    const btn = document.getElementById('testAdhanBtn');
-
-    if (!btn) {
-      console.warn('⚠️ لم أجد زر testAdhanBtn');
-      return;
-    }
-
-    console.log('✅ وجدت الزر — جاهز للربط');
-
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      console.log('🎵 تم الضغط على الزر');
-
-      try {
-        /* قراءة الصوت من الإعدادات */
-        let volume = 0.8;
-        try {
-          const savedSettings = JSON.parse(localStorage.getItem('adhan_settings') || '{}');
-          if (savedSettings.volume) volume = savedSettings.volume;
-        } catch {}
-
-        /* تشغيل الصوت */
-        const audio = new Audio('assets/audio/adhan.mp3');
-        audio.volume = volume;
-
-        const promise = audio.play();
-
-        if (promise && promise.then) {
-          promise
-            .then(() => {
-              console.log('✅ الأذان يعمل بنجاح');
-            })
-            .catch(err => {
-              console.error('❌ فشل التشغيل:', err);
-              alert('⚠️ تعذّر تشغيل الأذان: ' + (err.message || err));
-            });
-        }
-      } catch (err) {
-        console.error('❌ خطأ:', err);
-        alert('⚠️ حدث خطأ: ' + err.message);
-      }
-    });
+  function getSettings() {
+    try {
+      return { ...PS_DEFAULTS, ...(JSON.parse(localStorage.getItem(PS_KEY) || '{}')) };
+    } catch { return { ...PS_DEFAULTS }; }
   }
 
-  /* طريقتان للتحميل */
+  function saveSettings(s) {
+    localStorage.setItem(PS_KEY, JSON.stringify(s));
+  }
+
+  function init() {
+    const s = getSettings();
+
+    /* الموقع */
+    const useGeoEl = document.getElementById('useGeo');
+    const manualBlockEl = document.getElementById('manualBlock');
+
+    if (useGeoEl) {
+      const useGeo = !s.manualLocation;
+      useGeoEl.checked = useGeo;
+      if (manualBlockEl) {
+        manualBlockEl.style.display = useGeo ? 'none' : 'flex';
+      }
+      useGeoEl.addEventListener('change', (e) => {
+        if (manualBlockEl) {
+          manualBlockEl.style.display = e.target.checked ? 'none' : 'flex';
+        }
+      });
+    }
+
+    const inpLat = document.getElementById('inpLat');
+    const inpLng = document.getElementById('inpLng');
+    const inpCity = document.getElementById('inpCity');
+    if (inpLat && s.manualLocation) inpLat.value = s.lat || '';
+    if (inpLng && s.manualLocation) inpLng.value = s.lng || '';
+    if (inpCity && s.manualLocation) inpCity.value = s.cityName || '';
+
+    /* طريقة الحساب */
+    const methodSelect = document.getElementById('methodSelect');
+    if (methodSelect) methodSelect.value = String(s.method);
+
+    document.querySelectorAll('input[name="school"]').forEach(r => {
+      r.checked = String(s.school) === r.value;
+    });
+
+    /* حفظ */
+    const saveBtn = document.getElementById('saveBtn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        const useGeo = useGeoEl ? useGeoEl.checked : true;
+        const updated = { ...s, manualLocation: !useGeo };
+
+        if (methodSelect) updated.method = parseInt(methodSelect.value, 10);
+
+        const schoolEl = document.querySelector('input[name="school"]:checked');
+        if (schoolEl) updated.school = parseInt(schoolEl.value, 10);
+
+        if (!useGeo) {
+          const lat = inpLat ? parseFloat(inpLat.value) : NaN;
+          const lng = inpLng ? parseFloat(inpLng.value) : NaN;
+          const city = inpCity ? inpCity.value.trim() : '';
+
+          if (isNaN(lat) || isNaN(lng)) {
+            alert('⚠️ الرجاء إدخال إحداثيات صحيحة');
+            return;
+          }
+          updated.lat = lat;
+          updated.lng = lng;
+          updated.cityName = city || 'موقع مخصص';
+        }
+
+        saveSettings(updated);
+
+        /* مسح الكاش */
+        Object.keys(localStorage)
+          .filter(k => k.startsWith('prayer_times_cache_'))
+          .forEach(k => localStorage.removeItem(k));
+
+        alert('✅ تم حفظ الإعدادات');
+        location.href = 'prayer.html';
+      });
+    }
+
+    const refreshBtn = document.getElementById('refreshBtn');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', () => {
+        Object.keys(localStorage)
+          .filter(k => k.startsWith('prayer_times_cache_'))
+          .forEach(k => localStorage.removeItem(k));
+        alert('🔄 تم مسح البيانات المؤقتة');
+      });
+    }
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bindTestButton);
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    bindTestButton();
+    init();
   }
 })();
 </script>
