@@ -25,20 +25,25 @@
     <div style="width:42px"></div>
   </header>
 
-  <!-- ========== قسم الأذان ========== -->
+  <!-- ============================================
+       🔔 قسم الأذان
+       ============================================ -->
   <section class="settings-group">
 
+    <!-- تنبيه إذن الإشعارات -->
     <div class="adhan-permission-alert" id="permissionAlert">
       <span class="apa-ico">🔔</span>
       <span class="apa-txt">للحصول على تنبيهات الأذان، نحتاج إذن الإشعارات</span>
-      <button class="apa-btn" id="requestPermissionBtn">السماح</button>
+      <button class="apa-btn" id="requestPermissionBtn" type="button">السماح</button>
     </div>
 
+    <!-- تفعيل الأذان -->
     <div class="settings-item">
       <div class="item-info"><span class="ico">🕌</span><span>تشغيل الأذان تلقائيًا</span></div>
       <label class="switch"><input type="checkbox" id="adhanEnabled" checked><span class="slider"></span></label>
     </div>
 
+    <!-- المؤذن -->
     <div class="adhan-settings-card">
       <h4>🎵 المؤذن</h4>
       <div class="adhan-prayer-row">
@@ -51,8 +56,10 @@
       <button class="adhan-test-btn" id="testAdhanBtn" type="button">🔊 تجربة صوت الأذان</button>
     </div>
 
+    <!-- الصلوات -->
     <div class="adhan-settings-card">
       <h4>🕌 الصلوات المشغَّلة</h4>
+
       <div class="adhan-prayer-row">
         <div class="apr-info"><span class="apr-ico">🌄</span><span>الفجر</span></div>
         <label class="switch"><input type="checkbox" data-prayer="Fajr" checked><span class="slider"></span></label>
@@ -77,7 +84,9 @@
 
   </section>
 
-  <!-- ========== الموقع ========== -->
+  <!-- ============================================
+       📍 الموقع
+       ============================================ -->
   <section class="settings-group">
     <h3 class="group-title">📍 الموقع</h3>
 
@@ -96,7 +105,9 @@
     </div>
   </section>
 
-  <!-- ========== طريقة الحساب ========== -->
+  <!-- ============================================
+       🧮 طريقة الحساب
+       ============================================ -->
   <section class="settings-group">
     <h3 class="group-title">🧮 طريقة الحساب</h3>
 
@@ -119,13 +130,19 @@
     </div>
   </section>
 
+  <!-- ============================================
+       💾 الأزرار
+       ============================================ -->
   <div class="action-buttons">
     <button class="btn primary" id="saveBtn">💾 حفظ الإعدادات</button>
     <button class="btn" id="refreshBtn">🔄 تحديث المواقيت</button>
   </div>
+
 </div>
 
-<!-- ========== السكربتات (بدون prayer-settings.js) ========== -->
+<!-- ============================================
+     📜 السكربتات
+     ============================================ -->
 <script src="assets/js/app.js"></script>
 <script src="assets/js/navbar.js"></script>
 <script src="assets/js/header.js"></script>
@@ -134,11 +151,16 @@
 <script src="assets/js/pwa.js"></script>
 <script src="assets/js/adhan.js"></script>
 
-<!-- ========== سكربت مستقل لصفحة الإعدادات ========== -->
+<!-- ============================================
+     🎯 سكربت الصفحة — الإعدادات + الإشعارات
+     ============================================ -->
 <script>
 (function () {
   'use strict';
 
+  console.log('🚀 سكربت إعدادات الصلاة جاهز');
+
+  /* ============ ثوابت ============ */
   const PS_KEY = 'prayer_settings';
   const PS_DEFAULTS = {
     method: 4,
@@ -153,26 +175,147 @@
   function getSettings() {
     try {
       return { ...PS_DEFAULTS, ...(JSON.parse(localStorage.getItem(PS_KEY) || '{}')) };
-    } catch { return { ...PS_DEFAULTS }; }
+    } catch {
+      return { ...PS_DEFAULTS };
+    }
   }
 
   function saveSettings(s) {
     localStorage.setItem(PS_KEY, JSON.stringify(s));
   }
 
-  function init() {
-    const s = getSettings();
+  function clearTimesCache() {
+    Object.keys(localStorage)
+      .filter(k => k.startsWith('prayer_times_cache_'))
+      .forEach(k => localStorage.removeItem(k));
+  }
 
-    /* الموقع */
+  /* ============ زر "السماح" للإشعارات ============ */
+  function initNotificationPermission() {
+    const requestBtn = document.getElementById('requestPermissionBtn');
+    const permissionAlert = document.getElementById('permissionAlert');
+
+    /* عند التحميل: إذا كان الإذن ممنوحًا → أخفِ التنبيه */
+    if ('Notification' in window) {
+      if (Notification.permission === 'granted' && permissionAlert) {
+        permissionAlert.style.display = 'none';
+      }
+    } else {
+      console.warn('⚠️ المتصفح لا يدعم Notification API');
+    }
+
+    if (!requestBtn) {
+      console.warn('⚠️ لم أجد زر السماح');
+      return;
+    }
+
+    requestBtn.addEventListener('click', async () => {
+      console.log('🔔 طلب إذن الإشعارات...');
+
+      /* المتصفح لا يدعم */
+      if (!('Notification' in window)) {
+        alert('⚠️ متصفحك لا يدعم الإشعارات');
+        return;
+      }
+
+      /* الإذن ممنوح مسبقًا */
+      if (Notification.permission === 'granted') {
+        alert('✅ الإشعارات مسموحة بالفعل');
+        if (permissionAlert) permissionAlert.style.display = 'none';
+        return;
+      }
+
+      /* الإذن مرفوض */
+      if (Notification.permission === 'denied') {
+        alert('⚠️ الإشعارات مرفوضة. افتح إعدادات المتصفح للسماح بها:\n\n' +
+              'Chrome: القفل بجانب الرابط → الإشعارات → السماح');
+        return;
+      }
+
+      /* طلب الإذن */
+      try {
+        const permission = await Notification.requestPermission();
+        console.log('نتيجة الإذن:', permission);
+
+        if (permission === 'granted') {
+          alert('✅ تم تفعيل الإشعارات — بارك الله فيك');
+          if (permissionAlert) permissionAlert.style.display = 'none';
+
+          /* إشعار تجريبي */
+          try {
+            new Notification('🕌 وِرْدِي', {
+              body: 'تم تفعيل إشعارات الأذان بنجاح',
+              icon: 'assets/img/icon-192.png',
+              badge: 'assets/img/icon-192.png',
+            });
+          } catch (e) {
+            console.warn('تعذّر عرض إشعار تجريبي:', e);
+          }
+        } else if (permission === 'denied') {
+          alert('⚠️ تم رفض الإشعارات');
+        }
+      } catch (err) {
+        console.error('❌ خطأ في طلب الإذن:', err);
+        alert('⚠️ حدث خطأ: ' + err.message);
+      }
+    });
+  }
+
+  /* ============ زر "تجربة الأذان" ============ */
+  function initTestButton() {
+    const btn = document.getElementById('testAdhanBtn');
+    if (!btn) {
+      console.warn('⚠️ لم أجد زر تجربة الأذان');
+      return;
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      console.log('🎵 تم الضغط على تجربة الأذان');
+
+      try {
+        let volume = 0.8;
+        try {
+          const s = JSON.parse(localStorage.getItem('adhan_settings') || '{}');
+          if (s.volume) volume = s.volume;
+        } catch {}
+
+        const audio = new Audio('assets/audio/adhan.mp3');
+        audio.volume = volume;
+
+        const promise = audio.play();
+        if (promise && promise.then) {
+          promise
+            .then(() => console.log('✅ الأذان يعمل بنجاح'))
+            .catch(err => {
+              console.error('❌ فشل التشغيل:', err);
+              alert('⚠️ تعذّر تشغيل الأذان: ' + (err.message || err));
+            });
+        }
+      } catch (err) {
+        console.error('❌ خطأ:', err);
+        alert('⚠️ حدث خطأ: ' + err.message);
+      }
+    });
+  }
+
+  /* ============ الموقع ============ */
+  function initLocation() {
+    const s = getSettings();
     const useGeoEl = document.getElementById('useGeo');
     const manualBlockEl = document.getElementById('manualBlock');
+    const inpLat = document.getElementById('inpLat');
+    const inpLng = document.getElementById('inpLng');
+    const inpCity = document.getElementById('inpCity');
 
     if (useGeoEl) {
       const useGeo = !s.manualLocation;
       useGeoEl.checked = useGeo;
+
       if (manualBlockEl) {
         manualBlockEl.style.display = useGeo ? 'none' : 'flex';
       }
+
       useGeoEl.addEventListener('change', (e) => {
         if (manualBlockEl) {
           manualBlockEl.style.display = e.target.checked ? 'none' : 'flex';
@@ -180,68 +323,95 @@
       });
     }
 
-    const inpLat = document.getElementById('inpLat');
-    const inpLng = document.getElementById('inpLng');
-    const inpCity = document.getElementById('inpCity');
     if (inpLat && s.manualLocation) inpLat.value = s.lat || '';
     if (inpLng && s.manualLocation) inpLng.value = s.lng || '';
     if (inpCity && s.manualLocation) inpCity.value = s.cityName || '';
+  }
 
-    /* طريقة الحساب */
+  /* ============ طريقة الحساب ============ */
+  function initMethod() {
+    const s = getSettings();
     const methodSelect = document.getElementById('methodSelect');
-    if (methodSelect) methodSelect.value = String(s.method);
+
+    if (methodSelect) {
+      methodSelect.value = String(s.method);
+    }
 
     document.querySelectorAll('input[name="school"]').forEach(r => {
       r.checked = String(s.school) === r.value;
     });
+  }
 
-    /* حفظ */
+  /* ============ الحفظ ============ */
+  function initSaveButton() {
     const saveBtn = document.getElementById('saveBtn');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', () => {
-        const useGeo = useGeoEl ? useGeoEl.checked : true;
-        const updated = { ...s, manualLocation: !useGeo };
+    if (!saveBtn) return;
 
-        if (methodSelect) updated.method = parseInt(methodSelect.value, 10);
+    saveBtn.addEventListener('click', () => {
+      const s = getSettings();
+      const useGeoEl = document.getElementById('useGeo');
+      const manualBlockEl = document.getElementById('manualBlock');
+      const inpLat = document.getElementById('inpLat');
+      const inpLng = document.getElementById('inpLng');
+      const inpCity = document.getElementById('inpCity');
+      const methodSelect = document.getElementById('methodSelect');
 
-        const schoolEl = document.querySelector('input[name="school"]:checked');
-        if (schoolEl) updated.school = parseInt(schoolEl.value, 10);
+      const useGeo = useGeoEl ? useGeoEl.checked : true;
+      s.manualLocation = !useGeo;
 
-        if (!useGeo) {
-          const lat = inpLat ? parseFloat(inpLat.value) : NaN;
-          const lng = inpLng ? parseFloat(inpLng.value) : NaN;
-          const city = inpCity ? inpCity.value.trim() : '';
+      if (methodSelect) {
+        s.method = parseInt(methodSelect.value, 10);
+      }
 
-          if (isNaN(lat) || isNaN(lng)) {
-            alert('⚠️ الرجاء إدخال إحداثيات صحيحة');
-            return;
-          }
-          updated.lat = lat;
-          updated.lng = lng;
-          updated.cityName = city || 'موقع مخصص';
+      const schoolEl = document.querySelector('input[name="school"]:checked');
+      if (schoolEl) {
+        s.school = parseInt(schoolEl.value, 10);
+      }
+
+      if (!useGeo) {
+        const lat = inpLat ? parseFloat(inpLat.value) : NaN;
+        const lng = inpLng ? parseFloat(inpLng.value) : NaN;
+        const city = inpCity ? inpCity.value.trim() : '';
+
+        if (isNaN(lat) || isNaN(lng)) {
+          alert('⚠️ الرجاء إدخال إحداثيات صحيحة');
+          return;
         }
+        s.lat = lat;
+        s.lng = lng;
+        s.cityName = city || 'موقع مخصص';
+        s.cityDetail = `${lat.toFixed(3)}°، ${lng.toFixed(3)}°`;
+      }
 
-        saveSettings(updated);
+      saveSettings(s);
+      clearTimesCache();
 
-        /* مسح الكاش */
-        Object.keys(localStorage)
-          .filter(k => k.startsWith('prayer_times_cache_'))
-          .forEach(k => localStorage.removeItem(k));
+      alert('✅ تم حفظ الإعدادات');
+      location.href = 'prayer.html';
+    });
+  }
 
-        alert('✅ تم حفظ الإعدادات');
-        location.href = 'prayer.html';
-      });
-    }
-
+  /* ============ زر التحديث ============ */
+  function initRefreshButton() {
     const refreshBtn = document.getElementById('refreshBtn');
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', () => {
-        Object.keys(localStorage)
-          .filter(k => k.startsWith('prayer_times_cache_'))
-          .forEach(k => localStorage.removeItem(k));
-        alert('🔄 تم مسح البيانات المؤقتة');
-      });
-    }
+    if (!refreshBtn) return;
+
+    refreshBtn.addEventListener('click', () => {
+      clearTimesCache();
+      alert('🔄 تم مسح البيانات المؤقتة');
+    });
+  }
+
+  /* ============ التهيئة ============ */
+  function init() {
+    initNotificationPermission();
+    initTestButton();
+    initLocation();
+    initMethod();
+    initSaveButton();
+    initRefreshButton();
+
+    console.log('✅ اكتملت تهيئة صفحة الإعدادات');
   }
 
   if (document.readyState === 'loading') {
@@ -249,6 +419,7 @@
   } else {
     init();
   }
+
 })();
 </script>
 
