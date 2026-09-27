@@ -17,6 +17,7 @@
     { href: 'amin.html',            icon: '👑', label: 'وِرْدِي الأمين',  key: 'amin',     period: null },
     { href: 'calendar.html',        icon: '📅', label: 'التقويم',         key: 'calendar', period: null },
     { href: 'zakat.html',           icon: '💰', label: 'حساب الزكاة',     key: 'zakat',    period: null },
+    { href: 'support.html',         icon: '💚', label: 'ادعمنا',          key: 'support',  period: null },
   ];
 
   function getCurrentKey() {
@@ -32,6 +33,7 @@
     if (path === 'amin.html') return 'amin';
     if (path === 'calendar.html') return 'calendar';
     if (path === 'zakat.html') return 'zakat';
+    if (path === 'support.html') return 'support';
     return null;
   }
 
