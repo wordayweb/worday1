@@ -1,9 +1,9 @@
 /* ============ منطق إعدادات الصلاة ============ */
 
-const PRAYER_KEY = 'prayer_settings';
-const TIMES_CACHE_KEY = 'prayer_times_cache';
+const PS_KEY = 'prayer_settings';
+const PTS_CACHE_KEY = 'prayer_times_cache';
 
-const DEFAULT_SETTINGS = {
+const PS_DEFAULTS = {
   method: 4,
   school: 0,
   lat: 24.7136,
@@ -11,75 +11,114 @@ const DEFAULT_SETTINGS = {
   cityName: 'الرياض',
   cityDetail: 'السعودية',
   manualLocation: false,
-  notifications: { before: false, sound: false, vibrate: true },
 };
 
-function getSettings() { return { ...DEFAULT_SETTINGS, ...LS.get(PRAYER_KEY, {}) }; }
-function saveSettings(s) { LS.set(PRAYER_KEY, s); }
+function getPSSettings() {
+  return { ...PS_DEFAULTS, ...LS.get(PS_KEY, {}) };
+}
+function savePSSettings(s) {
+  LS.set(PS_KEY, s);
+}
 
-function clearTimingsCache() {
+function clearPTSCache() {
   Object.keys(localStorage)
-    .filter(k => k.startsWith(TIMES_CACHE_KEY))
+    .filter(k => k.startsWith(PTS_CACHE_KEY))
     .forEach(k => localStorage.removeItem(k));
 }
 
-function loadUI() {
-  const s = getSettings();
-  const useGeo = !s.manualLocation;
-  document.getElementById('useGeo').checked = useGeo;
-  document.getElementById('manualBlock').style.display = useGeo ? 'none' : 'flex';
+/* ---------- تحميل القيم ---------- */
+function psLoadUI() {
+  const s = getPSSettings();
 
-  if (!useGeo) {
-    document.getElementById('inpLat').value = s.lat || '';
-    document.getElementById('inpLng').value = s.lng || '';
-    document.getElementById('inpCity').value = s.cityName || '';
+  const useGeoEl = document.getElementById('useGeo');
+  const manualBlockEl = document.getElementById('manualBlock');
+
+  if (useGeoEl) {
+    const useGeo = !s.manualLocation;
+    useGeoEl.checked = useGeo;
+    if (manualBlockEl) {
+      manualBlockEl.style.display = useGeo ? 'none' : 'flex';
+    }
   }
 
-  document.getElementById('methodSelect').value = String(s.method);
-  document.querySelectorAll('input[name="school"]').forEach(r => {
-    r.checked = String(s.school) === r.value;
-  });
+  const inpLat = document.getElementById('inpLat');
+  const inpLng = document.getElementById('inpLng');
+  const inpCity = document.getElementById('inpCity');
+  if (inpLat && s.manualLocation) inpLat.value = s.lat || '';
+  if (inpLng && s.manualLocation) inpLng.value = s.lng || '';
+  if (inpCity && s.manualLocation) inpCity.value = s.cityName || '';
 
-  const notif = s.notifications || {};
-  document.getElementById('notifBefore').checked = !!notif.before;
-  document.getElementById('adhanSound').checked = !!notif.sound;
-  document.getElementById('notifVibrate').checked = notif.vibrate !== false;
+  const methodSelect = document.getElementById('methodSelect');
+  if (methodSelect) methodSelect.value = String(s.method);
+
+  const schoolRadios = document.querySelectorAll('input[name="school"]');
+  if (schoolRadios.length) {
+    schoolRadios.forEach(r => {
+      r.checked = String(s.school) === r.value;
+    });
+  }
 }
 
-function bindUI() {
-  document.getElementById('useGeo').addEventListener('change', (e) => {
-    document.getElementById('manualBlock').style.display = e.target.checked ? 'none' : 'flex';
-  });
+/* ---------- ربط الأحداث ---------- */
+function psBindUI() {
+  const useGeoEl = document.getElementById('useGeo');
+  const manualBlockEl = document.getElementById('manualBlock');
+  if (useGeoEl && manualBlockEl) {
+    useGeoEl.addEventListener('change', (e) => {
+      manualBlockEl.style.display = e.target.checked ? 'none' : 'flex';
+    });
+  }
 
-  document.getElementById('quickCities').addEventListener('click', () => {
-    const list = document.getElementById('citiesList');
-    list.style.display = list.style.display === 'none' ? 'grid' : 'none';
-  });
+  const quickCities = document.getElementById('quickCities');
+  const citiesList = document.getElementById('citiesList');
+  if (quickCities && citiesList) {
+    quickCities.addEventListener('click', () => {
+      citiesList.style.display = citiesList.style.display === 'none' ? 'grid' : 'none';
+    });
+  }
 
   document.querySelectorAll('#citiesList button').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.getElementById('inpLat').value = btn.dataset.lat;
-      document.getElementById('inpLng').value = btn.dataset.lng;
-      document.getElementById('inpCity').value = btn.dataset.city;
-      document.getElementById('useGeo').checked = false;
-      document.getElementById('manualBlock').style.display = 'flex';
-      document.getElementById('citiesList').style.display = 'none';
+      const inpLat = document.getElementById('inpLat');
+      const inpLng = document.getElementById('inpLng');
+      const inpCity = document.getElementById('inpCity');
+      const useGeoEl = document.getElementById('useGeo');
+      const manualBlockEl = document.getElementById('manualBlock');
+      const citiesList = document.getElementById('citiesList');
+
+      if (inpLat) inpLat.value = btn.dataset.lat;
+      if (inpLng) inpLng.value = btn.dataset.lng;
+      if (inpCity) inpCity.value = btn.dataset.city;
+      if (useGeoEl) useGeoEl.checked = false;
+      if (manualBlockEl) manualBlockEl.style.display = 'flex';
+      if (citiesList) citiesList.style.display = 'none';
     });
   });
 }
 
-function saveUI() {
-  const useGeo = document.getElementById('useGeo').checked;
-  const s = getSettings();
+/* ---------- حفظ ---------- */
+function psSaveUI() {
+  const useGeoEl = document.getElementById('useGeo');
+  const useGeo = useGeoEl ? useGeoEl.checked : true;
+  const s = getPSSettings();
 
-  s.method = parseInt(document.getElementById('methodSelect').value, 10);
-  s.school = parseInt(document.querySelector('input[name="school"]:checked').value, 10);
+  const methodSelect = document.getElementById('methodSelect');
+  if (methodSelect) s.method = parseInt(methodSelect.value, 10);
+
+  const schoolEl = document.querySelector('input[name="school"]:checked');
+  if (schoolEl) s.school = parseInt(schoolEl.value, 10);
+
   s.manualLocation = !useGeo;
 
   if (!useGeo) {
-    const lat = parseFloat(document.getElementById('inpLat').value);
-    const lng = parseFloat(document.getElementById('inpLng').value);
-    const city = document.getElementById('inpCity').value.trim();
+    const inpLat = document.getElementById('inpLat');
+    const inpLng = document.getElementById('inpLng');
+    const inpCity = document.getElementById('inpCity');
+
+    const lat = inpLat ? parseFloat(inpLat.value) : NaN;
+    const lng = inpLng ? parseFloat(inpLng.value) : NaN;
+    const city = inpCity ? inpCity.value.trim() : '';
+
     if (isNaN(lat) || isNaN(lng)) {
       alert('⚠️ الرجاء إدخال إحداثيات صحيحة');
       return false;
@@ -90,38 +129,32 @@ function saveUI() {
     s.cityDetail = `${lat.toFixed(3)}°، ${lng.toFixed(3)}°`;
   }
 
-  s.notifications = {
-    before: document.getElementById('notifBefore').checked,
-    sound: document.getElementById('adhanSound').checked,
-    vibrate: document.getElementById('notifVibrate').checked,
-  };
-
-  saveSettings(s);
-  clearTimingsCache();
+  savePSSettings(s);
+  clearPTSCache();
   return true;
 }
 
+/* ---------- التهيئة ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   initDark?.();
-  loadUI();
-  bindUI();
+  psLoadUI();
+  psBindUI();
 
-  document.getElementById('saveBtn').addEventListener('click', () => {
-    if (saveUI()) {
-      alert('✅ تم حفظ الإعدادات');
-      location.href = 'prayer.html';
-    }
-  });
+  const saveBtn = document.getElementById('saveBtn');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      if (psSaveUI()) {
+        alert('✅ تم حفظ الإعدادات');
+        location.href = 'prayer.html';
+      }
+    });
+  }
 
-  document.getElementById('refreshBtn').addEventListener('click', () => {
-    clearTimingsCache();
-    alert('🔄 تم مسح البيانات المؤقتة');
-  });
-
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    if (!confirm('⚠️ استعادة الإعدادات الافتراضية؟')) return;
-    LS.del(PRAYER_KEY);
-    clearTimingsCache();
-    location.reload();
-  });
+  const refreshBtn = document.getElementById('refreshBtn');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', () => {
+      clearPTSCache();
+      alert('🔄 تم مسح البيانات المؤقتة');
+    });
+  }
 });
