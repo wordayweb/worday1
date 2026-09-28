@@ -2,7 +2,7 @@
 
 const QURAN_API_V4 = 'https://api.quran.com/api/v4';
 const QURAN_FALLBACK = 'https://api.alquran.cloud/v1';
-const SURAH_CACHE_KEY = 'quran_surahs_v2';
+const SURAH_CACHE_KEY = 'quran_surahs_v3';   // محدّث: v2 ← v3
 const LAST_READ_KEY = 'quran_last_read';
 
 let ALL_SURAHS = [];
@@ -92,6 +92,7 @@ function renderSurahs() {
     const a = document.createElement('a');
     a.className = 'surah-row fade-in';
     a.href = `surah.html?n=${s.number}`;
+    a.dataset.type = s.revelationType;   // ← مضاف: يُفعّل تلوين الشارة
     a.innerHTML = `
       <div class="sr-num">${toAr(s.number)}</div>
       <div class="sr-info">
@@ -121,6 +122,10 @@ function renderContinue() {
 }
 
 async function initQuranPage() {
+  // ⚠️ سطر اختياري: يُستخدم لتصفير الكاش القديم مرة واحدة.
+  // أزل التعليق (//) عنه، شغّل الصفحة مرة، ثم أعد التعليق.
+  // localStorage.removeItem('quran_surahs_v2');
+
   try {
     ALL_SURAHS = await fetchSurahs();
     renderSurahs();
