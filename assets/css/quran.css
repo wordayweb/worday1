@@ -1,5 +1,11 @@
 /* ============================================================
-   quran.css — صفحة القرآن الكريم
+   quran.css — صفحة القرآن الكريم + صفحة السورة
+   ============================================================ */
+
+/* ============================================================
+   ══════════════════════════════════════════════════════════════
+   الجزء الأول: صفحة قائمة السور (quran.html)
+   ══════════════════════════════════════════════════════════════
    ============================================================ */
 
 /* ===== بطاقة «واصل القراءة» ===== */
@@ -167,7 +173,6 @@
   gap: 10px;
   padding-bottom: 24px;
 }
-
 .surah-row {
   display: flex;
   align-items: center;
@@ -188,7 +193,6 @@
   box-shadow: var(--shadow-md);
 }
 
-/* رقم السورة */
 .sr-num {
   width: 46px;
   height: 46px;
@@ -211,8 +215,6 @@
   border-radius: 9px;
   pointer-events: none;
 }
-
-/* معلومات السورة */
 .sr-info {
   flex: 1;
   text-align: right;
@@ -237,8 +239,6 @@
   color: var(--ink-soft);
   flex-wrap: wrap;
 }
-
-/* شارة مكية / مدنية */
 .sr-type {
   display: inline-block;
   padding: 2px 10px;
@@ -252,8 +252,6 @@
   background: rgba(31, 78, 61, .12);
   color: var(--green);
 }
-
-/* أيقونة الزخرفة على اليسار */
 .sr-badge {
   font-size: 16px;
   color: var(--gold);
@@ -267,7 +265,7 @@
   transform: scale(1.05);
 }
 
-/* ===== التحميل / لا نتائج ===== */
+/* ===== التحميل ===== */
 .loading {
   text-align: center;
   padding: 40px 20px;
@@ -276,7 +274,363 @@
   font-weight: 500;
 }
 
-/* ===== الوضع الليلي ===== */
+/* ============================================================
+   ══════════════════════════════════════════════════════════════
+   الجزء الثاني: صفحة السورة (surah.html)
+   ══════════════════════════════════════════════════════════════
+   ============================================================ */
+
+.surah-app {
+  padding-bottom: 140px;
+}
+
+/* ===== صندوق معلومات السورة ===== */
+.surah-info {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  border-top: 3px solid var(--gold);
+}
+.surah-info h3 {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.si-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.si-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.source-badge {
+  display: inline-block;
+  background: var(--green-light);
+  color: var(--green);
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+/* ===== ورقة المصحف ===== */
+.mushaf-page {
+  background: var(--white);
+  border: 6px solid var(--cream-2);
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 30px rgba(31, 78, 61, .08);
+  position: relative;
+}
+.mushaf-page::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--gold);
+  border-radius: calc(var(--radius) - 5px);
+  pointer-events: none;
+  opacity: .3;
+}
+
+/* البسملة */
+.bismillah {
+  font-family: 'Amiri Quran', 'Amiri', serif;
+  font-size: 26px;
+  text-align: center;
+  color: var(--green);
+  margin: 4px 0 18px;
+  letter-spacing: 2px;
+}
+.bismillah.hidden { display: none; }
+
+/* ===== قائمة الآيات ===== */
+.verses {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* الآية الواحدة */
+.verse {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px;
+  background: var(--cream-2);
+  border-radius: var(--radius-sm);
+  border-right: 3px solid transparent;
+  transition: border-color .25s, box-shadow .25s, transform .15s, background .3s;
+  position: relative;
+}
+.verse:hover {
+  border-right-color: var(--gold);
+  box-shadow: var(--shadow-md);
+}
+.verse.playing {
+  border-right-color: var(--green);
+  background: linear-gradient(to left, var(--green-light), var(--cream-2) 40%);
+}
+.verse.highlight {
+  background: rgba(201, 162, 39, .12);
+  animation: versePulse 1.6s ease;
+}
+@keyframes versePulse {
+  0%, 100% { box-shadow: var(--shadow-sm); }
+  50%      { box-shadow: 0 0 0 6px rgba(201, 162, 39, .2); }
+}
+
+/* ===== جسم الآية ===== */
+.v-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.v-text {
+  font-family: 'Amiri Quran', 'Amiri', serif;
+  font-size: 24px;
+  line-height: 2.2;
+  color: var(--ink);
+  text-align: right;
+  padding: 0 4px;
+  margin: 0;
+  word-spacing: 2px;
+}
+.v-num {
+  display: inline-block;
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin: 0 6px;
+  vertical-align: middle;
+  font-weight: 700;
+  position: relative;
+}
+.v-num::before {
+  content: '۝';
+  color: var(--gold);
+  opacity: .5;
+  margin-left: 4px;
+  font-size: 16px;
+}
+
+/* ===== شريط الإجراءات الأنيق أسفل الآية ===== */
+.v-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  opacity: .4;
+  transition: opacity .25s;
+}
+.verse:hover .v-actions,
+.verse.active .v-actions,
+.verse.playing .v-actions {
+  opacity: 1;
+}
+
+.v-actions button {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  transition: all .18s ease;
+  font-family: inherit;
+  padding: 0;
+}
+.v-actions button:hover {
+  background: var(--green-light);
+  border-color: var(--green);
+  transform: translateY(-2px);
+  color: var(--green);
+}
+.v-actions button:active {
+  transform: translateY(0) scale(.94);
+}
+
+/* زر الاستماع */
+.v-actions .play-btn {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.v-actions .play-btn:hover {
+  background: var(--green-2);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(31, 78, 61, .35);
+}
+
+/* حالة التشغيل */
+.verse.playing .v-actions .play-btn {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a1a1a;
+  animation: playingPulse 1.4s ease infinite;
+}
+@keyframes playingPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, .5); }
+  50%      { box-shadow: 0 0 0 8px rgba(201, 162, 39, 0); }
+}
+
+/* المفضلة النشطة */
+.v-actions .bookmark-btn.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a1a1a;
+}
+
+.va-ico {
+  display: block;
+  line-height: 1;
+  font-size: 13px;
+}
+
+/* تلميح على الحاسوب */
+.v-actions button[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) scale(.9);
+  background: var(--green);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s, transform .18s;
+  z-index: 10;
+}
+.v-actions button[data-tip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ===== شريط التنقل بين السور ===== */
+.surah-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.sn-btn {
+  flex: 1;
+  padding: 12px 16px;
+  background: var(--white);
+  color: var(--green);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+}
+.sn-btn:hover:not(:disabled) {
+  background: var(--green-light);
+  border-color: var(--green);
+}
+.sn-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+/* ===== مشغل الصوت ===== */
+.audio-player {
+  position: fixed;
+  bottom: calc(100px + var(--safe-bottom));
+  left: 16px;
+  right: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  box-shadow: 0 8px 30px rgba(31, 78, 61, .2);
+  z-index: 30;
+}
+.ap-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+.ap-info {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+}
+.ap-title {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--green);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ap-time {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.ap-progress {
+  position: absolute;
+  bottom: 0;
+  left: 14px;
+  right: 14px;
+  height: 3px;
+  background: var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.ap-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+  border-radius: 3px;
+  transition: width .2s;
+}
+
+/* ============================================================
+   الوضع الليلي
+   ============================================================ */
 body.dark .sr-num {
   background: rgba(255, 255, 255, .06);
   color: var(--gold);
@@ -284,12 +638,8 @@ body.dark .sr-num {
 body.dark .sr-num::before {
   border-color: rgba(201, 162, 39, .25);
 }
-body.dark .sr-name {
-  color: var(--gold);
-}
-body.dark .surah-row:hover {
-  border-color: var(--gold);
-}
+body.dark .sr-name { color: var(--gold); }
+body.dark .surah-row:hover { border-color: var(--gold); }
 body.dark .sr-type {
   background: rgba(201, 162, 39, .18);
   color: var(--gold);
@@ -298,8 +648,32 @@ body.dark .surah-row[data-type="Medinan"] .sr-type {
   background: rgba(76, 175, 120, .15);
   color: #8fd4ac;
 }
+body.dark .verse {
+  background: rgba(255, 255, 255, .03);
+}
+body.dark .verse.playing {
+  background: linear-gradient(to left, rgba(31, 78, 61, .35), transparent 60%);
+}
+body.dark .v-actions button {
+  background: rgba(255, 255, 255, .06);
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+body.dark .v-actions button:hover {
+  background: rgba(201, 162, 39, .15);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+body.dark .v-actions .play-btn {
+  background: var(--green);
+  color: #fff;
+}
 
-/* ===== تجاوب صغير جدًا ===== */
+/* ============================================================
+   التجاوب
+   ============================================================ */
+
+/* صغير جدًا */
 @media (max-width: 359px) {
   .continue-card { padding: 14px 14px; gap: 10px; }
   .cc-ico { width: 40px; height: 40px; font-size: 20px; }
@@ -315,16 +689,26 @@ body.dark .surah-row[data-type="Medinan"] .sr-type {
   .sr-meta { font-size: 11px; gap: 6px; }
   .sr-badge { font-size: 14px; }
   .ft { padding: 7px 16px; font-size: 12.5px; min-width: 68px; }
+  .mushaf-page { padding: 16px 12px; }
+  .v-text { font-size: 20px; line-height: 2; }
+  .verse { padding: 12px 12px; }
+  .v-actions button { width: 30px; height: 30px; font-size: 12px; }
+  .v-num { font-size: 16px; }
+  .bismillah { font-size: 22px; }
+  .surah-info h3 { font-size: 19px; }
 }
 
-/* ===== شاشات كبيرة ===== */
+/* متوسط */
 @media (min-width: 768px) {
+  .v-text { font-size: 27px; }
   .surah-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
 }
+
+/* كبير */
 @media (min-width: 1200px) {
   .surah-list {
     grid-template-columns: 1fr 1fr 1fr;

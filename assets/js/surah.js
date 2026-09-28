@@ -7,14 +7,14 @@ const BOOKMARKS_KEY = 'quran_bookmarks';
 const RECITER_KEY = 'quran_reciter';
 
 const RECITERS = {
-  Alafasy:                   { name: 'مشاري العفاسي',     slug: 'Alafasy' },
-  AbdulBaset:                { name: 'عبد الباسط (مرتل)', slug: 'AbdulBaset' },
-  Minshawy_Murattal_128kbps: { name: 'المنشاوي (مرتل)',   slug: 'Minshawy_Murattal_128kbps' },
-  Husary:                    { name: 'محمود خليل الحصري', slug: 'Husary' },
-  Sudais:                    { name: 'عبد الرحمن السديس', slug: 'Sudais' },
-  Maher:                     { name: 'ماهر المعيقلي',     slug: 'Maher' },
-  Ajamy:                     { name: 'أحمد بن علي العجمي',slug: 'Ajamy' },
-  Ghamadi:                   { name: 'سعد الغامدي',       slug: 'Ghamadi' },
+  Alafasy:                   { name: 'مشاري العفاسي',      slug: 'Alafasy' },
+  AbdulBaset:                { name: 'عبد الباسط (مرتل)',  slug: 'AbdulBaset' },
+  Minshawy_Murattal_128kbps: { name: 'المنشاوي (مرتل)',    slug: 'Minshawy_Murattal_128kbps' },
+  Husary:                    { name: 'محمود خليل الحصري',  slug: 'Husary' },
+  Sudais:                    { name: 'عبد الرحمن السديس',  slug: 'Sudais' },
+  Maher:                     { name: 'ماهر المعيقلي',      slug: 'Maher' },
+  Ajamy:                     { name: 'أحمد بن علي العجمي', slug: 'Ajamy' },
+  Ghamadi:                   { name: 'سعد الغامدي',        slug: 'Ghamadi' },
 };
 
 let CURRENT = null;
@@ -24,6 +24,7 @@ function toAr(s) {
   const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
   return String(s).replace(/[0-9]/g, d => ar[d]);
 }
+
 function formatTime(sec) {
   if (!sec || isNaN(sec)) return '٠:٠٠';
   const m = Math.floor(sec / 60);
@@ -31,13 +32,17 @@ function formatTime(sec) {
   return toAr(`${m}:${String(s).padStart(2, '0')}`);
 }
 
-function getBookmarks() { return LS.get(BOOKMARKS_KEY, []); }
+function getBookmarks() {
+  return LS.get(BOOKMARKS_KEY, []);
+}
+
 function toggleBookmark(ayah) {
   const list = getBookmarks();
   const idx = list.findIndex(b => b.surah === CURRENT.number && b.ayah === ayah);
   if (idx !== -1) list.splice(idx, 1);
   else list.push({ surah: CURRENT.number, surahName: CURRENT.name, ayah, time: Date.now() });
   LS.set(BOOKMARKS_KEY, list);
+  return idx === -1; // يُرجع true إذا أُضيف
 }
 
 /* ---------- جلب السورة ---------- */
@@ -110,6 +115,11 @@ function renderSurah(data) {
   const versesBox = document.getElementById('verses');
   versesBox.innerHTML = '';
 
+  // قراءة المفضلة الحالية
+  const bookmarks = getBookmarks();
+  const isBookmarked = (surahNum, ayahNum) =>
+    bookmarks.some(b => b.surah === surahNum && b.ayah === ayahNum);
+
   data.ayahs.forEach((ayah, idx) => {
     let text = ayah.text;
     if (idx === 0 && data.number !== 1 && data.number !== 9) {
@@ -122,46 +132,87 @@ function renderSurah(data) {
     el.dataset.ayah = ayah.numberInSurah;
 
     el.innerHTML = `
-      <div class="v-actions">
-        <button class="play-btn" title="استماع">▶</button>
-        <button class="bookmark-btn" title="مفضلة">🔖</button>
-        <button class="copy-btn" title="نسخ">📋</button>
-        <button class="share-btn" title="مشاركة">📤</button>
+      <div class="v-body">
+        <p class="v-text">
+          ${text}
+          <span class="v-num">${toAr(ayah.numberInSurah)}</span>
+        </p>
+        <div class="v-actions">
+          <button class="play-btn" data-tip="استماع" aria-label="استماع">
+            <span class="va-ico">▶</span>
+          </button>
+          <button class="bookmark-btn ${isBookmarked(data.number, ayah.numberInSurah) ? 'active' : ''}"
+                  data-tip="مفضلة" aria-label="مفضلة">
+            <span class="va-ico">🔖</span>
+          </button>
+          <button class="copy-btn" data-tip="نسخ" aria-label="نسخ">
+            <span class="va-ico">📋</span>
+          </button>
+          <button class="share-btn" data-tip="مشاركة" aria-label="مشاركة">
+            <span class="va-ico">📤</span>
+          </button>
+        </div>
       </div>
-      <p class="v-text">
-        ${text}
-        <span class="v-num">${toAr(ayah.numberInSurah)}</span>
-      </p>
     `;
 
-    el.querySelector('.play-btn').addEventListener('click', () => {
+    // ===== إظهار الأزرار عند لمس/الضغط على نص الآية =====
+    el.querySelector('.v-text').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isActive = el.classList.contains('active');
+      document.querySelectorAll('.verse.active').forEach(v => v.classList.remove('active'));
+      if (!isActive) el.classList.add('active');
+    });
+
+    // ===== زر الاستماع =====
+    el.querySelector('.play-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      // إزالة تشغيل الآيات الأخرى
+      document.querySelectorAll('.verse.playing').forEach(v => v.classList.remove('playing'));
+      el.classList.add('playing');
       playAyah(data.number, ayah.numberInSurah);
     });
 
+    // ===== المفضلة =====
     el.querySelector('.bookmark-btn').addEventListener('click', (e) => {
-      toggleBookmark(ayah.numberInSurah);
-      e.target.classList.toggle('active');
+      e.stopPropagation();
+      const added = toggleBookmark(ayah.numberInSurah);
+      e.currentTarget.classList.toggle('active', added);
     });
 
-    el.querySelector('.copy-btn').addEventListener('click', async () => {
+    // ===== النسخ =====
+    el.querySelector('.copy-btn').addEventListener('click', async (e) => {
+      e.stopPropagation();
       const t = `${text} (${data.arabicName || data.name}: ${toAr(ayah.numberInSurah)})`;
-      await navigator.clipboard.writeText(t);
-      alert('تم النسخ ✅');
+      try {
+        await navigator.clipboard.writeText(t);
+        const btn = e.currentTarget;
+        const original = btn.innerHTML;
+        btn.innerHTML = '<span class="va-ico">✓</span>';
+        setTimeout(() => { btn.innerHTML = original; }, 1200);
+      } catch {}
     });
 
-    el.querySelector('.share-btn').addEventListener('click', async () => {
+    // ===== المشاركة =====
+    el.querySelector('.share-btn').addEventListener('click', async (e) => {
+      e.stopPropagation();
       const t = `${text}\n\n[${data.arabicName || data.name}: ${toAr(ayah.numberInSurah)}]`;
       if (navigator.share) {
         try { await navigator.share({ title: data.name, text: t }); } catch {}
       } else {
-        await navigator.clipboard.writeText(t);
-        alert('تم النسخ ✅');
+        try {
+          await navigator.clipboard.writeText(t);
+          const btn = e.currentTarget;
+          const original = btn.innerHTML;
+          btn.innerHTML = '<span class="va-ico">✓</span>';
+          setTimeout(() => { btn.innerHTML = original; }, 1200);
+        } catch {}
       }
     });
 
     versesBox.appendChild(el);
   });
 
+  // ===== أزرار السورة السابقة/التالية =====
   const prevBtn = document.getElementById('prevSurah');
   const nextBtn = document.getElementById('nextSurah');
   prevBtn.disabled = data.number <= 1;
@@ -169,6 +220,7 @@ function renderSurah(data) {
   prevBtn.onclick = () => location.href = `surah.html?n=${data.number - 1}`;
   nextBtn.onclick = () => location.href = `surah.html?n=${data.number + 1}`;
 
+  // ===== حفظ آخر قراءة =====
   const params = new URLSearchParams(location.search);
   const ayahParam = parseInt(params.get('ayah'), 10) || 1;
   LS.set(LAST_READ_KEY, {
@@ -189,6 +241,7 @@ function renderSurah(data) {
     }, 300);
   }
 
+  // ===== قائمة العمليات =====
   document.getElementById('surahMenuBtn').onclick = () => {
     const curReciter = LS.get(RECITER_KEY, 'Alafasy');
     const choice = prompt(
@@ -217,6 +270,7 @@ function changeReciter() {
   }
 }
 
+/* ---------- الصوت ---------- */
 function initAudio() {
   if (audioEl) return;
   audioEl = new Audio();
@@ -224,10 +278,13 @@ function initAudio() {
   audioEl.addEventListener('loadedmetadata', updateProgress);
   audioEl.addEventListener('ended', () => {
     document.getElementById('apPlay').textContent = '▶';
+    document.querySelectorAll('.verse.playing').forEach(v => v.classList.remove('playing'));
   });
 }
 
-function pad(n, len = 3) { return String(n).padStart(len, '0'); }
+function pad(n, len = 3) {
+  return String(n).padStart(len, '0');
+}
 
 function playAyah(surahNum, ayahNum) {
   initAudio();
@@ -238,7 +295,7 @@ function playAyah(surahNum, ayahNum) {
   audioEl.src = url;
   audioEl.play().catch(err => {
     console.error('فشل التشغيل:', err);
-    alert('⚠️ تعذّر تشغيل التلاوة.');
+    alert('⚠️ تعذّر تشغيل التلاوة. تحقق من الاتصال.');
   });
 
   document.getElementById('audioPlayer').style.display = 'flex';
@@ -263,7 +320,7 @@ function playFullSurah() {
   const url = `https://cdn.islamic.network/quran/audio-surah/128/${apiReciter}/${CURRENT.number}.mp3`;
 
   audioEl.src = url;
-  audioEl.play().catch(err => alert('⚠️ تعذّر تشغيل السورة'));
+  audioEl.play().catch(() => alert('⚠️ تعذّر تشغيل السورة'));
   document.getElementById('audioPlayer').style.display = 'flex';
   document.getElementById('apTitle').textContent = `سورة ${CURRENT.arabicName} (${RECITERS[reciter].name})`;
   document.getElementById('apPlay').textContent = '⏸';
@@ -284,15 +341,19 @@ function stopAudio() {
   if (audioEl) {
     audioEl.pause();
     document.getElementById('apPlay').textContent = '▶';
+    document.querySelectorAll('.verse.playing').forEach(v => v.classList.remove('playing'));
   }
 }
 
 async function copyFullSurah() {
   const text = CURRENT.ayahs.map(a => a.text).join(' ');
-  await navigator.clipboard.writeText(text);
-  alert('تم نسخ السورة ✅');
+  try {
+    await navigator.clipboard.writeText(text);
+    alert('تم نسخ السورة ✅');
+  } catch {}
 }
 
+/* ---------- التهيئة ---------- */
 async function initSurahPage() {
   const params = new URLSearchParams(location.search);
   const num = parseInt(params.get('n'), 10) || 1;
