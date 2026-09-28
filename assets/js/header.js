@@ -17,6 +17,7 @@
     { href: 'amin.html',            icon: '👑', label: 'وِرْدِي الأمين',  key: 'amin',     period: null },
     { href: 'calendar.html',        icon: '📅', label: 'التقويم',         key: 'calendar', period: null },
     { href: 'zakat.html',           icon: '💰', label: 'حساب الزكاة',     key: 'zakat',    period: null },
+    { href: 'tafsir.html', icon: '📖', label: 'تفسير القرآن', key: 'tafsir', period: null },
     { href: 'support.html',         icon: '💚', label: 'ادعمنا',          key: 'support',  period: null },
   ];
 
