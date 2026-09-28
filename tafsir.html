@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1F4E3D" />
+<meta name="description" content="تفسير القرآن الكريم — التفسير الميسر بأسلوب واضح وسهل لجميع الآيات." />
+<title>تفسير القرآن — وِرْدِي</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="stylesheet" href="assets/css/quran.css" />
+<link rel="stylesheet" href="assets/css/tafsir.css" />
+
+<link rel="manifest" href="manifest.json" />
+<link rel="stylesheet" href="assets/css/pwa.css" />
+</head>
+<body>
+
+<div class="app tafsir-app">
+  <div data-header-target></div>
+
+  <header class="athkar-header">
+    <button class="nav-btn" onclick="history.back()">↪</button>
+    <h2 id="tafsirPageTitle">تفسير القرآن</h2>
+    <button class="nav-btn" id="tafsirMenuBtn">⋯</button>
+  </header>
+
+  <div id="surahView">
+    <div class="tafsir-hero">
+      <span class="tafsir-badge">📖 التفسير الميسر</span>
+      <h2>تفسير القرآن الكريم</h2>
+      <p>اختر السورة لعرض تفسير جميع آياتها بأسلوب مبسط وواضح.</p>
+    </div>
+
+    <div class="tafsir-selector">
+      <label for="tafsirSource">المصدر:</label>
+      <select id="tafsirSource">
+        <option value="ar-tafsir-muyassar" selected>التفسير الميسر</option>
+        <option value="ar-tafsir-jalalayn">تفسير الجلالين</option>
+        <option value="ar-tafseer-al-saddi">تفسير السعدي</option>
+      </select>
+    </div>
+
+    <div class="search-box">
+      <span class="s-ico">🔍</span>
+      <input type="text" id="tafsirSearch" placeholder="ابحث عن سورة…" autocomplete="off" />
+      <button class="s-clear" id="tafsirClearSearch" style="display:none;">✕</button>
+    </div>
+
+    <div class="surah-list" id="tafsirSurahList">
+      <div class="loading">⏳ جارٍ تحميل السور…</div>
+    </div>
+  </div>
+
+  <div id="tafsirView" hidden>
+    <div class="tafsir-surah-info" id="tafsirSurahInfo"></div>
+
+    <div class="tafsir-progress">
+      <span>جارٍ تحميل التفسير…</span>
+      <span id="tafsirProgressCount">٠ / ٠</span>
+    </div>
+
+    <div class="tafsir-list" id="tafsirList"></div>
+
+    <div class="surah-nav">
+      <button class="sn-btn" id="tafsirPrevSurah">◀ السابقة</button>
+      <button class="sn-btn" id="tafsirBackToList">📋 القائمة</button>
+      <button class="sn-btn" id="tafsirNextSurah">التالية ▶</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/navbar.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/tafsir.js"></script>
+<script src="assets/js/seo.js"></script>
+<script src="assets/js/pwa.js"></script>
+<script src="assets/js/adhan.js"></script>
+</body>
+</html>

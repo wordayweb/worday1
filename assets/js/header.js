@@ -33,6 +33,7 @@
     if (path === 'amin.html') return 'amin';
     if (path === 'calendar.html') return 'calendar';
     if (path === 'zakat.html') return 'zakat';
+    if (path === 'tafsir.html') return 'tafsir';
     if (path === 'support.html') return 'support';
     return null;
   }
