@@ -499,7 +499,9 @@ img { max-width: 100%; height: auto; display: block; }
 
 .footer-version { text-align: center; color: var(--ink-soft); font-size: 12px; padding: 30px 0 12px; opacity: .7; font-weight: 500; }
 
-/* ===== الوضع الليلي ===== */
+/* ============================================================
+   🌙 الوضع الليلي — الأساسي
+   ============================================================ */
 body.dark {
   --cream: #101A16;
   --cream-2: #0C1411;
@@ -514,6 +516,90 @@ body.dark .top-logo img { mix-blend-mode: screen; filter: contrast(1.15) saturat
 body.dark .clock-line { background: var(--white); border-color: var(--line); color: var(--gold); }
 body.dark .bottom-nav { background: var(--white); border-top-color: var(--line); }
 body.dark .bn-item:hover { background: rgba(255, 255, 255, .04); }
+
+/* ============================================================
+   🌙 تحسينات إضافية للوضع الليلي
+   ============================================================ */
+
+/* هالة الشعار — إزالة السواد */
+body.dark .top-logo img {
+  filter: brightness(1.1) contrast(1.05)
+          drop-shadow(0 6px 18px rgba(201, 162, 39, .35));
+  background: transparent;
+}
+
+/* التاريخ والساعة — ألوان أوضح */
+body.dark .date-line {
+  color: #d4c08a;
+}
+body.dark .clock-line {
+  background: #1A241F;
+  border-color: var(--line);
+  color: var(--gold);
+}
+
+/* شرائح التنقل — أنعم على العين */
+body.dark .chip {
+  background: #1A241F;
+  border-color: var(--line);
+  color: var(--ink);
+}
+body.dark .chip:hover {
+  border-color: var(--gold);
+  background: rgba(201, 162, 39, .08);
+}
+body.dark .chip.active {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+
+/* البطاقات الداكنة */
+body.dark .card {
+  background: #1A241F;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+}
+body.dark .card .info .lbl { color: var(--gold-light); }
+body.dark .card .info .val { color: var(--gold); }
+
+/* زر الوضع الليلي */
+body.dark .lang-bar .theme-toggle {
+  background: rgba(201, 162, 39, .15);
+  color: var(--gold);
+  border-color: rgba(201, 162, 39, .4);
+}
+body.dark .lang-bar .theme-toggle:hover {
+  background: rgba(201, 162, 39, .25);
+}
+
+/* القوائم في «المزيد» */
+body.dark .menu-item {
+  background: #1A241F;
+  color: var(--ink);
+}
+body.dark .menu-item:hover {
+  border-color: var(--gold);
+  background: rgba(201, 162, 39, .06);
+}
+body.dark .menu-section-title {
+  color: var(--gold);
+  border-bottom-color: var(--line);
+}
+
+/* الحقول في النماذج */
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background: #131C18;
+  color: var(--ink);
+  border-color: var(--line);
+}
+body.dark input:focus,
+body.dark select:focus,
+body.dark textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, .12);
+}
 
 /* ============================================================
    📱 استجابة كاملة
