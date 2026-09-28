@@ -76,7 +76,7 @@
 }
 
 /* ============================================================
-   🌐 شريط اللغة
+   🌐 شريط اللغة + زر الوضع الليلي
    ============================================================ */
 .lang-bar {
   display: flex;
@@ -114,6 +114,30 @@
   color: #fff;
   border-color: var(--green);
   box-shadow: 0 4px 12px rgba(31, 78, 61, .25);
+}
+
+/* ============================================================
+   🌙 زر الوضع الليلي السريع
+   ============================================================ */
+.lang-bar .theme-toggle {
+  padding: 7px 14px;
+  font-size: 15px;
+  line-height: 1;
+  min-width: auto;
+  transition: transform .2s, background .2s, color .2s;
+}
+.lang-bar .theme-toggle:hover {
+  transform: rotate(15deg) scale(1.05);
+}
+.lang-bar .theme-toggle:active {
+  transform: scale(.95);
+}
+
+/* في الوضع الليلي */
+body.dark .lang-bar .theme-toggle {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
 }
 
 /* ============================================================
@@ -242,6 +266,7 @@ body.dark .clock-line {
   .lang-bar { padding: 10px 12px 6px; gap: 8px; }
   .lang-btn { padding: 6px 14px; font-size: 11.5px; }
   .lang-sep { font-size: 12px; }
+  .lang-bar .theme-toggle { padding: 6px 10px; font-size: 13px; }
 
   .datetime-line { padding: 4px 12px 12px; }
   .date-line { font-size: 10.5px; }
@@ -269,6 +294,7 @@ body.dark .clock-line {
   .brand-tagline { font-size: 14.5px; }
 
   .lang-btn { padding: 6px 16px; font-size: 12px; }
+  .lang-bar .theme-toggle { padding: 6px 12px; font-size: 14px; }
 
   .date-line { font-size: 11.5px; }
   .clock-line { font-size: 12.5px; }
@@ -289,6 +315,7 @@ body.dark .clock-line {
   .brand-tagline { font-size: 15px; }
 
   .lang-btn { padding: 7px 18px; font-size: 12.5px; }
+  .lang-bar .theme-toggle { padding: 7px 13px; font-size: 14.5px; }
 
   .chip { padding: 7px 13px; font-size: 12.5px; }
 
@@ -305,6 +332,7 @@ body.dark .clock-line {
   .brand-tagline { font-size: 16px; }
 
   .lang-btn { padding: 8px 20px; font-size: 13px; }
+  .lang-bar .theme-toggle { padding: 8px 14px; font-size: 15px; }
   .chip { padding: 8px 15px; font-size: 13px; }
 
   .main-header.inner-page .top-logo img { width: clamp(90px, 18vw, 120px); }
@@ -322,6 +350,7 @@ body.dark .clock-line {
 
   .lang-bar { gap: 16px; }
   .lang-btn { padding: 8px 22px; font-size: 14px; }
+  .lang-bar .theme-toggle { padding: 8px 16px; font-size: 15px; }
 
   .date-line { font-size: 14px; }
   .clock-line { font-size: 15px; }
@@ -341,6 +370,7 @@ body.dark .clock-line {
   .title-divider { width: 140px; }
 
   .lang-btn { padding: 9px 24px; font-size: 15px; }
+  .lang-bar .theme-toggle { padding: 9px 18px; font-size: 16px; }
   .chips { justify-content: center; flex-wrap: wrap; }
   .chip { padding: 9px 18px; font-size: 13.5px; }
 
@@ -357,6 +387,7 @@ body.dark .clock-line {
   .brand-tagline { font-size: 22px; }
 
   .lang-btn { padding: 10px 26px; font-size: 15.5px; }
+  .lang-bar .theme-toggle { padding: 10px 20px; font-size: 17px; }
   .chips { justify-content: center; flex-wrap: wrap; }
   .chip { padding: 10px 20px; font-size: 14px; }
 
@@ -373,6 +404,7 @@ body.dark .clock-line {
   .brand-tagline { font-size: 24px; }
 
   .lang-btn { padding: 10px 28px; font-size: 16px; }
+  .lang-bar .theme-toggle { padding: 10px 22px; font-size: 18px; }
   .chip { padding: 10px 22px; font-size: 14.5px; }
 
   .date-line { font-size: 14px; }
@@ -391,6 +423,7 @@ body.dark .clock-line {
   .brand-tagline { font-size: 26px; }
 
   .lang-btn { padding: 11px 30px; font-size: 17px; }
+  .lang-bar .theme-toggle { padding: 11px 24px; font-size: 19px; }
   .chip { padding: 10px 24px; font-size: 15px; }
 
   .main-header.inner-page .top-logo img { width: clamp(140px, 11vw, 180px); }
@@ -406,6 +439,7 @@ body.dark .clock-line {
   .brand-tagline { font-size: 28px; }
 
   .lang-btn { padding: 12px 32px; font-size: 18px; }
+  .lang-bar .theme-toggle { padding: 12px 26px; font-size: 20px; }
   .chip { padding: 11px 26px; font-size: 15.5px; }
 
   .main-header.inner-page .top-logo img { width: clamp(150px, 10vw, 190px); }
@@ -422,6 +456,7 @@ body.dark .clock-line {
   .title-divider { width: 180px; }
 
   .lang-btn { padding: 13px 36px; font-size: 19px; }
+  .lang-bar .theme-toggle { padding: 13px 28px; font-size: 21px; }
   .chip { padding: 12px 28px; font-size: 16px; }
 
   .main-header.inner-page .top-logo img { width: clamp(160px, 9vw, 210px); }
@@ -441,6 +476,7 @@ body.dark .clock-line {
 
   .lang-bar { padding: 6px 12px 4px; gap: 10px; }
   .lang-btn { padding: 5px 14px; font-size: 11.5px; }
+  .lang-bar .theme-toggle { padding: 5px 12px; font-size: 13px; }
 
   .datetime-line { display: none; }
 

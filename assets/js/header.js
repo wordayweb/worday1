@@ -64,6 +64,8 @@
           <button class="lang-btn" id="langAr" type="button">العربية</button>
           <span class="lang-sep">•</span>
           <button class="lang-btn" id="langEn" type="button">English</button>
+          <span class="lang-sep">•</span>
+          <button class="lang-btn theme-toggle" id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" title="تبديل الوضع الليلي">🌙</button>
         </div>
 
         <div class="datetime-line">
@@ -151,6 +153,36 @@
     });
   }
 
+  /* ============ زر الوضع الليلي ============ */
+  function initThemeToggle() {
+    const btn = document.getElementById('themeToggle');
+    if (!btn) return;
+
+    /* قراءة الحالة المحفوظة — نفس المفتاح الذي يستخدمه settings.js */
+    const saved = localStorage.getItem('wirdi_dark') || localStorage.getItem('dark');
+
+    let isDark = false;
+    if (saved === 'true' || saved === '1' || saved === '"dark"') {
+      isDark = true;
+    } else if (saved === null) {
+      /* احترام تفضيل النظام */
+      isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    /* تطبيق الحالة */
+    if (isDark) document.body.classList.add('dark');
+    btn.textContent = isDark ? '☀️' : '🌙';
+
+    /* التفاعل */
+    btn.addEventListener('click', () => {
+      const nowDark = document.body.classList.toggle('dark');
+      btn.textContent = nowDark ? '☀️' : '🌙';
+      localStorage.setItem('wirdi_dark', String(nowDark));
+      /* مزامنة مع settings.js القديم */
+      localStorage.setItem('dark', String(nowDark));
+    });
+  }
+
   function injectHeader() {
     const target = document.querySelector('[data-header-target]');
     if (!target) return;
@@ -162,6 +194,7 @@
     target.innerHTML = buildHeader();
     initDatesAndClock();
     initLang();
+    initThemeToggle();
   }
 
   if (document.readyState === 'loading') {
