@@ -1,23 +1,20 @@
 /* ============================================================
-   tafsir.js — صفحة تفسير القرآن (v2)
-   يستخدم alquran.cloud للتفسير + quran.com للسور
+   tafsir.js — صفحة تفسير القرآن (v3)
    ============================================================ */
 
 const QURAN_API_V4 = 'https://api.quran.com/api/v4';
 const ALQURAN_API = 'https://api.alquran.cloud/v1';
-const TAFSIR_SOURCE_KEY = 'wirdi_tafsir_source';
-const TAFSIR_CACHE_PREFIX = 'tafsir_cache_v2_';
+const TAFSIR_SOURCE_KEY = 'wirdi_tafsir_source_v3';
+const CACHE_PREFIX = 'tafsir_v3_';
 const CACHE_TTL = 1000 * 60 * 60 * 24 * 7;
 
-/* خريطة المصادر → اسم الإصدار في alquran.cloud */
 const TAFSIR_SLUGS = {
-  'ar-tafsir-muyassar': 'ar.muyassar',
-  'ar-tafsir-jalalayn': 'ar.jalalayn',
+  'muyassar': 'ar.muyassar',
+  'jalalayn': 'ar.jalalayn',
 };
 
 let ALL_SURAHS = [];
-let CURRENT_SURAH = null;
-let CURRENT_SOURCE = 'ar-tafsir-muyassar';
+let CURRENT_SOURCE = 'muyassar';
 let searchQuery = '';
 
 function toAr(s) {
@@ -25,16 +22,13 @@ function toAr(s) {
   return String(s).replace(/[0-9]/g, d => ar[d]);
 }
 
-/* ============================================================
-   الكاش
-   ============================================================ */
 function getCache(key) {
   try {
-    const raw = localStorage.getItem(TAFSIR_CACHE_PREFIX + key);
+    const raw = localStorage.getItem(CACHE_PREFIX + key);
     if (!raw) return null;
     const obj = JSON.parse(raw);
     if (Date.now() - obj.time > CACHE_TTL) {
-      localStorage.removeItem(TAFSIR_CACHE_PREFIX + key);
+      localStorage.removeItem(CACHE_PREFIX + key);
       return null;
     }
     return obj.data;
@@ -43,7 +37,7 @@ function getCache(key) {
 
 function setCache(key, data) {
   try {
-    localStorage.setItem(TAFSIR_CACHE_PREFIX + key, JSON.stringify({
+    localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({
       time: Date.now(),
       data,
     }));
@@ -51,11 +45,10 @@ function setCache(key, data) {
 }
 
 /* ============================================================
-   جلب قائمة السور (quran.com)
+   قائمة السور — quran.com
    ============================================================ */
 async function fetchSurahs() {
-  const cacheKey = 'surahs_v2';
-  const cached = getCache(cacheKey);
+  const cached = getCache('surahs');
   if (cached) return cached;
 
   const res = await fetch(`${QURAN_API_V4}/chapters?language=ar`);
@@ -70,7 +63,7 @@ async function fetchSurahs() {
     revelationType: c.revelation_place === 'makkah' ? 'مكية' : 'مدنية',
   }));
 
-  setCache(cacheKey, surahs);
+  setCache('surahs', surahs);
   return surahs;
 }
 
@@ -115,11 +108,10 @@ function renderSurahList() {
 }
 
 /* ============================================================
-   جلب سورة كاملة (quran.com)
+   سورة كاملة — quran.com
    ============================================================ */
 async function fetchSurahVerses(surahNum) {
-  const cacheKey = `surah_${surahNum}_v2`;
-  const cached = getCache(cacheKey);
+  const cached = getCache(`surah_${surahNum}`);
   if (cached) return cached;
 
   const [infoRes, versesRes] = await Promise.all([
@@ -143,17 +135,16 @@ async function fetchSurahVerses(surahNum) {
       return {
         numberInSurah: a,
         text: v.text_uthmani,
-        verse_key: v.verse_key,
       };
     }),
   };
 
-  setCache(cacheKey, surah);
+  setCache(`surah_${surahNum}`, surah);
   return surah;
 }
 
 /* ============================================================
-   جلب تفسير آية — من alquran.cloud
+   تفسير آية — alquran.cloud
    ============================================================ */
 async function fetchTafsir(surahNum, ayahNum) {
   const key = `${CURRENT_SOURCE}_${surahNum}_${ayahNum}`;
@@ -162,8 +153,6 @@ async function fetchTafsir(surahNum, ayahNum) {
 
   const slug = TAFSIR_SLUGS[CURRENT_SOURCE] || 'ar.muyassar';
   const url = `${ALQURAN_API}/ayah/${surahNum}:${ayahNum}/${slug}`;
-
-  console.log('📖 جلب التفسير:', url);
 
   const res = await fetch(url);
   if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -197,7 +186,6 @@ async function renderTafsirView(surahNum) {
 
   try {
     const surah = await fetchSurahVerses(surahNum);
-    CURRENT_SURAH = surah;
 
     pageTitle.textContent = `تفسير ${surah.fullName}`;
     document.title = `تفسير ${surah.fullName} — وِرْدِي`;
@@ -222,7 +210,7 @@ async function renderTafsirView(surahNum) {
             آية <span class="num">${toAr(ayah.numberInSurah)}</span>
           </span>
           <div class="tafsir-card-actions">
-            <button class="copy-btn" title="نسخ التفسير" aria-label="نسخ">
+            <button class="copy-btn" title="نسخ" aria-label="نسخ">
               <span>📋</span>
             </button>
             <button class="open-quran-btn" title="فتح في المصحف" aria-label="فتح">
@@ -275,7 +263,6 @@ async function renderTafsirView(surahNum) {
           const paragraphs = text.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
           box.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
         } catch (err) {
-          console.warn('فشل تفسير', ayah.numberInSurah, err);
           box.innerHTML = '<div class="tafsir-error">⚠️ تعذّر تحميل التفسير لهذه الآية</div>';
         } finally {
           loaded++;
@@ -298,7 +285,7 @@ async function renderTafsirView(surahNum) {
   } catch (e) {
     console.error(e);
     infoBox.innerHTML = '';
-    listBox.innerHTML = '<div class="loading">❌ تعذّر تحميل التفسير. تحقق من الاتصال.</div>';
+    listBox.innerHTML = '<div class="loading">❌ تعذّر تحميل التفسير.</div>';
     progress.hidden = true;
   }
 }
@@ -320,7 +307,7 @@ async function initTafsirPage() {
       const num = parseInt(params.get('n'), 10);
       if (num) {
         Object.keys(localStorage)
-          .filter(k => k.startsWith(TAFSIR_CACHE_PREFIX))
+          .filter(k => k.startsWith(CACHE_PREFIX))
           .forEach(k => localStorage.removeItem(k));
         location.reload();
       }
@@ -331,7 +318,6 @@ async function initTafsirPage() {
     ALL_SURAHS = await fetchSurahs();
     renderSurahList();
   } catch (e) {
-    console.error(e);
     document.getElementById('tafsirSurahList').innerHTML =
       '<div class="loading">❌ تعذّر تحميل السور.</div>';
   }
