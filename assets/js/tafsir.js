@@ -10,6 +10,18 @@ const CACHE_TTL = 1000 * 60 * 60 * 24 * 7;
 let ALL_SURAHS = [];
 let CURRENT_SURAH = null;
 let CURRENT_SOURCE = 'ar-tafsir-muyassar';
+
+/* خريطة مبدئية للتفاسير — تُحدَّث ديناميكيًا من API */
+let TAFSIR_ID_MAP = {
+  'ar-tafsir-muyassar':      169,
+  'ar-tafsir-jalalayn':      168,
+  'ar-tafseer-al-saddi':     91,
+  'ar-tafsir-ibn-kathir':    164,
+  'ar-tafsir-tabari':        166,
+  'ar-tafsir-qurtubi':       90,
+  'ar-tafsir-baghawi':       94,
+};
+let TAFSIR_ID_MAP_LOADED = false;
 let searchQuery = '';
 
 function toAr(s) {
@@ -136,11 +148,31 @@ async function fetchSurahVerses(surahNum) {
 }
 
 async function fetchTafsir(surahNum, ayahNum) {
+/* تحميل خريطة الأسماء ← الأرقام من API */
+async function loadTafsirIds() {
+  if (TAFSIR_ID_MAP_LOADED) return;
+  try {
+    const res = await fetch('https://api.quran.com/api/v4/resources/tafsirs');
+    const data = await res.json();
+    if (data.tafsirs && data.tafsirs.length) {
+      const found = {};
+      data.tafsirs.forEach(t => {
+        if (t.slug) found[t.slug] = t.id;
+      });
+      console.log('📖 التفاسير المتوفرة من API:', found);
+      TAFSIR_ID_MAP = { ...TAFSIR_ID_MAP, ...found };
+      TAFSIR_ID_MAP_LOADED = true;
+    }
+  } catch (e) {
+    console.warn('⚠️ فشل تحميل قائمة التفاسير:', e);
+  }
+}
+
   const key = `${CURRENT_SOURCE}_${surahNum}_${ayahNum}`;
   const cached = getCache(key);
   if (cached) return cached;
 
-  const url = `${QURAN_API_V4}/tafsirs/${CURRENT_SOURCE}/by_ayah/${surahNum}:${ayahNum}?language=ar`;
+  await loadTafsirIds(); const tafsirId = TAFSIR_ID_MAP[CURRENT_SOURCE] || 169; const url = `${QURAN_API_V4}/tafsirs/${tafsirId}/by_ayah/${surahNum}:${ayahNum}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error('HTTP ' + res.status);
 
