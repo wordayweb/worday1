@@ -50,27 +50,38 @@ function toggleBookmark(ayah) {
    ============================================================ */
 async function fetchMushafPosition(surahNum, lastAyah) {
   try {
-    const [firstRes, lastRes] = await Promise.all([
-      fetch(`${QURAN_API_V4}/verses/by_key/${surahNum}:1?fields=page_number,juz_number,hizb_number`),
-      fetch(`${QURAN_API_V4}/verses/by_key/${surahNum}:${lastAyah}?fields=page_number,juz_number,hizb_number`)
-    ]);
+    const url1 = `${QURAN_API_V4}/verses/by_key/${surahNum}:1?fields=page_number,juz_number,hizb_number`;
+    const url2 = `${QURAN_API_V4}/verses/by_key/${surahNum}:${lastAyah}?fields=page_number,juz_number,hizb_number`;
 
+    const [firstRes, lastRes] = await Promise.all([fetch(url1), fetch(url2)]);
     const firstData = await firstRes.json();
     const lastData  = await lastRes.json();
 
-    const f = firstData.verse || {};
-    const l = lastData.verse  || {};
+    // طباعة الاستجابة للتشخيص
+    console.log('📖 أول آية:', firstData);
+    console.log('📖 آخر آية:', lastData);
 
-    return {
-      juzStart:  f.juz_number  || 1,
-      juzEnd:    l.juz_number  || f.juz_number || 1,
-      pageStart: f.page_number || 1,
-      pageEnd:   l.page_number || f.page_number || 1,
-      hizbStart: f.hizb_number || 1,
-      hizbEnd:   l.hizb_number || f.hizb_number || 1,
+    // احتياط: قد تأتي داخل verse أو verses[0]
+    const f = firstData.verse || (firstData.verses && firstData.verses[0]) || {};
+    const l = lastData.verse  || (lastData.verses  && lastData.verses[0])  || {};
+
+    const pick = (v, ...keys) => {
+      for (const k of keys) {
+        if (v[k] !== undefined && v[k] !== null) return v[k];
+      }
+      return null;
     };
+
+    const juzStart  = pick(f, 'juz_number', 'juz')  || 1;
+    const juzEnd    = pick(l, 'juz_number', 'juz')  || juzStart;
+    const pageStart = pick(f, 'page_number', 'page') || 1;
+    const pageEnd   = pick(l, 'page_number', 'page') || pageStart;
+    const hizbStart = pick(f, 'hizb_number', 'hizb') || 1;
+    const hizbEnd   = pick(l, 'hizb_number', 'hizb') || hizbStart;
+
+    return { juzStart, juzEnd, pageStart, pageEnd, hizbStart, hizbEnd };
   } catch (e) {
-    console.warn('فشل جلب موقع المصحف:', e);
+    console.error('❌ فشل جلب موقع المصحف:', e);
     return null;
   }
 }
