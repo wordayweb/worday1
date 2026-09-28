@@ -42,12 +42,51 @@ function toggleBookmark(ayah) {
   if (idx !== -1) list.splice(idx, 1);
   else list.push({ surah: CURRENT.number, surahName: CURRENT.name, ayah, time: Date.now() });
   LS.set(BOOKMARKS_KEY, list);
-  return idx === -1; // يُرجع true إذا أُضيف
+  return idx === -1;
+}
+
+/* ============================================================
+   جلب موقع السورة في المصحف (الجزء والصفحة والحزب)
+   ============================================================ */
+async function fetchMushafPosition(surahNum, lastAyah) {
+  try {
+    const [firstRes, lastRes] = await Promise.all([
+      fetch(`${QURAN_API_V4}/verses/by_key/${surahNum}:1?fields=page_number,juz_number,hizb_number`),
+      fetch(`${QURAN_API_V4}/verses/by_key/${surahNum}:${lastAyah}?fields=page_number,juz_number,hizb_number`)
+    ]);
+
+    const firstData = await firstRes.json();
+    const lastData  = await lastRes.json();
+
+    const f = firstData.verse || {};
+    const l = lastData.verse  || {};
+
+    return {
+      juzStart:  f.juz_number  || 1,
+      juzEnd:    l.juz_number  || f.juz_number || 1,
+      pageStart: f.page_number || 1,
+      pageEnd:   l.page_number || f.page_number || 1,
+      hizbStart: f.hizb_number || 1,
+      hizbEnd:   l.hizb_number || f.hizb_number || 1,
+    };
+  } catch (e) {
+    console.warn('فشل جلب موقع المصحف:', e);
+    return null;
+  }
+}
+
+/* ---------- عرض شريط المصحف ---------- */
+function renderMushafBar(pos) {
+  if (!pos) return;
+  const fmt = (a, b) => a === b ? toAr(a) : `${toAr(a)} - ${toAr(b)}`;
+  const $ = id => document.getElementById(id);
+  if ($('mbJuz'))  $('mbJuz').textContent  = fmt(pos.juzStart,  pos.juzEnd);
+  if ($('mbPage')) $('mbPage').textContent = fmt(pos.pageStart, pos.pageEnd);
+  if ($('mbHizb')) $('mbHizb').textContent = fmt(pos.hizbStart, pos.hizbEnd);
 }
 
 /* ---------- جلب السورة ---------- */
 async function fetchSurah(number) {
-  // المصدر الرسمي
   try {
     const infoRes = await fetch(`${QURAN_API_V4}/chapters/${number}?language=ar`);
     const infoData = await infoRes.json();
@@ -80,7 +119,6 @@ async function fetchSurah(number) {
     console.warn('المصدر الرسمي فشل، نستخدم الاحتياطي:', e);
   }
 
-  // الاحتياطي
   const res = await fetch(`${QURAN_FALLBACK}/surah/${number}/quran-uthmani`);
   const data = await res.json();
   if (data.code !== 200) throw new Error('فشل جلب السورة');
@@ -115,7 +153,6 @@ function renderSurah(data) {
   const versesBox = document.getElementById('verses');
   versesBox.innerHTML = '';
 
-  // قراءة المفضلة الحالية
   const bookmarks = getBookmarks();
   const isBookmarked = (surahNum, ayahNum) =>
     bookmarks.some(b => b.surah === surahNum && b.ayah === ayahNum);
@@ -155,7 +192,6 @@ function renderSurah(data) {
       </div>
     `;
 
-    // ===== إظهار الأزرار عند لمس/الضغط على نص الآية =====
     el.querySelector('.v-text').addEventListener('click', (e) => {
       e.stopPropagation();
       const isActive = el.classList.contains('active');
@@ -163,23 +199,19 @@ function renderSurah(data) {
       if (!isActive) el.classList.add('active');
     });
 
-    // ===== زر الاستماع =====
     el.querySelector('.play-btn').addEventListener('click', (e) => {
       e.stopPropagation();
-      // إزالة تشغيل الآيات الأخرى
       document.querySelectorAll('.verse.playing').forEach(v => v.classList.remove('playing'));
       el.classList.add('playing');
       playAyah(data.number, ayah.numberInSurah);
     });
 
-    // ===== المفضلة =====
     el.querySelector('.bookmark-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       const added = toggleBookmark(ayah.numberInSurah);
       e.currentTarget.classList.toggle('active', added);
     });
 
-    // ===== النسخ =====
     el.querySelector('.copy-btn').addEventListener('click', async (e) => {
       e.stopPropagation();
       const t = `${text} (${data.arabicName || data.name}: ${toAr(ayah.numberInSurah)})`;
@@ -192,7 +224,6 @@ function renderSurah(data) {
       } catch {}
     });
 
-    // ===== المشاركة =====
     el.querySelector('.share-btn').addEventListener('click', async (e) => {
       e.stopPropagation();
       const t = `${text}\n\n[${data.arabicName || data.name}: ${toAr(ayah.numberInSurah)}]`;
@@ -212,7 +243,6 @@ function renderSurah(data) {
     versesBox.appendChild(el);
   });
 
-  // ===== أزرار السورة السابقة/التالية =====
   const prevBtn = document.getElementById('prevSurah');
   const nextBtn = document.getElementById('nextSurah');
   prevBtn.disabled = data.number <= 1;
@@ -220,7 +250,6 @@ function renderSurah(data) {
   prevBtn.onclick = () => location.href = `surah.html?n=${data.number - 1}`;
   nextBtn.onclick = () => location.href = `surah.html?n=${data.number + 1}`;
 
-  // ===== حفظ آخر قراءة =====
   const params = new URLSearchParams(location.search);
   const ayahParam = parseInt(params.get('ayah'), 10) || 1;
   LS.set(LAST_READ_KEY, {
@@ -241,7 +270,6 @@ function renderSurah(data) {
     }, 300);
   }
 
-  // ===== قائمة العمليات =====
   document.getElementById('surahMenuBtn').onclick = () => {
     const curReciter = LS.get(RECITER_KEY, 'Alafasy');
     const choice = prompt(
@@ -361,6 +389,11 @@ async function initSurahPage() {
   try {
     const data = await fetchSurah(num);
     renderSurah(data);
+
+    // ✅ جلب وعرض موقع السورة في المصحف
+    const lastAyah = data.ayahs.length;
+    const pos = await fetchMushafPosition(num, lastAyah);
+    renderMushafBar(pos);
 
     document.getElementById('apPlay').addEventListener('click', () => {
       if (!audioEl) return;
