@@ -49,41 +49,74 @@ function toggleBookmark(ayah) {
    جلب موقع السورة في المصحف (الجزء والصفحة والحزب)
    ============================================================ */
 async function fetchMushafPosition(surahNum, lastAyah) {
+  const pick = (obj, ...keys) => {
+    for (const k of keys) {
+      if (obj && obj[k] !== undefined && obj[k] !== null) return obj[k];
+    }
+    return null;
+  };
+
+  /* ===== المحاولة 1: verses/by_chapter ===== */
   try {
-    const url1 = `${QURAN_API_V4}/verses/by_key/${surahNum}:1?fields=page_number,juz_number,hizb_number`;
-    const url2 = `${QURAN_API_V4}/verses/by_key/${surahNum}:${lastAyah}?fields=page_number,juz_number,hizb_number`;
+    const url = `${QURAN_API_V4}/verses/by_chapter/${surahNum}?fields=page_number,juz_number,hizb_number&per_page=300`;
+    const res = await fetch(url);
+    const data = await res.json();
 
-    const [firstRes, lastRes] = await Promise.all([fetch(url1), fetch(url2)]);
-    const firstData = await firstRes.json();
-    const lastData  = await lastRes.json();
+    console.log('📖 verses/by_chapter:', data);
 
-    // طباعة الاستجابة للتشخيص
-    console.log('📖 أول آية:', firstData);
-    console.log('📖 آخر آية:', lastData);
+    const verses = data.verses || [];
+    if (verses.length > 0) {
+      const first = verses[0];
+      const last  = verses[verses.length - 1];
 
-    // احتياط: قد تأتي داخل verse أو verses[0]
-    const f = firstData.verse || (firstData.verses && firstData.verses[0]) || {};
-    const l = lastData.verse  || (lastData.verses  && lastData.verses[0])  || {};
+      const juzStart  = pick(first, 'juz_number', 'juz')   || 1;
+      const juzEnd    = pick(last,  'juz_number', 'juz')   || juzStart;
+      const pageStart = pick(first, 'page_number', 'page') || 1;
+      const pageEnd   = pick(last,  'page_number', 'page') || pageStart;
+      const hizbStart = pick(first, 'hizb_number', 'hizb') || 1;
+      const hizbEnd   = pick(last,  'hizb_number', 'hizb') || hizbStart;
 
-    const pick = (v, ...keys) => {
-      for (const k of keys) {
-        if (v[k] !== undefined && v[k] !== null) return v[k];
+      if (pageStart !== 1 || juzStart !== 1) {
+        return { juzStart, juzEnd, pageStart, pageEnd, hizbStart, hizbEnd };
       }
-      return null;
-    };
+    }
+  } catch (e) {
+    console.warn('⚠️ verses/by_chapter فشل:', e);
+  }
 
-    const juzStart  = pick(f, 'juz_number', 'juz')  || 1;
-    const juzEnd    = pick(l, 'juz_number', 'juz')  || juzStart;
-    const pageStart = pick(f, 'page_number', 'page') || 1;
-    const pageEnd   = pick(l, 'page_number', 'page') || pageStart;
-    const hizbStart = pick(f, 'hizb_number', 'hizb') || 1;
-    const hizbEnd   = pick(l, 'hizb_number', 'hizb') || hizbStart;
+  /* ===== المحاولة 2: chapters/{n} ===== */
+  try {
+    const url = `${QURAN_API_V4}/chapters/${surahNum}?language=ar`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    console.log('📖 chapters:', data);
+
+    const chapter = data.chapter || {};
+    const pages = chapter.pages || [];
+    const pageStart = pages.length > 0 ? pages[0] : 1;
+    const pageEnd   = pages.length > 0 ? pages[pages.length - 1] : pageStart;
+
+    /* حساب الجزء تقريبيًا من الصفحة: كل جزء = 20 صفحة تقريبًا */
+    const juzStart = Math.max(1, Math.ceil(pageStart / 20));
+    const juzEnd   = Math.max(1, Math.ceil(pageEnd / 20));
+
+    /* الحزب = ضعف الجزء (كل جزء حزبان) */
+    const hizbStart = (juzStart - 1) * 2 + 1;
+    const hizbEnd   = (juzEnd - 1) * 2 + 2;
 
     return { juzStart, juzEnd, pageStart, pageEnd, hizbStart, hizbEnd };
   } catch (e) {
-    console.error('❌ فشل جلب موقع المصحف:', e);
-    return null;
+    console.warn('⚠️ chapters فشل:', e);
   }
+
+  /* ===== المحاولة 3: قيم افتراضية آمنة ===== */
+  console.warn('❌ جميع المحاولات فشلت، استخدام قيم افتراضية');
+  return {
+    juzStart: 1, juzEnd: 1,
+    pageStart: 1, pageEnd: 1,
+    hizbStart: 1, hizbEnd: 1
+  };
 }
 
 /* ---------- عرض شريط المصحف ---------- */
@@ -401,7 +434,7 @@ async function initSurahPage() {
     const data = await fetchSurah(num);
     renderSurah(data);
 
-    // ✅ جلب وعرض موقع السورة في المصحف
+    /* ✅ جلب وعرض موقع السورة في المصحف */
     const lastAyah = data.ayahs.length;
     const pos = await fetchMushafPosition(num, lastAyah);
     renderMushafBar(pos);
