@@ -1,27 +1,23 @@
 /* ============================================================
-   tafsir.js — صفحة تفسير القرآن
+   tafsir.js — صفحة تفسير القرآن (v2)
+   يستخدم alquran.cloud للتفسير + quran.com للسور
    ============================================================ */
 
 const QURAN_API_V4 = 'https://api.quran.com/api/v4';
+const ALQURAN_API = 'https://api.alquran.cloud/v1';
 const TAFSIR_SOURCE_KEY = 'wirdi_tafsir_source';
-const TAFSIR_CACHE_PREFIX = 'tafsir_cache_';
+const TAFSIR_CACHE_PREFIX = 'tafsir_cache_v2_';
 const CACHE_TTL = 1000 * 60 * 60 * 24 * 7;
+
+/* خريطة المصادر → اسم الإصدار في alquran.cloud */
+const TAFSIR_SLUGS = {
+  'ar-tafsir-muyassar': 'ar.muyassar',
+  'ar-tafsir-jalalayn': 'ar.jalalayn',
+};
 
 let ALL_SURAHS = [];
 let CURRENT_SURAH = null;
 let CURRENT_SOURCE = 'ar-tafsir-muyassar';
-
-/* خريطة مبدئية للتفاسير — تُحدَّث ديناميكيًا من API */
-let TAFSIR_ID_MAP = {
-  'ar-tafsir-muyassar':      169,
-  'ar-tafsir-jalalayn':      168,
-  'ar-tafseer-al-saddi':     91,
-  'ar-tafsir-ibn-kathir':    164,
-  'ar-tafsir-tabari':        166,
-  'ar-tafsir-qurtubi':       90,
-  'ar-tafsir-baghawi':       94,
-};
-let TAFSIR_ID_MAP_LOADED = false;
 let searchQuery = '';
 
 function toAr(s) {
@@ -29,6 +25,9 @@ function toAr(s) {
   return String(s).replace(/[0-9]/g, d => ar[d]);
 }
 
+/* ============================================================
+   الكاش
+   ============================================================ */
 function getCache(key) {
   try {
     const raw = localStorage.getItem(TAFSIR_CACHE_PREFIX + key);
@@ -51,8 +50,11 @@ function setCache(key, data) {
   } catch {}
 }
 
+/* ============================================================
+   جلب قائمة السور (quran.com)
+   ============================================================ */
 async function fetchSurahs() {
-  const cacheKey = 'surahs_v1';
+  const cacheKey = 'surahs_v2';
   const cached = getCache(cacheKey);
   if (cached) return cached;
 
@@ -112,8 +114,11 @@ function renderSurahList() {
   });
 }
 
+/* ============================================================
+   جلب سورة كاملة (quran.com)
+   ============================================================ */
 async function fetchSurahVerses(surahNum) {
-  const cacheKey = `surah_${surahNum}_v1`;
+  const cacheKey = `surah_${surahNum}_v2`;
   const cached = getCache(cacheKey);
   if (cached) return cached;
 
@@ -147,51 +152,41 @@ async function fetchSurahVerses(surahNum) {
   return surah;
 }
 
+/* ============================================================
+   جلب تفسير آية — من alquran.cloud
+   ============================================================ */
 async function fetchTafsir(surahNum, ayahNum) {
-/* تحميل خريطة الأسماء ← الأرقام من API */
-async function loadTafsirIds() {
-  if (TAFSIR_ID_MAP_LOADED) return;
-  try {
-    const res = await fetch('https://api.quran.com/api/v4/resources/tafsirs');
-    const data = await res.json();
-    if (data.tafsirs && data.tafsirs.length) {
-      const found = {};
-      data.tafsirs.forEach(t => {
-        if (t.slug) found[t.slug] = t.id;
-      });
-      console.log('📖 التفاسير المتوفرة من API:', found);
-      TAFSIR_ID_MAP = { ...TAFSIR_ID_MAP, ...found };
-      TAFSIR_ID_MAP_LOADED = true;
-    }
-  } catch (e) {
-    console.warn('⚠️ فشل تحميل قائمة التفاسير:', e);
-  }
-}
-
   const key = `${CURRENT_SOURCE}_${surahNum}_${ayahNum}`;
   const cached = getCache(key);
   if (cached) return cached;
 
-  await loadTafsirIds(); const tafsirId = TAFSIR_ID_MAP[CURRENT_SOURCE] || 169; const url = `${QURAN_API_V4}/tafsirs/${tafsirId}/by_ayah/${surahNum}:${ayahNum}`;
+  const slug = TAFSIR_SLUGS[CURRENT_SOURCE] || 'ar.muyassar';
+  const url = `${ALQURAN_API}/ayah/${surahNum}:${ayahNum}/${slug}`;
+
+  console.log('📖 جلب التفسير:', url);
+
   const res = await fetch(url);
   if (!res.ok) throw new Error('HTTP ' + res.status);
 
   const data = await res.json();
-  const tafsir = data.tafsir || (data.tafsirs && data.tafsirs[0]);
-  if (!tafsir || !tafsir.text) throw new Error('لا يوجد تفسير');
+  if (data.code !== 200 || !data.data || !data.data.text) {
+    throw new Error('لا يوجد تفسير');
+  }
 
-  const cleanText = tafsir.text.replace(/<[^>]*>/g, '').trim();
+  const cleanText = data.data.text.replace(/<[^>]*>/g, '').trim();
   setCache(key, cleanText);
   return cleanText;
 }
 
+/* ============================================================
+   عرض التفسير
+   ============================================================ */
 async function renderTafsirView(surahNum) {
   const surahView = document.getElementById('surahView');
   const tafsirView = document.getElementById('tafsirView');
   const infoBox = document.getElementById('tafsirSurahInfo');
   const listBox = document.getElementById('tafsirList');
   const progress = document.querySelector('.tafsir-progress');
-  const progressCount = document.getElementById('tafsirProgressCount');
   const pageTitle = document.getElementById('tafsirPageTitle');
 
   surahView.hidden = true;
@@ -268,7 +263,7 @@ async function renderTafsirView(surahNum) {
 
     let loaded = 0;
     const total = surah.ayahs.length;
-    const BATCH = 5;
+    const BATCH = 3;
 
     for (let i = 0; i < total; i += BATCH) {
       const batch = surah.ayahs.slice(i, i + BATCH);
@@ -308,9 +303,12 @@ async function renderTafsirView(surahNum) {
   }
 }
 
+/* ============================================================
+   التهيئة
+   ============================================================ */
 async function initTafsirPage() {
   const savedSource = localStorage.getItem(TAFSIR_SOURCE_KEY);
-  if (savedSource) CURRENT_SOURCE = savedSource;
+  if (savedSource && TAFSIR_SLUGS[savedSource]) CURRENT_SOURCE = savedSource;
 
   const selectBox = document.getElementById('tafsirSource');
   if (selectBox) {
@@ -322,7 +320,7 @@ async function initTafsirPage() {
       const num = parseInt(params.get('n'), 10);
       if (num) {
         Object.keys(localStorage)
-          .filter(k => k.startsWith(TAFSIR_CACHE_PREFIX + 'ar-'))
+          .filter(k => k.startsWith(TAFSIR_CACHE_PREFIX))
           .forEach(k => localStorage.removeItem(k));
         location.reload();
       }
