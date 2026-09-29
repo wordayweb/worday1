@@ -3,7 +3,7 @@
    ⚠️ عند أي تعديل: غيّر CACHE_NAME أدناه
    ============================================================ */
 
-const CACHE_NAME   = 'wirdi-v2609292800';
+const CACHE_NAME   = 'wirdi-v2609293100';
 const OFFLINE_URL  = './data/offline.html';
 
 const PRECACHE_URLS = [
@@ -28,6 +28,7 @@ const PRECACHE_URLS = [
   './settings.html',
   './manifest.json',
   './assets/css/style.css',
+  './assets/css/index.css',
   './assets/css/header.css',
   './assets/css/quran.css',
   './assets/css/share-image.css',
@@ -48,6 +49,7 @@ const PRECACHE_URLS = [
   './assets/css/zakat.css',
   './assets/css/pwa.css',
   './assets/js/app.js',
+  './assets/js/index.js',
   './assets/js/header.js',
   './assets/js/navbar.js',
   './assets/js/logo.js',

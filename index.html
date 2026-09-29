@@ -38,110 +38,217 @@
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/header.css" />
 <link rel="stylesheet" href="assets/css/smart-adhkar.css" />
+<link rel="stylesheet" href="assets/css/index.css" />
 <link rel="stylesheet" href="assets/css/pwa.css" />
 </head>
 <body>
 
-
 <div id="wirdi-live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
 <div class="app">
 
   <!-- ===== الهيدر الموحّد ===== -->
   <div data-header-target></div>
 
   <!-- ===== بطاقة الأذكار الذكية ===== -->
-  <section id="smartHero" class="fade-in"></section>
+  <section id="smartHero" class="fade-in" aria-label="أذكار الوقت الحالي"></section>
+
+  <!-- ===== شبكة لوحة المتابعة ===== -->
+  <div class="dashboard-grid">
+    <section class="streak-slot fade-in" id="streakSlot" aria-label="سلسلة الأيام"></section>
+
+    <section class="card tracker-card fade-in" aria-label="بطاقة الالتزام">
+      <div class="tracker-head">
+        <div class="progress-ring" id="progressRing">
+          <span id="progressTxt">٠٪</span>
+        </div>
+        <div class="headline">
+          <h3 id="dayGreeting">🌙 ليلة هادئة بذكر الله</h3>
+          <p>🔥 أنت ملتزم لليوم الـ <span id="streak">١</span> على التوالي</p>
+        </div>
+      </div>
+
+      <div class="tasks" id="tasks">
+        <label class="task"><span>الفجر</span><input type="checkbox" data-k="fajr" aria-label="الفجر"></label>
+        <label class="task"><span>الصباح</span><input type="checkbox" data-k="morning" aria-label="أذكار الصباح"></label>
+        <label class="task"><span>الصلوات</span><input type="checkbox" data-k="prayers" aria-label="الصلوات"></label>
+        <label class="task"><span>المساء</span><input type="checkbox" data-k="evening" aria-label="أذكار المساء"></label>
+        <label class="task"><span>الورد</span><input type="checkbox" data-k="wird" aria-label="الورد"></label>
+        <label class="task"><span>النوم</span><input type="checkbox" data-k="sleep" aria-label="أذكار النوم"></label>
+      </div>
+
+      <hr>
+
+      <div class="goal-row" onclick="setGoal()" role="button" tabindex="0" aria-label="تحديد هدف اليوم">
+        <span class="plus">+</span>
+        <span class="txt" id="goalTxt">لم يتم تحديد هدف بعد</span>
+        <span class="sq"></span>
+      </div>
+    </section>
+  </div>
 
   <!-- ===== واصل القراءة ===== -->
-  <section class="card resume fade-in">
-    <button class="btn-play" onclick="location.href='quran.html'">
-      <span class="tri"></span> انتقال
+  <section class="card resume fade-in" aria-label="واصل القراءة">
+    <button class="btn-play" onclick="location.href='quran.html'" aria-label="اذهب إلى آخر ما قرأت">
+      <span class="tri" aria-hidden="true"></span> انتقال
     </button>
     <div class="info">
       <div class="lbl">واصل القراءة</div>
       <div class="val" id="lastRead">سورة الجن — آية ٢٢</div>
     </div>
-    <div class="thumb">📖</div>
+    <div class="thumb" aria-hidden="true">📖</div>
   </section>
 
-  <!-- ===== بطاقة الالتزام ===== -->
-  <section class="card fade-in">
-    <div class="tracker-head">
-      <div class="progress-ring" id="progressRing">
-        <span id="progressTxt">٠٪</span>
-      </div>
-      <div class="headline">
-        <h3 id="dayGreeting">🌙 ليلة هادئة بذكر الله</h3>
-        <p>🔥 أنت ملتزم لليوم الـ <span id="streak">١</span> على التوالي</p>
-      </div>
-    </div>
+  <!-- =====================================================
+       📿 الورد اليومي
+       ===================================================== -->
+  <section class="section-group" aria-labelledby="groupWird">
+    <header class="group-head">
+      <h2 class="group-title" id="groupWird">
+        <span class="group-ico" aria-hidden="true">📿</span>
+        الورد اليومي
+      </h2>
+      <span class="group-line" aria-hidden="true"></span>
+    </header>
 
-    <div class="tasks" id="tasks">
-      <label class="task"><span>الفجر</span><input type="checkbox" data-k="fajr"></label>
-      <label class="task"><span>الصباح</span><input type="checkbox" data-k="morning"></label>
-      <label class="task"><span>الصلوات</span><input type="checkbox" data-k="prayers"></label>
-      <label class="task"><span>المساء</span><input type="checkbox" data-k="evening"></label>
-      <label class="task"><span>الورد</span><input type="checkbox" data-k="wird"></label>
-      <label class="task"><span>النوم</span><input type="checkbox" data-k="sleep"></label>
-    </div>
-
-    <hr>
-
-    <div class="goal-row" onclick="setGoal()">
-      <span class="plus">+</span>
-      <span class="txt" id="goalTxt">لم يتم تحديد هدف بعد</span>
-      <span class="sq"></span>
+    <div class="sections-grid">
+      <a href="athkar-morning.html" class="sec-card fade-in" data-period="morning" aria-label="أذكار الصباح">
+        <div class="bg" style="background:linear-gradient(160deg,#E4B94C,#A8871D);"></div>
+        <div class="overlay"><h4>🌅 أذكار الصباح</h4><div class="underline"></div></div>
+      </a>
+      <a href="athkar-evening.html" class="sec-card fade-in" data-period="evening" aria-label="أذكار المساء">
+        <div class="bg" style="background:linear-gradient(160deg,#2C4A6B,#16293A);"></div>
+        <div class="overlay"><h4>🌆 أذكار المساء</h4><div class="underline"></div></div>
+      </a>
+      <a href="quran.html" class="sec-card fade-in" aria-label="القرآن الكريم">
+        <div class="bg" style="background:linear-gradient(160deg,#4a6b52,#1a2b22);"></div>
+        <div class="overlay"><h4>📖 القرآن الكريم</h4><div class="underline"></div></div>
+      </a>
+      <a href="tasbih.html" class="sec-card fade-in" aria-label="التسبيح">
+        <div class="bg" style="background:linear-gradient(160deg,#3e6b58,#0f1c16);"></div>
+        <div class="overlay"><h4>📿 التسبيح</h4><div class="underline"></div></div>
+      </a>
     </div>
   </section>
 
-  <!-- ===== شبكة الأقسام ===== -->
-  <section class="sections">
+  <!-- =====================================================
+       🕋 العبادات
+       ===================================================== -->
+  <section class="section-group" aria-labelledby="groupIbadat">
+    <header class="group-head">
+      <h2 class="group-title" id="groupIbadat">
+        <span class="group-ico" aria-hidden="true">🕋</span>
+        العبادات
+      </h2>
+      <span class="group-line" aria-hidden="true"></span>
+    </header>
 
-    <a href="quran.html" class="sec-card fade-in">
-      <div class="bg" style="background:linear-gradient(160deg,#4a6b52,#1a2b22);"></div>
-      <div class="overlay"><h4>📖 القرآن الكريم</h4><div class="underline"></div></div>
-    </a>
+    <div class="sections-grid">
+      <a href="prayer.html" class="sec-card fade-in" aria-label="مواقيت الصلاة">
+        <div class="bg" style="background:linear-gradient(160deg,#3a5c4a,#132019);"></div>
+        <div class="overlay"><h4>🕌 مواقيت الصلاة</h4><div class="underline"></div></div>
+      </a>
+      <a href="zakat.html" class="sec-card fade-in" aria-label="حساب الزكاة">
+        <div class="bg" style="background:linear-gradient(160deg,#7a4a2c,#2a1408);"></div>
+        <div class="overlay"><h4>💰 حساب الزكاة</h4><div class="underline"></div></div>
+      </a>
+      <a href="calendar.html" class="sec-card fade-in" aria-label="التقويم">
+        <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
+        <div class="overlay"><h4>📅 التقويم</h4><div class="underline"></div></div>
+      </a>
+      <a href="notifications.html" class="sec-card fade-in" aria-label="الإشعارات">
+        <div class="bg" style="background:linear-gradient(160deg,#5b4a7a,#1f1530);"></div>
+        <div class="overlay"><h4>🔔 الإشعارات</h4><div class="underline"></div></div>
+      </a>
+    </div>
+  </section>
 
-    <a href="amin.html" class="sec-card fade-in">
-      <div class="bg" style="background:linear-gradient(160deg,#6b5b3a,#2a1f10);"></div>
-      <div class="overlay"><h4>👑 وِرْدِي الأمين</h4><div class="underline"></div></div>
-    </a>
+  <!-- =====================================================
+       📚 المعرفة
+       ===================================================== -->
+  <section class="section-group" aria-labelledby="groupMaarifa">
+    <header class="group-head">
+      <h2 class="group-title" id="groupMaarifa">
+        <span class="group-ico" aria-hidden="true">📚</span>
+        المعرفة
+      </h2>
+      <span class="group-line" aria-hidden="true"></span>
+    </header>
 
-    <a href="athkar-morning.html" class="sec-card fade-in" data-period="morning">
-      <div class="bg" style="background:linear-gradient(160deg,#E4B94C,#A8871D);"></div>
-      <div class="overlay"><h4>🌅 أذكار الصباح</h4><div class="underline"></div></div>
-    </a>
+    <div class="sections-grid">
+      <a href="tafsir.html" class="sec-card fade-in" aria-label="تفسير القرآن">
+        <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
+        <div class="overlay"><h4>📖 تفسير القرآن</h4><div class="underline"></div></div>
+      </a>
+      <a href="#" class="sec-card fade-in soon" aria-disabled="true" aria-label="التجويد — قريبًا">
+        <div class="bg" style="background:linear-gradient(160deg,#1F4E3D,#0F2A20);"></div>
+        <div class="overlay">
+          <h4>📗 التجويد</h4>
+          <div class="underline"></div>
+          <span class="soon-badge">قريبًا</span>
+        </div>
+      </a>
+      <a href="#" class="sec-card fade-in soon" aria-disabled="true" aria-label="زاد القلوب — قريبًا">
+        <div class="bg" style="background:linear-gradient(160deg,#6b3a5c,#2a1020);"></div>
+        <div class="overlay">
+          <h4>💖 زاد القلوب</h4>
+          <div class="underline"></div>
+          <span class="soon-badge">قريبًا</span>
+        </div>
+      </a>
+    </div>
+  </section>
 
-    <a href="athkar-evening.html" class="sec-card fade-in" data-period="evening">
-      <div class="bg" style="background:linear-gradient(160deg,#2C4A6B,#16293A);"></div>
-      <div class="overlay"><h4>🌆 أذكار المساء</h4><div class="underline"></div></div>
-    </a>
+  <!-- =====================================================
+       👑 وِرْدِي الأمين (قسم مستقل)
+       ===================================================== -->
+  <section class="section-group" aria-labelledby="groupAmin">
+    <header class="group-head">
+      <h2 class="group-title" id="groupAmin">
+        <span class="group-ico" aria-hidden="true">👑</span>
+        وِرْدِي الأمين
+      </h2>
+      <span class="group-line" aria-hidden="true"></span>
+    </header>
 
-    <a href="prayer.html" class="sec-card fade-in">
-      <div class="bg" style="background:linear-gradient(160deg,#3a5c4a,#132019);"></div>
-      <div class="overlay"><h4>🕌 مواقيت الصلاة</h4><div class="underline"></div></div>
-    </a>
+    <div class="sections-grid amin-grid">
+      <a href="amin.html" class="sec-card amin-card fade-in" aria-label="وِرْدِي الأمين — الرؤية والأهداف">
+        <div class="bg" style="background:linear-gradient(140deg,#6b5b3a 0%,#3a2f18 60%,#2a1f10 100%);"></div>
+        <div class="overlay">
+          <h4>👑 وِرْدِي الأمين</h4>
+          <p class="amin-desc">الرؤية · الأهداف · الهيكل الإداري</p>
+          <div class="underline"></div>
+        </div>
+      </a>
+    </div>
+  </section>
 
-    <a href="tasbih.html" class="sec-card fade-in">
-      <div class="bg" style="background:linear-gradient(160deg,#3e6b58,#0f1c16);"></div>
-      <div class="overlay"><h4>📿 التسبيح</h4><div class="underline"></div></div>
-    </a>
+  <!-- =====================================================
+       🌿 عن وِرْدِي
+       ===================================================== -->
+  <section class="section-group" aria-labelledby="groupAbout">
+    <header class="group-head">
+      <h2 class="group-title" id="groupAbout">
+        <span class="group-ico" aria-hidden="true">🌿</span>
+        عن وِرْدِي
+      </h2>
+      <span class="group-line" aria-hidden="true"></span>
+    </header>
 
-    <a href="calendar.html" class="sec-card fade-in">
-      <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
-      <div class="overlay"><h4>📅 التقويم</h4><div class="underline"></div></div>
-    </a>
-
-    <a href="zakat.html" class="sec-card fade-in">
-      <div class="bg" style="background:linear-gradient(160deg,#7a4a2c,#2a1408);"></div>
-      <div class="overlay"><h4>💰 حساب الزكاة</h4><div class="underline"></div></div>
-    </a>
-
-    <a href="tafsir.html" class="sec-card fade-in">
-      <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
-      <div class="overlay"><h4>📖 تفسير القرآن</h4><div class="underline"></div></div>
-    </a>
-
+    <div class="sections-grid">
+      <a href="support.html" class="sec-card fade-in" aria-label="ادعمنا">
+        <div class="bg" style="background:linear-gradient(160deg,#3a6b5c,#0f2a1f);"></div>
+        <div class="overlay"><h4>💚 ادعمنا</h4><div class="underline"></div></div>
+      </a>
+      <a href="contact.html" class="sec-card fade-in" aria-label="اتصل بنا">
+        <div class="bg" style="background:linear-gradient(160deg,#4a4a6b,#18182a);"></div>
+        <div class="overlay"><h4>📞 اتصل بنا</h4><div class="underline"></div></div>
+      </a>
+      <a href="sources.html" class="sec-card fade-in" aria-label="مصادرنا">
+        <div class="bg" style="background:linear-gradient(160deg,#6b4a3a,#2a1410);"></div>
+        <div class="overlay"><h4>📚 مصادرنا</h4><div class="underline"></div></div>
+      </a>
+    </div>
   </section>
 
 </div>
@@ -155,6 +262,9 @@
 <script src="assets/js/seo.js"></script>
 <script src="assets/js/pwa.js"></script>
 <script src="assets/js/adhan.js"></script>
-  <script src="assets/js/streak.js" defer></script>
+<script src="assets/js/notifications.js"></script>
+<script src="assets/js/streak.js" defer></script>
+<script src="assets/js/index.js" defer></script>
+
 </body>
 </html>

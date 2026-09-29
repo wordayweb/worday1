@@ -3,6 +3,44 @@
 .main-header { width: 100%; }
 
 /* ============================================================
+   ✨ التحية الزمنية
+   ============================================================ */
+.greeting-block {
+  display: flex;
+  justify-content: center;
+  padding: 14px 16px 0;
+}
+
+.greeting-block .greeting-txt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--gold-light, #E4CC6E), var(--gold, #C9A227));
+  color: var(--green, #1F4E3D);
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 14px rgba(201,162,39,.28);
+  transition: transform .25s;
+}
+
+.greeting-block .greeting-ico {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.greeting-block:hover .greeting-txt {
+  transform: translateY(-1px);
+}
+
+body.dark .greeting-block .greeting-txt {
+  background: linear-gradient(135deg, var(--gold-light, #E4CC6E), var(--gold, #C9A227));
+  color: #0F2A20;
+}
+
+/* ============================================================
    🖼️ الشعار
    ============================================================ */
 .top-logo {
@@ -65,7 +103,6 @@
   text-shadow: 0 1px 2px rgba(201, 162, 39, .08);
 }
 
-/* خط زخرفي أنيق */
 .title-divider {
   width: 100px;
   height: 2px;
@@ -133,7 +170,6 @@
   transform: scale(.95);
 }
 
-/* في الوضع الليلي */
 body.dark .lang-bar .theme-toggle {
   background: var(--green);
   color: #fff;
@@ -141,7 +177,7 @@ body.dark .lang-bar .theme-toggle {
 }
 
 /* ============================================================
-   📅 التاريخ + الساعة
+   📅 التاريخ + الساعة + الصلاة القادمة
    ============================================================ */
 .datetime-line {
   text-align: center;
@@ -155,32 +191,84 @@ body.dark .lang-bar .theme-toggle {
   font-weight: 500;
   line-height: 1.6;
   margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .date-line .dot {
   color: var(--gold);
-  margin: 0 8px;
+  margin: 0 4px;
   font-size: 9px;
   vertical-align: middle;
+}
+
+/* عناصر داخلية (تاريخ/وقت) */
+.dt-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.dt-ico {
+  font-size: 13px;
+  opacity: .75;
+  line-height: 1;
 }
 
 .clock-line {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 4px 14px;
+  padding: 5px 16px;
   font-family: 'Tajawal', monospace;
   font-size: 14px;
   font-weight: 700;
   color: var(--green);
   box-shadow: var(--shadow-sm);
-  direction: ltr;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-.clock-line .clock-ico { font-size: 14px; opacity: .7; }
-#liveClock { letter-spacing: 1px; font-variant-numeric: tabular-nums; }
+
+.clock-line .clock-ico { font-size: 14px; opacity: .7; line-height: 1; }
+
+#liveClock {
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  display: inline-block;
+}
+
+.clock-line .dot {
+  color: var(--gold);
+  font-size: 10px;
+  opacity: .7;
+}
+
+/* الصلاة القادمة */
+#nextPrayerWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#nextPrayerWrap[hidden] { display: none; }
+
+#nextPrayerTxt {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 12.5px;
+}
+
+body.dark #nextPrayerTxt {
+  color: #E8E8E8;
+}
 
 /* ============================================================
    🧭 شريط التنقل
@@ -194,6 +282,7 @@ body.dark .lang-bar .theme-toggle {
 /* ============================================================
    🎯 حالة الصفحات الداخلية
    ============================================================ */
+.main-header.inner-page .greeting-block { display: none; }
 .main-header.inner-page .top-logo { padding: 12px 16px 0; }
 .main-header.inner-page .top-logo img { width: clamp(90px, 14vw, 130px); }
 
@@ -256,6 +345,9 @@ body.dark .clock-line {
 
 /* ===== 📱 صغير جداً (320-359) ===== */
 @media (max-width: 359px) {
+  .greeting-block { padding: 10px 12px 0; }
+  .greeting-block .greeting-txt { font-size: 12px; padding: 5px 14px; }
+
   .top-logo { padding: 14px 12px 0; }
   .top-logo img { width: clamp(100px, 35vw, 140px); }
 
@@ -269,14 +361,14 @@ body.dark .clock-line {
   .lang-bar .theme-toggle { padding: 6px 10px; font-size: 13px; }
 
   .datetime-line { padding: 4px 12px 12px; }
-  .date-line { font-size: 10.5px; }
-  .clock-line { padding: 3px 10px; font-size: 11.5px; }
+  .date-line { font-size: 10.5px; gap: 4px; }
+  .clock-line { padding: 3px 10px; font-size: 11.5px; gap: 6px; }
+  #nextPrayerTxt { font-size: 11px; }
 
   .chips { padding: 3px 0 8px; gap: 5px; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
   .chip { padding: 6px 10px; font-size: 11px; }
   .top-nav { padding-bottom: 6px; margin-bottom: 6px; }
 
-  /* الصفحات الداخلية */
   .main-header.inner-page .top-logo img { width: clamp(70px, 20vw, 100px); }
   .main-header.inner-page .main-title { font-size: 24px; }
   .main-header.inner-page .brand-tagline { font-size: 12px; }
@@ -288,6 +380,9 @@ body.dark .clock-line {
 
 /* ===== 📱 Galaxy S23, iPhone SE/mini (360-389) ===== */
 @media (min-width: 360px) and (max-width: 389px) {
+  .greeting-block { padding: 12px 14px 0; }
+  .greeting-block .greeting-txt { font-size: 12.5px; padding: 5px 15px; }
+
   .top-logo img { width: clamp(120px, 38vw, 160px); }
 
   .main-title { font-size: 32px; }
@@ -296,8 +391,9 @@ body.dark .clock-line {
   .lang-btn { padding: 6px 16px; font-size: 12px; }
   .lang-bar .theme-toggle { padding: 6px 12px; font-size: 14px; }
 
-  .date-line { font-size: 11.5px; }
-  .clock-line { font-size: 12.5px; }
+  .date-line { font-size: 11.5px; gap: 4px; }
+  .clock-line { font-size: 12.5px; gap: 6px; }
+  #nextPrayerTxt { font-size: 11.5px; }
 
   .chip { padding: 7px 12px; font-size: 12px; }
   .chips { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
@@ -309,6 +405,8 @@ body.dark .clock-line {
 
 /* ===== 📱 iPhone 12-15 (390-411) ===== */
 @media (min-width: 390px) and (max-width: 411px) {
+  .greeting-block .greeting-txt { font-size: 13px; padding: 6px 16px; }
+
   .top-logo img { width: clamp(130px, 35vw, 170px); }
 
   .main-title { font-size: 36px; }
@@ -326,6 +424,8 @@ body.dark .clock-line {
 
 /* ===== 📱 iPhone Plus/Max, Samsung S24 (412-479) ===== */
 @media (min-width: 412px) and (max-width: 479px) {
+  .greeting-block .greeting-txt { font-size: 13.5px; }
+
   .top-logo img { width: clamp(140px, 32vw, 180px); }
 
   .main-title { font-size: 40px; }
@@ -466,6 +566,8 @@ body.dark .clock-line {
 
 /* ===== 📱 شاشات أفقية قصيرة ===== */
 @media (max-height: 500px) and (orientation: landscape) {
+  .greeting-block { display: none; }
+
   .top-logo { padding: 8px 12px 0; }
   .top-logo img { width: 80px; }
 
