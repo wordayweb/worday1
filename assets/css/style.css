@@ -847,3 +847,52 @@ body.dark textarea:focus {
   white-space: nowrap;
   border: 0;
 }
+
+/* ============================================================
+   📜 الخلفية الإسلامية — المخطوطة العتيقة
+   3 طبقات: قاعدة كريمية + نجوم إسلامية + خط «وِرْدِي»
+   ============================================================ */
+
+html, body {
+  background-color: #F0EADA;
+
+  /* الطبقة العليا: «وِرْدِي» بخط أميري  */
+  /* الطبقة الوسطى: النجوم الثمانية       */
+  /* الطبقة السفلى: اللون الكريمي          */
+  background-image:
+    url('../img/wirdi-manuscript.svg'),
+    url('../img/islamic-bg.svg');
+  background-size: 240px 240px, 140px 140px;
+  background-repeat: repeat, repeat;
+  background-position: center top, center top;
+  background-attachment: fixed, fixed;
+}
+
+body.dark {
+  background-color: #0A1510 !important;
+
+  background-image:
+    url('../img/wirdi-manuscript-dark.svg'),
+    url('../img/islamic-bg-dark.svg') !important;
+  background-size: 240px 240px, 140px 140px !important;
+  background-repeat: repeat, repeat !important;
+  background-position: center top, center top !important;
+  background-attachment: fixed, fixed !important;
+}
+
+/* على الجوال — تصغير الطبقتين */
+@media (max-width: 700px) {
+  html, body {
+    background-size: 180px 180px, 110px 110px;
+  }
+  body.dark {
+    background-size: 180px 180px, 110px 110px !important;
+  }
+}
+
+/* الطبقات الشفافة فوق الخلفية */
+.app,
+.container,
+main {
+  background: transparent;
+}
