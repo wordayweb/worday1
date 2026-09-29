@@ -40,6 +40,7 @@ const PRECACHE_URLS = [
   './assets/css/amin.css',
   './assets/css/favorites.css',
   './assets/css/settings.css',
+  './assets/css/streak.css',
   './assets/css/smart-adhkar.css',
   './assets/css/zakat.css',
   './assets/css/pwa.css',
@@ -65,6 +66,7 @@ const PRECACHE_URLS = [
   './assets/js/calendar.js',
   './assets/js/favorites.js',
   './assets/js/settings.js',
+  './assets/js/streak.js',
   './assets/img/logo.png',
   './assets/img/icon-192.png',
   './assets/img/icon-512.png'
