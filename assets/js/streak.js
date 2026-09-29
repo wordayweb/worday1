@@ -127,19 +127,35 @@
     const wrapper = document.createElement('div');
     wrapper.innerHTML = buildCard(data).trim();
     const card = wrapper.firstElementChild;
-    const after =
-      document.querySelector('.tracker-card') ||
-      document.querySelector('#tasks')?.closest('section, .card') ||
-      document.querySelector('.quick-access') ||
-      document.querySelector('.cards-grid') ||
-      document.querySelector('main') ||
-      document.querySelector('.container');
+
+    const candidates = [
+      '.tracker-card',
+      '.continue-reading',
+      '.quick-access',
+      '.cards-grid',
+      '.hero-verse',
+      '.hero',
+      'main',
+      '.container',
+    ];
+    let after = null;
+    for (const sel of candidates) {
+      after = document.querySelector(sel);
+      if (after) break;
+    }
+
     if (after && after.parentNode) {
       after.insertAdjacentElement('afterend', card);
+      console.log('[Streak] أُدرجت البطاقة بعد:', after.className || after.tagName);
     } else {
-      const nav = document.querySelector('.bottom-nav');
-      if (nav) nav.insertAdjacentElement('beforebegin', card);
-      else document.body.appendChild(card);
+      const header = document.querySelector('.main-header') || document.querySelector('.header');
+      if (header && header.parentNode) {
+        header.insertAdjacentElement('afterend', card);
+        console.log('[Streak] أُدرجت البطاقة بعد الهيدر');
+      } else {
+        document.body.insertBefore(card, document.body.firstChild);
+        console.log('[Streak] أُدرجت البطاقة في أول body');
+      }
     }
   }
 
