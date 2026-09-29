@@ -6,6 +6,10 @@
     return p === '' || p === 'index.html';
   })();
 
+  const PRAYER_CACHE_KEY = 'wirdi_prayer_timings';
+  const PRAYER_CITY_KEY  = 'wirdi_prayer_city';
+  const DEFAULT_CITY     = { lat: 24.7136, lng: 46.6753, name: 'الرياض' };
+
   const TOP_NAV_ITEMS = [
     { href: 'index.html',           icon: '🏠', label: 'رئيسية',         key: 'home',    period: null },
     { href: 'quran.html',           icon: '📖', label: 'القرآن',         key: 'quran',   period: null },
@@ -44,16 +48,16 @@
 
   function buildChips() {
     const current = getCurrentKey();
-    const primary = TOP_NAV_ITEMS.filter(it => PRIMARY_CHIPS.includes(it.key));
-    return primary.map(item => {
+    const primary = TOP_NAV_ITEMS.filter(function (it) { return PRIMARY_CHIPS.indexOf(it.key) !== -1; });
+    return primary.map(function (item) {
       const active = item.key === current;
       const cls = active ? 'chip active' : 'chip';
-      const periodAttr = item.period ? ` data-period="${item.period}"` : '';
+      const periodAttr = item.period ? ' data-period="' + item.period + '"' : '';
       const currentAttr = active ? ' aria-current="page"' : '';
-      const ico = item.icon ? `<span aria-hidden="true">${item.icon}</span> ` : '';
-      return `<a href="${item.href}" class="${cls}"${periodAttr}${currentAttr} aria-label="${item.label}">${ico}${item.label}</a>`;
+      const ico = item.icon ? '<span aria-hidden="true">' + item.icon + '</span> ' : '';
+      return '<a href="' + item.href + '" class="' + cls + '"' + periodAttr + currentAttr + ' aria-label="' + item.label + '">' + ico + item.label + '</a>';
     }).join('') +
-      `<a href="more.html" class="chip chip-more" aria-label="المزيد من الأقسام">⋯ المزيد</a>`;
+      '<a href="more.html" class="chip chip-more" aria-label="المزيد من الأقسام">⋯ المزيد</a>';
   }
 
   function getTimeGreeting() {
@@ -66,74 +70,61 @@
 
   function buildHeader() {
     const g = getTimeGreeting();
-    return `
-      <div class="main-header">
-        <div class="greeting-block">
-          <span class="greeting-ico" aria-hidden="true">${g.icon}</span>
-          <span class="greeting-txt">${g.text}</span>
-        </div>
+    return '' +
+      '<div class="main-header">' +
+        '<div class="greeting-block">' +
+          '<span class="greeting-txt">' +
+            '<span class="greeting-ico" aria-hidden="true">' + g.icon + '</span> ' + g.text +
+          '</span>' +
+        '</div>' +
 
-        <div class="top-logo">
-          <img src="assets/img/logo.png" alt="شعار وِرْدِي" />
-        </div>
+        '<div class="top-logo">' +
+          '<img src="assets/img/logo.png" alt="شعار وِرْدِي" />' +
+        '</div>' +
 
-        <div class="title-block">
-          <h1 class="main-title">وِرْدِي</h1>
-          <p class="brand-tagline">رفيقك اليومي لذكر الله</p>
-          <div class="title-divider"></div>
-        </div>
+        '<div class="title-block">' +
+          '<h1 class="main-title">وِرْدِي</h1>' +
+          '<p class="brand-tagline">رفيقك اليومي لذكر الله</p>' +
+          '<div class="title-divider"></div>' +
+        '</div>' +
 
-        <div class="lang-bar">
-          <button class="lang-btn" id="langAr" type="button" aria-label="التبديل إلى العربية">العربية</button>
-          <span class="lang-sep" aria-hidden="true">•</span>
-          <button class="lang-btn" id="langEn" type="button" aria-label="Switch to English">English</button>
-          <span class="lang-sep" aria-hidden="true">•</span>
-          <button class="lang-btn theme-toggle" id="themeToggle" type="button"
-                  aria-label="تبديل الوضع الليلي" aria-pressed="false"
-                  title="تبديل الوضع الليلي">🌙</button>
-        </div>
+        '<div class="lang-bar">' +
+          '<button class="lang-btn" id="langAr" type="button" aria-label="التبديل إلى العربية">العربية</button>' +
+          '<span class="lang-sep" aria-hidden="true">•</span>' +
+          '<button class="lang-btn" id="langEn" type="button" aria-label="Switch to English">English</button>' +
+          '<span class="lang-sep" aria-hidden="true">•</span>' +
+          '<button class="lang-btn theme-toggle" id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" aria-pressed="false" title="تبديل الوضع الليلي">🌙</button>' +
+        '</div>' +
 
-        <div class="datetime-line">
-          <p class="date-line">
-            <span class="dt-item">
-              <span class="dt-ico" aria-hidden="true">📅</span>
-              <span id="gregDate">…</span>
-            </span>
-            <span class="dot" aria-hidden="true">•</span>
-            <span class="dt-item">
-              <span class="dt-ico" aria-hidden="true">🕌</span>
-              <span id="hijriDate">…</span>
-            </span>
-          </p>
-          <p class="clock-line">
-            <span class="dt-item">
-              <span class="clock-ico" aria-hidden="true">🕐</span>
-              <span id="liveClock">00:00</span>
-            </span>
-            <span class="dot" aria-hidden="true">•</span>
-            <span class="dt-item" id="nextPrayerWrap" hidden>
-              <span class="dt-ico" aria-hidden="true">🕌</span>
-              <span id="nextPrayerTxt">—</span>
-            </span>
-          </p>
-        </div>
+        '<div class="datetime-line">' +
+          '<p class="date-line">' +
+            '<span class="dt-item"><span class="dt-ico" aria-hidden="true">📅</span><span id="gregDate">…</span></span>' +
+            '<span class="dot" aria-hidden="true">•</span>' +
+            '<span class="dt-item"><span class="dt-ico" aria-hidden="true">🕌</span><span id="hijriDate">…</span></span>' +
+          '</p>' +
+          '<p class="clock-line">' +
+            '<span class="dt-item"><span class="clock-ico" aria-hidden="true">🕐</span><span id="liveClock">00:00</span></span>' +
+            '<span class="dot" aria-hidden="true">•</span>' +
+            '<span class="dt-item" id="nextPrayerWrap" hidden>' +
+              '<span class="dt-ico" aria-hidden="true">🕌</span>' +
+              '<span id="nextPrayerTxt">—</span>' +
+            '</span>' +
+          '</p>' +
+        '</div>' +
 
-        <nav class="chips top-nav" role="navigation" aria-label="التنقل العلوي">
-          ${buildChips()}
-        </nav>
-      </div>
-    `;
+        '<nav class="chips top-nav" role="navigation" aria-label="التنقل العلوي">' + buildChips() + '</nav>' +
+      '</div>';
   }
 
   function toAr(s) {
     const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-    return String(s).replace(/[0-9]/g, d => ar[d]);
+    return String(s).replace(/[0-9]/g, function (d) { return ar[d]; });
   }
 
   function initDatesAndClock() {
-    const hijriEl  = document.getElementById('hijriDate');
-    const gregEl   = document.getElementById('gregDate');
-    const clockEl  = document.getElementById('liveClock');
+    const hijriEl = document.getElementById('hijriDate');
+    const gregEl  = document.getElementById('gregDate');
+    const clockEl = document.getElementById('liveClock');
     const d = new Date();
 
     try {
@@ -148,15 +139,72 @@
     } catch (e) { console.error(e); }
 
     if (clockEl) {
-      const tick = () => {
+      const tick = function () {
         const now = new Date();
         const hh = String(now.getHours()).padStart(2, '0');
         const mm = String(now.getMinutes()).padStart(2, '0');
-        clockEl.textContent = toAr(`${hh}:${mm}`);
+        clockEl.textContent = toAr(hh + ':' + mm);
       };
       tick();
       setInterval(tick, 30000);
     }
+  }
+
+  function todayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+
+  async function fetchAndCachePrayerTimings() {
+    let city = DEFAULT_CITY;
+    try {
+      const saved = localStorage.getItem(PRAYER_CITY_KEY);
+      if (saved) {
+        const obj = JSON.parse(saved);
+        if (obj && typeof obj.lat === 'number' && typeof obj.lng === 'number') {
+          city = obj;
+        }
+      }
+    } catch (e) {}
+
+    const today = todayKey();
+    const url = 'https://api.aladhan.com/v1/timings/' + today +
+      '?latitude=' + city.lat + '&longitude=' + city.lng + '&method=4';
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return null;
+      const data = await res.json();
+      if (!data || !data.data || !data.data.timings) return null;
+
+      const raw = data.data.timings;
+      const clean = {
+        Fajr:    raw.Fajr,
+        Sunrise: raw.Sunrise,
+        Dhuhr:   raw.Dhuhr,
+        Asr:     raw.Asr,
+        Maghrib: raw.Maghrib,
+        Isha:    raw.Isha
+      };
+
+      const payload = { date: today, city: city.name || 'الرياض', timings: clean };
+      localStorage.setItem(PRAYER_CACHE_KEY, JSON.stringify(payload));
+      return clean;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function readCachedTimings() {
+    try {
+      const raw = localStorage.getItem(PRAYER_CACHE_KEY);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj || obj.date !== todayKey() || !obj.timings) return null;
+      return obj.timings;
+    } catch (e) { return null; }
   }
 
   function initNextPrayer() {
@@ -164,48 +212,51 @@
     const txt  = document.getElementById('nextPrayerTxt');
     if (!wrap || !txt) return;
 
-    function update() {
-      let timings = null;
-      try {
-        const cached = localStorage.getItem('wirdi_prayer_timings');
-        if (cached) {
-          const obj = JSON.parse(cached);
-          if (obj && obj.date === new Date().toISOString().slice(0,10)) timings = obj.timings;
-        }
-      } catch {}
-      if (!timings) { wrap.hidden = true; return; }
+    const ORDER = [
+      { key: 'Fajr',    ar: 'الفجر' },
+      { key: 'Dhuhr',   ar: 'الظهر' },
+      { key: 'Asr',     ar: 'العصر' },
+      { key: 'Maghrib', ar: 'المغرب' },
+      { key: 'Isha',    ar: 'العشاء' }
+    ];
 
+    function computeFromTimings(timings) {
       const now = new Date();
       const nowMin = now.getHours() * 60 + now.getMinutes();
-      const order = [
-        { key: 'Fajr',    ar: 'الفجر' },
-        { key: 'Dhuhr',   ar: 'الظهر' },
-        { key: 'Asr',     ar: 'العصر' },
-        { key: 'Maghrib', ar: 'المغرب' },
-        { key: 'Isha',    ar: 'العشاء' }
-      ];
-      let next = null;
-      for (const p of order) {
+      for (let i = 0; i < ORDER.length; i++) {
+        const p = ORDER[i];
         const t = timings[p.key];
         if (!t) continue;
-        const [hh, mm] = t.split(':').map(Number);
-        const tMin = hh * 60 + mm;
-        if (tMin > nowMin) { next = { name: p.ar, diff: tMin - nowMin }; break; }
+        const parts = t.split(':');
+        const tMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+        if (tMin > nowMin) return { name: p.ar, diff: tMin - nowMin };
       }
-      if (!next) {
-        const t = timings.Fajr || '05:00';
-        const [hh, mm] = t.split(':').map(Number);
-        next = { name: 'الفجر', diff: (24 * 60 - nowMin) + hh * 60 + mm };
-      }
+      const fajr = timings.Fajr || '05:00';
+      const parts = fajr.split(':');
+      return { name: 'الفجر', diff: (24 * 60 - nowMin) + parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10) };
+    }
+
+    function render(timings) {
+      const next = computeFromTimings(timings);
       const h = Math.floor(next.diff / 60);
       const m = next.diff % 60;
-      const str = h > 0 ? `${toAr(h)} س ${toAr(m)} د` : `${toAr(m)} دقيقة`;
-      txt.textContent = `${next.name} بعد ${str}`;
+      const str = h > 0 ? toAr(h) + ' س ' + toAr(m) + ' د' : toAr(m) + ' دقيقة';
+      txt.textContent = next.name + ' بعد ' + str;
       wrap.hidden = false;
+    }
+
+    function update() {
+      const cached = readCachedTimings();
+      if (cached) { render(cached); return; }
+      wrap.hidden = true;
+      fetchAndCachePrayerTimings().then(function (t) { if (t) render(t); });
     }
 
     update();
     setInterval(update, 60000);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) update();
+    });
   }
 
   function initLang() {
@@ -216,8 +267,8 @@
     const current = saved ? JSON.parse(saved) : 'ar';
     if (current === 'ar') langAr.classList.add('active');
     else langEn.classList.add('active');
-    langAr.addEventListener('click', () => { localStorage.setItem('wirdi_lang', JSON.stringify('ar')); location.reload(); });
-    langEn.addEventListener('click', () => { alert('النسخة الإنجليزية قريبًا'); });
+    langAr.addEventListener('click', function () { localStorage.setItem('wirdi_lang', JSON.stringify('ar')); location.reload(); });
+    langEn.addEventListener('click', function () { alert('النسخة الإنجليزية قريبًا'); });
   }
 
   function initThemeToggle() {

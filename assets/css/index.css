@@ -93,3 +93,15 @@ body.dark .soon-badge { background: rgba(31,78,61,.9); color: var(--gold-light, 
 @keyframes fadeInUp {
   to { opacity: 1; transform: translateY(0); }
 }
+
+.dashboard-grid > section {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.dashboard-grid .streak-card {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  flex: 1;
+}
