@@ -181,3 +181,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const goalEl = document.getElementById('goalTxt');
   if (goal && goalEl) goalEl.textContent = `هدفك اليومي: ${goal} ذكر`;
 });
+
+/* ============ 🚀 محمّل ديناميكي — الفوتر + التفاعلات ============ */
+(function () {
+  if (window.__wirdiDynamicLoader) return;
+  window.__wirdiDynamicLoader = true;
+
+  function loadScript(src, id) {
+    if (document.getElementById(id)) return;
+    if (document.querySelector('script[src="' + src + '"]')) return;
+    var s = document.createElement('script');
+    s.src = src; s.id = id; s.defer = true;
+    document.head.appendChild(s);
+  }
+  function loadStyle(href, id) {
+    if (document.getElementById(id)) return;
+    if (document.querySelector('link[href="' + href + '"]')) return;
+    var l = document.createElement('link');
+    l.rel = 'stylesheet'; l.href = href; l.id = id;
+    document.head.appendChild(l);
+  }
+  function init() {
+    loadStyle('assets/css/footer.css', 'wirdi-footer-css');
+    loadScript('assets/js/footer.js', 'wirdi-footer-js');
+    loadScript('assets/js/interactions.js', 'wirdi-interactions-js');
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else { init(); }
+})();
