@@ -896,3 +896,75 @@ body.dark {
 main {
   background: transparent;
 }
+
+/* ============================================================
+   ✨ تفاعلات وتحسينات بصرية
+   ============================================================ */
+
+/* Scroll Reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.4, 0, .2, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ripple Effect */
+.wirdi-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(201, 162, 39, .35);
+  transform: scale(0);
+  animation: wirdiRipple .65s ease-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes wirdiRipple {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Header shrink on scroll */
+.main-header.scrolled {
+  padding-top: 4px !important;
+}
+
+.main-header.scrolled .top-logo img {
+  width: clamp(60px, 10vw, 90px) !important;
+  transition: width .3s ease;
+}
+
+.main-header.scrolled .main-title {
+  font-size: clamp(20px, 3.5vw, 30px) !important;
+  transition: font-size .3s ease;
+}
+
+.main-header.scrolled .brand-tagline {
+  display: none;
+}
+
+.main-header.scrolled .greeting-block {
+  display: none;
+}
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .wirdi-ripple { animation: none; }
+  .main-header.scrolled .top-logo img,
+  .main-header.scrolled .main-title { transition: none; }
+}

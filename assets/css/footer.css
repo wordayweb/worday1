@@ -1,0 +1,293 @@
+/* ============================================================
+   🕌 الفوتر الموحّد — وِرْدِي
+   ============================================================ */
+
+.wirdi-footer {
+  margin-top: 42px;
+  background: linear-gradient(180deg, #1F4E3D 0%, #0F2A20 100%);
+  color: #E8E8E8;
+  font-family: 'Tajawal', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.wirdi-footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #C9A227, #E4CC6E, #C9A227, transparent);
+}
+
+/* ============ الآية ============ */
+.wf-verse {
+  text-align: center;
+  padding: 36px 20px 28px;
+  position: relative;
+  border-bottom: 1px dashed rgba(228, 204, 110, .22);
+}
+
+.wf-bismillah {
+  font-size: 30px;
+  color: #E4CC6E;
+  margin-bottom: 14px;
+  font-family: 'Amiri', serif;
+}
+
+.wf-verse-text {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #FBF8F1;
+  margin: 0 auto;
+  max-width: 700px;
+  line-height: 1.7;
+  letter-spacing: .3px;
+}
+
+.wf-verse-src {
+  display: block;
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: #E4CC6E;
+  opacity: .9;
+  letter-spacing: .3px;
+}
+
+/* ============ الأعمدة ============ */
+.wf-cols {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 28px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 34px 22px;
+}
+
+.wf-col { min-width: 0; }
+
+.wf-brand-col { text-align: center; }
+
+.wf-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(228, 204, 110, .3));
+  margin-bottom: 8px;
+  opacity: .9;
+}
+
+.wf-brand {
+  margin: 0 0 4px;
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #E4CC6E;
+}
+
+.wf-tagline {
+  margin: 0;
+  font-size: 13px;
+  color: #B8D4C8;
+  line-height: 1.6;
+}
+
+.wf-made {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: #E4CC6E;
+  opacity: .7;
+}
+
+.wf-col-title {
+  margin: 0 0 14px;
+  font-family: 'Amiri', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #E4CC6E;
+  letter-spacing: .3px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.wf-col-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, #C9A227, transparent);
+  border-radius: 2px;
+}
+
+.wf-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wf-links a {
+  color: #D4E0DC;
+  text-decoration: none;
+  font-size: 13.5px;
+  display: inline-block;
+  transition: all .2s ease;
+  position: relative;
+  padding-inline-start: 0;
+}
+
+.wf-links a:hover {
+  color: #E4CC6E;
+  padding-inline-start: 5px;
+}
+
+/* ============ شريط الأزرار ============ */
+.wf-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 22px;
+  background: rgba(0, 0, 0, .18);
+  border-top: 1px solid rgba(228, 204, 110, .15);
+  border-bottom: 1px solid rgba(228, 204, 110, .15);
+}
+
+.wf-bar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: rgba(228, 204, 110, .1);
+  color: #E4CC6E;
+  border: 1.5px solid rgba(228, 204, 110, .35);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .25s ease;
+}
+
+.wf-bar-btn:hover {
+  background: rgba(228, 204, 110, .22);
+  border-color: #E4CC6E;
+  color: #FBF8F1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(228, 204, 110, .22);
+}
+
+/* ============ الحقوق ============ */
+.wf-bottom {
+  text-align: center;
+  padding: 22px 20px 26px;
+}
+
+.wf-copy {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: #E4CC6E;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+
+.wf-date {
+  margin: 0;
+  font-size: 11.5px;
+  color: #A8C4B8;
+  letter-spacing: .3px;
+}
+
+/* ============ زر العودة للأعلى ============ */
+.wirdi-top-btn {
+  position: fixed;
+  bottom: 90px;
+  inset-inline-start: 20px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E4CC6E, #C9A227);
+  color: #1F4E3D;
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(201, 162, 39, .4);
+  opacity: 0;
+  transform: translateY(20px) scale(.8);
+  transition: all .3s cubic-bezier(.4, 0, .2, 1);
+  z-index: 500;
+  pointer-events: none;
+}
+
+.wirdi-top-btn.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.wirdi-top-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 28px rgba(201, 162, 39, .55);
+}
+
+.wirdi-top-btn:active {
+  transform: translateY(0) scale(.95);
+}
+
+/* ============ الوضع الليلي ============ */
+body.dark .wirdi-footer {
+  background: linear-gradient(180deg, #0F1F1A 0%, #050F0A 100%);
+}
+
+body.dark .wf-verse {
+  border-bottom-color: rgba(228, 204, 110, .15);
+}
+
+body.dark .wf-bar {
+  background: rgba(0, 0, 0, .3);
+}
+
+/* ============ الجوال ============ */
+@media (max-width: 900px) {
+  .wf-cols {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    padding: 26px 18px;
+  }
+  .wf-brand-col {
+    grid-column: 1 / -1;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed rgba(228, 204, 110, .15);
+  }
+  .wf-verse-text { font-size: 19px; }
+  .wf-bismillah { font-size: 26px; }
+}
+
+@media (max-width: 500px) {
+  .wf-cols {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .wf-verse { padding: 26px 16px 22px; }
+  .wf-verse-text { font-size: 17px; line-height: 1.6; }
+  .wf-bismillah { font-size: 22px; }
+  .wf-bar { padding: 16px; gap: 8px; }
+  .wf-bar-btn { font-size: 12px; padding: 8px 14px; }
+  .wirdi-top-btn { bottom: 80px; inset-inline-start: 14px; width: 42px; height: 42px; }
+}
+
+/* تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+  .wirdi-top-btn,
+  .wf-bar-btn,
+  .wf-links a { transition: none !important; }
+}
