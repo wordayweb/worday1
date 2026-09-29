@@ -17,7 +17,7 @@
     { href: 'amin.html',            icon: '👑', label: 'وِرْدِي الأمين',  key: 'amin',     period: null },
     { href: 'calendar.html',        icon: '📅', label: 'التقويم',         key: 'calendar', period: null },
     { href: 'zakat.html',           icon: '💰', label: 'حساب الزكاة',     key: 'zakat',    period: null },
-    { href: 'tafsir.html', icon: '📖', label: 'تفسير القرآن', key: 'tafsir', period: null },
+    { href: 'tafsir.html',          icon: '📖', label: 'تفسير القرآن',    key: 'tafsir',   period: null },
     { href: 'support.html',         icon: '💚', label: 'ادعمنا',          key: 'support',  period: null },
   ];
 
@@ -63,11 +63,11 @@
         </div>
 
         <div class="lang-bar">
-          <button class="lang-btn" id="langAr" type="button">العربية</button>
+          <button class="lang-btn" id="langAr" type="button" aria-label="التبديل إلى العربية">العربية</button>
           <span class="lang-sep">•</span>
-          <button class="lang-btn" id="langEn" type="button">English</button>
+          <button class="lang-btn" id="langEn" type="button" aria-label="Switch to English">English</button>
           <span class="lang-sep">•</span>
-          <button class="lang-btn theme-toggle" id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" title="تبديل الوضع الليلي">🌙</button>
+          <button class="lang-btn theme-toggle" id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" aria-pressed="false" title="تبديل الوضع الليلي">🌙</button>
         </div>
 
         <div class="datetime-line">
@@ -155,25 +155,13 @@
     });
   }
 
+  /* ============ زر الوضع الليلي ============
+     الإدارة الكاملة في WirdiTheme (app.js)
+     هنا نكتفي بتحديث الشكل بعد حقن الهيدر */
   function initThemeToggle() {
-    if (window.WirdiTheme) { window.WirdiTheme.apply(); }
-  } else if (saved === null) {
-      /* احترام تفضيل النظام */
-      isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (window.WirdiTheme) {
+      window.WirdiTheme.apply();
     }
-
-    /* تطبيق الحالة */
-    if (isDark) document.body.classList.add('dark');
-    btn.textContent = isDark ? '☀️' : '🌙';
-
-    /* التفاعل */
-    btn.addEventListener('click', () => {
-      const nowDark = document.body.classList.toggle('dark');
-      btn.textContent = nowDark ? '☀️' : '🌙';
-      localStorage.setItem('wirdi_dark', String(nowDark));
-      /* مزامنة مع settings.js القديم */
-      localStorage.setItem('dark', String(nowDark));
-    });
   }
 
   function injectHeader() {
