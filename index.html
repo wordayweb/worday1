@@ -39,51 +39,54 @@
 
   
   <!-- ===== واصل القراءة ===== -->
-<section class="card resume fade-in" aria-label="واصل القراءة">
-    <button class="btn-play" onclick="location.href='quran.html'" aria-label="اذهب إلى آخر ما قرأت">
-      <span class="tri" aria-hidden="true"></span> انتقال
-    </button>
-    <div class="info">
-      <div class="lbl">واصل القراءة</div>
-      <div class="val" id="lastRead">سورة الجن — آية ٢٢</div>
-    </div>
-    <div class="thumb" aria-hidden="true">📖</div>
-  </section>
-  <!-- ===== لوحة المتابعة اليومية ===== -->
-<section class="dashboard-unified fade-in" aria-label="لوحة المتابعة اليومية">
+<!-- ===== لوحة اليوم الموحّدة ===== -->
+  <section class="dashboard-unified fade-in" aria-label="لوحة اليوم">
 
-    <div class="dash-panel dash-panel-tracker" aria-label="بطاقة الالتزام">
-      <div class="tracker-head">
-        <div class="progress-ring" id="progressRing">
-          <span id="progressTxt">٠٪</span>
+    <a href="quran.html" class="dash-resume-header" aria-label="اذهب إلى آخر ما قرأت">
+      <span class="drh-ico" aria-hidden="true">📖</span>
+      <div class="drh-info">
+        <span class="drh-lbl">واصل القراءة</span>
+        <span class="drh-val" id="lastRead">سورة الجن — آية ٢٢</span>
+      </div>
+      <span class="drh-btn">انتقال ←</span>
+    </a>
+
+    <div class="dash-body">
+
+      <div class="dash-panel dash-panel-tracker" aria-label="بطاقة الالتزام">
+        <div class="tracker-head">
+          <div class="progress-ring" id="progressRing">
+            <span id="progressTxt">٠٪</span>
+          </div>
+          <div class="headline">
+            <h3 id="dayGreeting">🌙 ليلة هادئة بذكر الله</h3>
+            <p>🔥 أنت ملتزم لليوم الـ <span id="streak">١</span> على التوالي</p>
+          </div>
         </div>
-        <div class="headline">
-          <h3 id="dayGreeting">🌙 ليلة هادئة بذكر الله</h3>
-          <p>🔥 أنت ملتزم لليوم الـ <span id="streak">١</span> على التوالي</p>
+
+        <div class="tasks" id="tasks">
+          <label class="task"><span>الفجر</span><input type="checkbox" data-k="fajr" aria-label="الفجر"></label>
+          <label class="task"><span>الصباح</span><input type="checkbox" data-k="morning" aria-label="أذكار الصباح"></label>
+          <label class="task"><span>الصلوات</span><input type="checkbox" data-k="prayers" aria-label="الصلوات"></label>
+          <label class="task"><span>المساء</span><input type="checkbox" data-k="evening" aria-label="أذكار المساء"></label>
+          <label class="task"><span>الورد</span><input type="checkbox" data-k="wird" aria-label="الورد"></label>
+          <label class="task"><span>النوم</span><input type="checkbox" data-k="sleep" aria-label="أذكار النوم"></label>
+        </div>
+
+        <hr class="dash-hr">
+
+        <div class="goal-row" onclick="setGoal()" role="button" tabindex="0" aria-label="تحديد هدف اليوم">
+          <span class="plus">+</span>
+          <span class="txt" id="goalTxt">لم يتم تحديد هدف بعد</span>
+          <span class="sq"></span>
         </div>
       </div>
 
-      <div class="tasks" id="tasks">
-        <label class="task"><span>الفجر</span><input type="checkbox" data-k="fajr" aria-label="الفجر"></label>
-        <label class="task"><span>الصباح</span><input type="checkbox" data-k="morning" aria-label="أذكار الصباح"></label>
-        <label class="task"><span>الصلوات</span><input type="checkbox" data-k="prayers" aria-label="الصلوات"></label>
-        <label class="task"><span>المساء</span><input type="checkbox" data-k="evening" aria-label="أذكار المساء"></label>
-        <label class="task"><span>الورد</span><input type="checkbox" data-k="wird" aria-label="الورد"></label>
-        <label class="task"><span>النوم</span><input type="checkbox" data-k="sleep" aria-label="أذكار النوم"></label>
-      </div>
+      <div class="dash-divider" aria-hidden="true"></div>
 
-      <hr class="dash-hr">
+      <div class="dash-panel dash-panel-streak" id="streakSlot" aria-label="سلسلة الأيام"></div>
 
-      <div class="goal-row" onclick="setGoal()" role="button" tabindex="0" aria-label="تحديد هدف اليوم">
-        <span class="plus">+</span>
-        <span class="txt" id="goalTxt">لم يتم تحديد هدف بعد</span>
-        <span class="sq"></span>
-      </div>
     </div>
-
-    <div class="dash-divider" aria-hidden="true"></div>
-
-    <div class="dash-panel dash-panel-streak" id="streakSlot" aria-label="سلسلة الأيام"></div>
 
   </section>
 
