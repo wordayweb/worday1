@@ -48,16 +48,14 @@
 
   function buildChips() {
     const current = getCurrentKey();
-    const primary = TOP_NAV_ITEMS.filter(function (it) { return PRIMARY_CHIPS.indexOf(it.key) !== -1; });
-    return primary.map(function (item) {
+    return TOP_NAV_ITEMS.map(item => {
       const active = item.key === current;
       const cls = active ? 'chip active' : 'chip';
-      const periodAttr = item.period ? ' data-period="' + item.period + '"' : '';
+      const periodAttr = item.period ? ` data-period="${item.period}"` : '';
       const currentAttr = active ? ' aria-current="page"' : '';
-      const ico = item.icon ? '<span aria-hidden="true">' + item.icon + '</span> ' : '';
-      return '<a href="' + item.href + '" class="' + cls + '"' + periodAttr + currentAttr + ' aria-label="' + item.label + '">' + ico + item.label + '</a>';
-    }).join('') +
-      '<a href="more.html" class="chip chip-more" aria-label="المزيد من الأقسام">⋯ المزيد</a>';
+      const ico = item.icon ? `<span aria-hidden="true">${item.icon}</span> ` : '';
+      return `<a href="${item.href}" class="${cls}"${periodAttr}${currentAttr} aria-label="${item.label}">${ico}${item.label}</a>`;
+    }).join('');
   }
 
   function getTimeGreeting() {

@@ -588,3 +588,155 @@ body.dark .clock-line {
   .main-header.inner-page .brand-tagline { font-size: 11px; }
   .main-header.inner-page .title-divider { display: none; }
 }
+
+/* ============================================================
+   🎯 شريط التنقل العلوي — عرض كل الأقسام
+   ============================================================ */
+
+.top-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px 18px;
+  max-width: 1000px;
+  margin: 0 auto 14px;
+  border-bottom: 1px dashed var(--line, #EAE6DD);
+}
+
+.top-nav .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--white, #fff);
+  color: var(--ink, #2B2B2B);
+  border: 1.5px solid var(--line, #EAE6DD);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all .22s ease;
+  box-shadow: 0 1px 3px rgba(31,78,61,.04);
+}
+
+.top-nav .chip:hover {
+  border-color: var(--gold, #C9A227);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(201,162,39,.22);
+  background: var(--cream-2, #FBF8F1);
+}
+
+.top-nav .chip.active {
+  background: var(--green, #1F4E3D);
+  color: #fff;
+  border-color: var(--green, #1F4E3D);
+  box-shadow: 0 4px 14px rgba(31,78,61,.3);
+}
+
+/* تمييز أذكار الصباح/المساء */
+.top-nav .chip[data-period="morning"] {
+  background: linear-gradient(135deg, #FCEEC8, #F8DCA0);
+  border-color: #E4B94C;
+  color: #6B4A10;
+}
+.top-nav .chip[data-period="morning"]:hover {
+  background: linear-gradient(135deg, #F8DCA0, #E4B94C);
+  border-color: #A8871D;
+}
+.top-nav .chip[data-period="morning"].active {
+  background: linear-gradient(135deg, #E4B94C, #A8871D);
+  color: #fff;
+  border-color: #A8871D;
+}
+
+.top-nav .chip[data-period="evening"] {
+  background: linear-gradient(135deg, #D4E0F0, #B8CCE4);
+  border-color: #7A98BF;
+  color: #1F3A52;
+}
+.top-nav .chip[data-period="evening"]:hover {
+  background: linear-gradient(135deg, #B8CCE4, #7A98BF);
+  border-color: #4A6B92;
+}
+.top-nav .chip[data-period="evening"].active {
+  background: linear-gradient(135deg, #2C4A6B, #1F3A52);
+  color: #fff;
+  border-color: #1F3A52;
+}
+
+/* الوضع الليلي */
+body.dark .top-nav {
+  border-bottom-color: rgba(255,255,255,.08);
+}
+
+body.dark .top-nav .chip {
+  background: #1F2B26;
+  color: #E8E8E8;
+  border-color: rgba(255,255,255,.1);
+}
+
+body.dark .top-nav .chip:hover {
+  border-color: var(--gold, #C9A227);
+  background: #263A32;
+}
+
+body.dark .top-nav .chip.active {
+  background: var(--gold, #C9A227);
+  color: #1F4E3D;
+  border-color: var(--gold, #C9A227);
+}
+
+body.dark .top-nav .chip[data-period="morning"] {
+  background: linear-gradient(135deg, #4A3520, #6B4A28);
+  border-color: #A8871D;
+  color: #FCEEC8;
+}
+body.dark .top-nav .chip[data-period="morning"].active {
+  background: linear-gradient(135deg, #E4B94C, #A8871D);
+  color: #1A1410;
+}
+
+body.dark .top-nav .chip[data-period="evening"] {
+  background: linear-gradient(135deg, #1F2A3A, #2C3A52);
+  border-color: #4A6B92;
+  color: #D4E0F0;
+}
+body.dark .top-nav .chip[data-period="evening"].active {
+  background: linear-gradient(135deg, #2C4A6B, #4A6B92);
+  color: #fff;
+}
+
+/* الجوال — تمرير أفقي */
+@media (max-width: 700px) {
+  .top-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 10px 12px 14px;
+    gap: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201,162,39,.4) transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+  .top-nav::-webkit-scrollbar {
+    height: 4px;
+  }
+  .top-nav::-webkit-scrollbar-thumb {
+    background: rgba(201,162,39,.4);
+    border-radius: 4px;
+  }
+  .top-nav .chip {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* الصفحات الداخلية — تصغير المسافات */
+.main-header.inner-page .top-nav {
+  padding: 8px 16px 12px;
+  margin-bottom: 10px;
+}
