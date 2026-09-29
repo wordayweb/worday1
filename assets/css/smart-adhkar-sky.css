@@ -168,11 +168,13 @@
 }
 
 #smartHero[data-period="evening"] .hero-adhkar {
-  background: rgba(20, 15, 35, 0.35);
-  border: 1px solid rgba(228, 204, 110, 0.22);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(15, 12, 30, 0.72);
+  border: 1px solid rgba(228, 204, 110, 0.35);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(228, 204, 110, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 #smartHero[data-period="evening"] .hero-adhkar-head {
@@ -220,7 +222,10 @@
 }
 
 #smartHero[data-period="evening"] .hero-adhkar-item:nth-child(even) {
-  background: rgba(228, 204, 110, 0.08);
+  background: rgba(228, 204, 110, 0.05);
+}
+#smartHero[data-period="evening"] .hero-adhkar-item:not(:last-child) {
+  border-bottom-color: rgba(228, 204, 110, 0.12);
 }
 
 #smartHero[data-period="evening"] .hero-adhkar-item:hover {
@@ -262,15 +267,22 @@
 }
 
 #smartHero[data-period="evening"] .hero-cta {
-  background: linear-gradient(135deg, #E4CC6E, #C9A227);
-  color: #1F1D3A;
-  box-shadow: 0 8px 22px rgba(228, 204, 110, 0.35);
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFF4D6;
+  border: 1.5px solid #E4CC6E;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 #smartHero[data-period="evening"] .hero-cta:hover {
-  background: linear-gradient(135deg, #F5E5A0, #E4CC6E);
+  background: rgba(228, 204, 110, 0.22);
+  border-color: #F5E5A0;
+  color: #FFF8E7;
   transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(255, 220, 140, 0.5);
+  box-shadow: 0 12px 28px rgba(255, 220, 140, 0.35);
 }
 
 /* ═══════════════════════════════════════════
