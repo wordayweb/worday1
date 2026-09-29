@@ -1,4 +1,4 @@
-/* ============ صفحة السورة — مصحف المدينة النبوية (a11y) ============ */
+/* ============ صفحة السورة — مصحف المدينة النبوية (a11y + share image) ============ */
 
 const QURAN_API_V4 = 'https://api.quran.com/api/v4';
 const QURAN_FALLBACK = 'https://api.alquran.cloud/v1';
@@ -352,6 +352,9 @@ function renderSurah(data) {
           <button type="button" class="share-btn" aria-label="شارك الآية">
             <span class="va-ico" aria-hidden="true">📤</span>
           </button>
+          <button type="button" class="image-btn" aria-label="حوّل الآية إلى صورة">
+            <span class="va-ico" aria-hidden="true">🖼️</span>
+          </button>
         </div>
       </div>
     `;
@@ -397,16 +400,32 @@ function renderSurah(data) {
       e.stopPropagation();
       const btn = e.currentTarget;
       const t = `${text}\n\n[${data.arabicName || data.name}: ${toAr(ayah.numberInSurah)}]`;
-      if (navigator.share) { try { await navigator.share({ title: data.name, text: t }); } catch {} }
-      else {
+      if (navigator.share) {
+        try { await navigator.share({ title: data.name, text: t }); } catch {}
+      } else {
         try {
           await navigator.clipboard.writeText(t);
           const original = btn.innerHTML;
           btn.innerHTML = '<span class="va-ico" aria-hidden="true">✓</span>';
-          btn.setAttribute('aria-label', 'تم نسخ الآية');
+          btn.setAttribute('aria-label', 'تم نسخ الآية للمشاركة');
           announce('تم نسخ الآية للمشاركة');
           setTimeout(() => { btn.innerHTML = original; btn.setAttribute('aria-label', 'شارك الآية'); }, 1200);
         } catch {}
+      }
+    });
+    /* 🖼️ تحويل الآية إلى صورة */
+    el.querySelector('.image-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (window.WirdiShareImage) {
+        window.WirdiShareImage.open({
+          ayahText: text.trim(),
+          surahName: data.arabicName || data.name.replace('سُورَةُ ', ''),
+          ayahNum: toAr(ayah.numberInSurah),
+          theme: 'classic',
+          size: 'square'
+        });
+      } else {
+        console.warn('share-image.js غير محمّل');
       }
     });
     versesBox.appendChild(el);
