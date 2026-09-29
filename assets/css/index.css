@@ -470,3 +470,101 @@ body.dark .sec-card.amin-card .amin-desc {
   }
   .sec-card.amin-card .overlay h4 .card-title { font-size: 18px; }
 }
+
+/* ============================================================
+   ✨ Watermark + Glass على بطاقات الأقسام
+   ============================================================ */
+
+.sec-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    url('../img/islamic-pattern.svg') center/180px no-repeat,
+    linear-gradient(160deg, #FBF8F1 0%, #F5F1E8 100%) !important;
+  border: 2px solid var(--gold, #C9A227) !important;
+}
+
+/* طبقة الشعار كعلامة مائية */
+.sec-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../img/logo.png') center / 55% no-repeat;
+  opacity: 0.06;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* الإطار الذهبي الداخلي */
+.sec-card::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* طبقة الجلاس — ضباب ناعم فوق العلامة المائية */
+.sec-card .overlay {
+  position: relative !important;
+  inset: auto !important;
+  background: rgba(251, 248, 241, 0.55) !important;
+  backdrop-filter: blur(6px) saturate(1.1);
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
+  border-radius: 12px;
+  padding: 14px 10px !important;
+  margin: 12px 14px;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  z-index: 2;
+  width: calc(100% - 28px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ============================================================
+   الوضع الليلي
+   ============================================================ */
+body.dark .sec-card {
+  background:
+    url('../img/islamic-pattern.svg') center/180px no-repeat,
+    linear-gradient(160deg, #1F2B26 0%, #14201C 100%) !important;
+  border-color: var(--gold, #C9A227) !important;
+}
+
+body.dark .sec-card::before {
+  opacity: 0.08;
+  mix-blend-mode: screen;
+  filter: brightness(1.5);
+}
+
+body.dark .sec-card .overlay {
+  background: rgba(31, 43, 38, 0.6) !important;
+  border-color: rgba(228, 204, 110, 0.25);
+}
+
+body.dark .sec-card::after {
+  border-color: rgba(228, 204, 110, 0.4);
+}
+
+/* ============================================================
+   الجوال
+   ============================================================ */
+@media (max-width: 480px) {
+  .sec-card::before {
+    background-size: 65%;
+    opacity: 0.05;
+  }
+  .sec-card .overlay {
+    margin: 10px;
+    padding: 12px 8px !important;
+    width: calc(100% - 20px);
+  }
+}
