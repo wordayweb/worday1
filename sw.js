@@ -3,7 +3,7 @@
    ⚠️ عند أي تعديل: غيّر CACHE_NAME أدناه
    ============================================================ */
 
-const CACHE_NAME   = 'wirdi-v2609301300';
+const CACHE_NAME   = 'wirdi-v2609301400';
 const OFFLINE_URL  = './data/offline.html';
 
 const PRECACHE_URLS = [
@@ -46,6 +46,7 @@ const PRECACHE_URLS = [
   './assets/css/settings.css',
   './assets/css/streak.css',
   './assets/css/smart-adhkar.css',
+  './assets/css/smart-adhkar-sky.css',
   './assets/css/zakat.css',
   './assets/css/pwa.css',
   './assets/js/app.js',

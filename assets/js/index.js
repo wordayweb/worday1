@@ -77,3 +77,22 @@
     setTimeout(wrapCardEmojis, 1500);
   };
 })();
+
+/* ============ 🌅 محدد الصباح/المساء ============ */
+(function () {
+  function getPeriod() {
+    const h = new Date().getHours();
+    return (h >= 4 && h < 15) ? 'morning' : 'evening';
+  }
+  function apply() {
+    const hero = document.getElementById('smartHero');
+    if (!hero) return;
+    hero.classList.remove('morning', 'evening');
+    hero.classList.add(getPeriod());
+  }
+  apply();
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) apply();
+  });
+  setInterval(apply, 30 * 60 * 1000);
+})();
