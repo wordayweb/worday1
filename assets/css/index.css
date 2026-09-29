@@ -264,3 +264,209 @@ body.dark .soon-badge {
   .sec-card h4.long-text { font-size: 11.5px; line-height: 1.3; }
   .sec-card.amin-card h4.long-text { font-size: 14px; }
 }
+
+/* ============================================================
+   🕌 نمط المصحف — البطاقات
+   ============================================================ */
+
+.sec-card {
+  position: relative;
+  background: linear-gradient(160deg, #FBF8F1 0%, #F5F1E8 100%) !important;
+  border: 2px solid var(--gold, #C9A227) !important;
+  border-radius: 18px !important;
+  min-height: 160px;
+  padding: 22px 14px 18px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .3s ease;
+  box-shadow: 0 4px 14px rgba(201,162,39,.08);
+}
+
+.sec-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(201,162,39,.28);
+}
+
+.sec-card .bg { display: none !important; }
+
+.sec-card::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(201,162,39,.35);
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sec-card::after {
+  content: '❁';
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 12px;
+  color: var(--gold, #C9A227);
+  opacity: .55;
+  z-index: 2;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.sec-card .overlay {
+  position: relative !important;
+  inset: auto !important;
+  background: transparent !important;
+  padding: 0 !important;
+  text-align: center;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.sec-card .overlay h4 {
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--green, #1F4E3D) !important;
+  margin: 0 !important;
+  padding: 0;
+  line-height: 1.4;
+  letter-spacing: .2px;
+  text-shadow: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: transparent !important;
+}
+
+.sec-card .overlay h4 .card-emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E4CC6E 0%, #C9A227 100%);
+  box-shadow:
+    0 4px 12px rgba(201,162,39,.35),
+    inset 0 -2px 4px rgba(0,0,0,.08);
+  font-size: 26px;
+  line-height: 1;
+  padding-top: 2px;
+}
+
+.sec-card .overlay h4 .card-title {
+  display: block;
+  font-size: 17px;
+  letter-spacing: .2px;
+}
+
+.sec-card .overlay .underline {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  border-radius: 2px;
+  margin-top: 2px;
+  opacity: .85;
+}
+
+/* البطاقة العريضة */
+.sec-card.amin-card {
+  min-height: 140px;
+  padding: 26px 20px !important;
+}
+
+.sec-card.amin-card .overlay h4 {
+  font-size: 22px;
+  gap: 8px;
+}
+
+.sec-card.amin-card .overlay h4 .card-emoji {
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+}
+
+.sec-card.amin-card .overlay h4 .card-title {
+  font-size: 22px;
+}
+
+.sec-card.amin-card .amin-desc {
+  color: var(--ink-soft, #6B6B6B) !important;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* بطاقة "قريبًا" */
+.sec-card.soon {
+  opacity: .72;
+  filter: grayscale(20%);
+}
+
+.sec-card.soon::after {
+  content: 'قريبًا';
+  position: absolute;
+  top: 8px;
+  inset-inline-start: 12px;
+  background: var(--gold, #C9A227);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: 'Tajawal', sans-serif;
+  z-index: 5;
+  opacity: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+
+.sec-card.soon .soon-badge { display: none !important; }
+
+/* الوضع الليلي */
+body.dark .sec-card {
+  background: linear-gradient(160deg, #1F2B26 0%, #14201C 100%) !important;
+  border-color: var(--gold, #C9A227) !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+}
+
+body.dark .sec-card::before { border-color: rgba(228,204,110,.35); }
+
+body.dark .sec-card .overlay h4 {
+  color: var(--gold-light, #E4CC6E) !important;
+}
+
+body.dark .sec-card.amin-card .amin-desc {
+  color: #A8A8A8 !important;
+}
+
+/* الجوال */
+@media (max-width: 480px) {
+  .sec-card {
+    min-height: 140px;
+    padding: 18px 10px 14px !important;
+    border-radius: 14px !important;
+  }
+  .sec-card .overlay h4 .card-emoji {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+  .sec-card .overlay h4 {
+    font-size: 15px;
+    gap: 8px;
+  }
+  .sec-card .overlay h4 .card-title { font-size: 14.5px; }
+  .sec-card.amin-card { padding: 20px 14px !important; }
+  .sec-card.amin-card .overlay h4 .card-emoji {
+    width: 50px; height: 50px; font-size: 26px;
+  }
+  .sec-card.amin-card .overlay h4 .card-title { font-size: 18px; }
+}

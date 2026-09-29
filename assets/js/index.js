@@ -55,4 +55,25 @@
   } else {
     setTimeout(init, 700);
   }
+  function wrapCardEmojis() {
+    const headings = document.querySelectorAll('.sec-card .overlay h4');
+    headings.forEach(function (h4) {
+      if (h4.querySelector('.card-emoji')) return;
+      const html = h4.innerHTML.trim();
+      const firstChar = Array.from(html)[0];
+      if (!firstChar) return;
+      const isEmoji = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F900}-\u{1F9FF}]/u.test(firstChar);
+      if (!isEmoji) return;
+      const rest = html.slice(firstChar.length).trim();
+      if (!rest) return;
+      h4.innerHTML = '<span class="card-emoji">' + firstChar + '</span><span class="card-title">' + rest + '</span>';
+    });
+  }
+
+  const _origInit = init;
+  init = function () {
+    _origInit();
+    setTimeout(wrapCardEmojis, 500);
+    setTimeout(wrapCardEmojis, 1500);
+  };
 })();
