@@ -237,7 +237,6 @@ async function fetchMushafPosition(surahNum) {
     console.warn('⚠️ chapters فشل:', e);
   }
 
-  /* المحاولة 3: قيم افتراضية */
   return {
     juzStart: 1, juzEnd: 1,
     pageStart: 1, pageEnd: 1,
@@ -255,37 +254,135 @@ function renderMushafBar(pos) {
 }
 
 /* ============================================================
-   جلب السورة
+   ✨ المؤشر الديناميكي — يُحدِّث الشريط أثناء التمرير
+   ============================================================ */
+function initScrollTracker() {
+  const verses = document.querySelectorAll('.verse');
+  if (!verses.length) return;
+
+  const mbJuz  = document.getElementById('mbJuz');
+  const mbPage = document.getElementById('mbPage');
+  const mbHizb = document.getElementById('mbHizb');
+  if (!mbJuz || !mbPage || !mbHizb) return;
+
+  let currentJuz = null;
+  let currentPage = null;
+  let currentHizb = null;
+  let initialized = false;
+
+  /* تحديث عنصر بقيمة جديدة + نبضة ذهبية */
+  function updateItem(el, newValue) {
+    const newText = toAr(newValue);
+    if (el.textContent === newText) return false;
+    el.textContent = newText;
+    el.classList.remove('flash');
+    void el.offsetWidth;
+    el.classList.add('flash');
+    return true;
+  }
+
+  /* استخدام scroll مباشرة — أوثق من IntersectionObserver للشريط المتصل */
+  let ticking = false;
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+
+    requestAnimationFrame(() => {
+      /* اختر الآية الأقرب لأعلى الشاشة */
+      const viewportTop = 150; /* نطاق قريب من أعلى الشاشة */
+      let closest = null;
+      let closestDist = Infinity;
+
+      for (const v of verses) {
+        const rect = v.getBoundingClientRect();
+        const dist = Math.abs(rect.top - viewportTop);
+        if (rect.bottom > 0 && dist < closestDist) {
+          closest = v;
+          closestDist = dist;
+        }
+      }
+
+      if (closest) {
+        const page = parseInt(closest.dataset.page, 10);
+        const juz  = parseInt(closest.dataset.juz, 10);
+        const hizb = parseInt(closest.dataset.hizb, 10);
+
+        if (page && page !== currentPage) {
+          currentPage = page;
+          updateItem(mbPage, page);
+        }
+        if (juz && juz !== currentJuz) {
+          currentJuz = juz;
+          updateItem(mbJuz, juz);
+        }
+        if (hizb && hizb !== currentHizb) {
+          currentHizb = hizb;
+          updateItem(mbHizb, hizb);
+        }
+      }
+
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  /* تشغيل أولي */
+  setTimeout(onScroll, 100);
+}
+
+/* ============================================================
+   جلب السورة (مع metadata لكل آية)
    ============================================================ */
 async function fetchSurah(number) {
   try {
-    const infoRes = await fetch(`${QURAN_API_V4}/chapters/${number}?language=ar`);
+    const [infoRes, versesRes, metaRes] = await Promise.all([
+      fetch(`${QURAN_API_V4}/chapters/${number}?language=ar`),
+      fetch(`${QURAN_API_V4}/quran/verses/uthmani?chapter_number=${number}`),
+      fetch(`${QURAN_API_V4}/verses/by_chapter/${number}?fields=page_number,juz_number,hizb_number&per_page=300`)
+    ]);
+
     const infoData = await infoRes.json();
-    const chapter = infoData.chapter;
-
-    const versesRes = await fetch(`${QURAN_API_V4}/quran/verses/uthmani?chapter_number=${number}`);
     const versesData = await versesRes.json();
+    const metaData = await metaRes.json();
 
-    if (versesData.verses && versesData.verses.length) {
-      return {
-        number: chapter.id,
-        name: `سُورَةُ ${chapter.name_arabic}`,
-        arabicName: chapter.name_arabic,
-        revelationType: chapter.revelation_place === 'makkah' ? 'Meccan' : 'Medinan',
-        numberOfAyahs: chapter.verses_count,
-        bismillahPre: chapter.bismillah_pre,
-        ayahs: versesData.verses.map(v => {
-          const [, a] = v.verse_key.split(':').map(Number);
-          return {
-            numberInSurah: a,
-            number: v.id,
-            text: v.text_uthmani,
-            verse_key: v.verse_key,
-          };
-        }),
-        source: '✅ مصحف المدينة النبوية',
+    const chapter = infoData.chapter;
+    if (!chapter || !versesData.verses) throw new Error('فشل');
+
+    /* خريطة metadata: verse_key → { page, juz, hizb } */
+    const metaMap = {};
+    (metaData.verses || []).forEach(v => {
+      metaMap[v.verse_key] = {
+        page: v.page_number || 1,
+        juz:  v.juz_number  || 1,
+        hizb: v.hizb_number || 1,
       };
-    }
+    });
+
+    return {
+      number: chapter.id,
+      name: `سُورَةُ ${chapter.name_arabic}`,
+      arabicName: chapter.name_arabic,
+      revelationType: chapter.revelation_place === 'makkah' ? 'Meccan' : 'Medinan',
+      numberOfAyahs: chapter.verses_count,
+      bismillahPre: chapter.bismillah_pre,
+      ayahs: versesData.verses.map(v => {
+        const [, a] = v.verse_key.split(':').map(Number);
+        const meta = metaMap[v.verse_key] || { page: 1, juz: 1, hizb: 1 };
+        return {
+          numberInSurah: a,
+          number: v.id,
+          text: v.text_uthmani,
+          verse_key: v.verse_key,
+          page: meta.page,
+          juz:  meta.juz,
+          hizb: meta.hizb,
+        };
+      }),
+      source: '✅ مصحف المدينة النبوية',
+    };
   } catch (e) {
     console.warn('المصدر الرسمي فشل، نستخدم الاحتياطي:', e);
   }
@@ -340,6 +437,9 @@ function renderSurah(data) {
     el.className = 'verse fade-in';
     el.id = `ayah-${ayah.numberInSurah}`;
     el.dataset.ayah = ayah.numberInSurah;
+    el.dataset.page = ayah.page || 1;
+    el.dataset.juz  = ayah.juz  || 1;
+    el.dataset.hizb = ayah.hizb || 1;
 
     el.innerHTML = `
       <div class="v-body">
@@ -391,7 +491,7 @@ function renderSurah(data) {
       e.currentTarget.classList.toggle('active', added);
     });
 
-    /* ✨ التفسير */
+    /* التفسير */
     el.querySelector('.tafsir-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       openTafsir(data.number, ayah.numberInSurah, text.trim());
@@ -585,6 +685,9 @@ async function initSurahPage() {
 
     const pos = await fetchMushafPosition(num);
     renderMushafBar(pos);
+
+    /* بدء تتبع التمرير بعد ظهور الآيات */
+    setTimeout(initScrollTracker, 400);
 
     document.getElementById('apPlay').addEventListener('click', () => {
       if (!audioEl) return;

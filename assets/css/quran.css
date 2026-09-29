@@ -355,6 +355,7 @@
   border: 1px solid var(--gold);
   border-radius: 12px;
   position: relative;
+  transition: box-shadow .3s;
 }
 .mushaf-bar::before,
 .mushaf-bar::after {
@@ -369,6 +370,11 @@
 }
 .mushaf-bar::before { right: -3px; }
 .mushaf-bar::after  { left: -3px; }
+
+/* تأثير الحدود الذهبية عند التحديث */
+.mushaf-bar:has(.flash) {
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, .15);
+}
 
 .mb-item {
   display: flex;
@@ -390,6 +396,7 @@
   color: var(--green);
   min-width: 22px;
   text-align: center;
+  transition: color .3s;
 }
 .mb-divider {
   font-family: 'Amiri', serif;
@@ -397,6 +404,28 @@
   color: var(--gold);
   opacity: .7;
   flex: 0 0 auto;
+}
+
+/* ============================================================
+   ✨ نبضة ذهبية عند تحديث شريط المصحف (المؤشر الديناميكي)
+   ============================================================ */
+.mb-value.flash {
+  animation: mbFlash 1.2s ease;
+}
+@keyframes mbFlash {
+  0% {
+    transform: scale(1);
+    color: var(--green);
+  }
+  30% {
+    transform: scale(1.25);
+    color: var(--gold);
+    text-shadow: 0 0 12px rgba(201, 162, 39, .6);
+  }
+  100% {
+    transform: scale(1);
+    color: var(--green);
+  }
 }
 
 /* البسملة */
@@ -927,6 +956,26 @@ body.dark .mushaf-bar {
 body.dark .mb-value { color: var(--gold); }
 body.dark .mb-label { color: rgba(255,255,255,.6); }
 
+/* الوضع الليلي — نبضة المؤشر */
+body.dark .mb-value.flash {
+  animation: mbFlashDark 1.2s ease;
+}
+@keyframes mbFlashDark {
+  0% {
+    transform: scale(1);
+    color: var(--gold);
+  }
+  30% {
+    transform: scale(1.25);
+    color: #fff;
+    text-shadow: 0 0 12px rgba(201, 162, 39, .8);
+  }
+  100% {
+    transform: scale(1);
+    color: var(--gold);
+  }
+}
+
 /* الوضع الليلي — التفسير */
 body.dark .tafsir-dialog {
   background: #1A241F;
@@ -978,6 +1027,7 @@ body.dark .spinner {
   .mushaf-bar { padding: 8px 10px; gap: 6px; }
   .mb-label { font-size: 10px; }
   .mb-value { font-size: 15px; }
+  .mb-value.flash { animation-duration: .9s; }
   .mb-divider { font-size: 12px; }
   .v-text { font-size: 19px; line-height: 1.85; }
   .verse { padding: 10px 12px; gap: 6px; }
