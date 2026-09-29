@@ -35,7 +35,6 @@
     if (path === 'calendar.html') return 'calendar';
     if (path === 'zakat.html') return 'zakat';
     if (path === 'tafsir.html') return 'tafsir';
-    if (path === 'tafsir.html') return 'tafsir';
     if (path === 'support.html') return 'support';
     return null;
   }
@@ -156,18 +155,9 @@
     });
   }
 
-  /* ============ زر الوضع الليلي ============ */
   function initThemeToggle() {
-    const btn = document.getElementById('themeToggle');
-    if (!btn) return;
-
-    /* قراءة الحالة المحفوظة — نفس المفتاح الذي يستخدمه settings.js */
-    const saved = localStorage.getItem('wirdi_dark') || localStorage.getItem('dark');
-
-    let isDark = false;
-    if (saved === 'true' || saved === '1' || saved === '"dark"') {
-      isDark = true;
-    } else if (saved === null) {
+    if (window.WirdiTheme) { window.WirdiTheme.apply(); }
+  } else if (saved === null) {
       /* احترام تفضيل النظام */
       isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     }

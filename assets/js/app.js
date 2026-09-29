@@ -1,33 +1,102 @@
 /* ============ وِرْدِي — App JS ============ */
 
+/* ============================================================
+   نظام الوضع الليلي الموحّد (WirdiTheme)
+   ============================================================ */
+(function () {
+  const KEY = 'wirdi_dark';
+  const html = document.documentElement;
+  const BTN_SELECTOR = '#darkToggle, .dark-toggle, [data-dark-toggle], #themeToggle, .theme-toggle';
+
+  try {
+    if (localStorage.getItem(KEY) === null) {
+      const legacy = ['dark', 'set_dark'];
+      let migrated = null;
+      for (const k of legacy) {
+        const raw = localStorage.getItem(k);
+        if (raw === null) continue;
+        let val = null;
+        try { val = JSON.parse(raw); } catch { val = raw; }
+        migrated = (val === true || val === 'true' || val === '1' || val === 1) ? '1' : '0';
+        break;
+      }
+      if (migrated !== null) {
+        localStorage.setItem(KEY, migrated);
+        legacy.forEach(k => localStorage.removeItem(k));
+      }
+    }
+  } catch (e) {}
+
+  function isDark() {
+    try {
+      const v = localStorage.getItem(KEY);
+      if (v === '1' || v === 'true') return true;
+      if (v === '0' || v === 'false') return false;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } catch { return false; }
+  }
+
+  function updateButtons(d) {
+    document.querySelectorAll(BTN_SELECTOR).forEach(b => {
+      b.textContent = d ? '☀️' : '🌙';
+      b.setAttribute('aria-pressed', d ? 'true' : 'false');
+    });
+  }
+
+  function apply(force) {
+    const d = (typeof force === 'boolean') ? force : isDark();
+    html.classList.toggle('dark', d);
+    if (document.body) document.body.classList.toggle('dark', d);
+    updateButtons(d);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', d ? '#1F4E3D' : '#F5F1E8');
+    return d;
+  }
+
+  function toggle() {
+    const next = !isDark();
+    try { localStorage.setItem(KEY, next ? '1' : '0'); } catch {}
+    apply(next);
+    return next;
+  }
+
+  if (!window.__wirdiThemeDelegated) {
+    window.__wirdiThemeDelegated = true;
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest(BTN_SELECTOR);
+      if (!btn) return;
+      e.preventDefault();
+      toggle();
+    });
+  }
+
+  apply();
+
+  function init() { apply(); }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else { init(); }
+
+  try {
+    window.matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', () => {
+        if (localStorage.getItem(KEY) === null) apply();
+      });
+  } catch {}
+
+  window.WirdiTheme = { KEY, isDark, apply, toggle, init };
+})();
+
 const LS = {
   get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
   set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
   del: (k) => localStorage.removeItem(k),
 };
 
-/* ---------- الوضع الليلي ---------- */
 function initDark() {
-  const saved = LS.get('dark', null) ?? LS.get('set_dark', null);
-  if (saved === null) {
-    const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (prefers) document.body.classList.add('dark');
-  } else if (saved) {
-    document.body.classList.add('dark');
-  }
-  const btn = document.getElementById('darkToggle');
-  if (btn) {
-    btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-    btn.onclick = () => {
-      document.body.classList.toggle('dark');
-      const isDark = document.body.classList.contains('dark');
-      LS.set('dark', isDark);
-      btn.textContent = isDark ? '☀️' : '🌙';
-    };
-  }
+  if (window.WirdiTheme) { window.WirdiTheme.init(); window.WirdiTheme.apply(); }
 }
 
-/* ---------- التاريخ الهجري ---------- */
 function initHijriDate() {
   const el = document.getElementById('hijriDate');
   if (!el) return;
@@ -43,11 +112,9 @@ function initHijriDate() {
   }
 }
 
-/* ---------- بطاقة الالتزام ---------- */
 function initTracker() {
   const tasksBox = document.getElementById('tasks');
   if (!tasksBox) return;
-
   const today = new Date().toISOString().slice(0, 10);
   const store = LS.get('tracker', {});
   if (store.date !== today) {
@@ -55,7 +122,6 @@ function initTracker() {
     store.done = {};
     LS.set('tracker', store);
   }
-
   const inputs = tasksBox.querySelectorAll('input[type="checkbox"]');
   inputs.forEach(inp => {
     inp.checked = !!(store.done && store.done[inp.dataset.k]);
@@ -65,17 +131,14 @@ function initTracker() {
       updateProgress();
     });
   });
-
   function updateProgress() {
     const total = inputs.length;
     const done = [...inputs].filter(i => i.checked).length;
     const pct = Math.round((done / total) * 100);
-
     const ring = document.getElementById('progressRing');
     const txt = document.getElementById('progressTxt');
     if (ring) ring.style.background = `conic-gradient(var(--green) ${pct * 3.6}deg, var(--line) 0)`;
     if (txt) txt.textContent = pct + '%';
-
     const greet = document.getElementById('dayGreeting');
     if (greet) {
       const h = new Date().getHours();
@@ -87,7 +150,6 @@ function initTracker() {
     }
   }
   updateProgress();
-
   const streak = LS.get('streak', { count: 1, last: today });
   if (streak.last !== today) {
     const yest = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
@@ -99,7 +161,6 @@ function initTracker() {
   if (streakEl) streakEl.textContent = streak.count;
 }
 
-/* ---------- الهدف اليومي ---------- */
 function setGoal() {
   const cur = LS.get('goal', 0);
   const val = prompt('كم عدد الأذكار التي تريد إتمامها اليوم؟', cur || 10);
@@ -112,7 +173,6 @@ function setGoal() {
   }
 }
 
-/* ---------- تشغيل ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   initDark();
   initHijriDate();
