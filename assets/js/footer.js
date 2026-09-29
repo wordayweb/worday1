@@ -93,6 +93,10 @@
 
         '<div class="wf-bottom">' +
           '<p class="wf-copy">© وِرْدِي — مجاني لله، بدون إعلانات</p>' +
+          '<div class="wf-credit">' +
+            '<span class="wf-credit-label">الإشراف الاستشاري في التطوير والبرمجة</span>' +
+            '<span class="wf-credit-name">محمد العالم</span>' +
+          '</div>' +
           '<p class="wf-date">' + hijriDate() + '</p>' +
         '</div>' +
       '</footer>' +
