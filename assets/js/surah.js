@@ -2,9 +2,17 @@
 
 const QURAN_API_V4 = 'https://api.quran.com/api/v4';
 const QURAN_FALLBACK = 'https://api.alquran.cloud/v1';
+const ALQURAN_API = 'https://api.alquran.cloud/v1';
 const LAST_READ_KEY = 'quran_last_read';
 const BOOKMARKS_KEY = 'quran_bookmarks';
 const RECITER_KEY = 'quran_reciter';
+const TAFSIR_SOURCE_KEY = 'wirdi_tafsir_source_v3';
+const TAFSIR_CACHE_PREFIX = 'tafsir_v3_';
+
+const TAFSIR_SLUGS = {
+  'muyassar': 'ar.muyassar',
+  'jalalayn': 'ar.jalalayn',
+};
 
 const RECITERS = {
   Alafasy:                   { name: 'مشاري العفاسي',      slug: 'Alafasy' },
@@ -19,6 +27,7 @@ const RECITERS = {
 
 let CURRENT = null;
 let audioEl = null;
+let CURRENT_TAFSIR = 'muyassar';
 
 function toAr(s) {
   const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
@@ -46,9 +55,133 @@ function toggleBookmark(ayah) {
 }
 
 /* ============================================================
+   📖 التفسير — Cache + Fetch + Modal
+   ============================================================ */
+function getTafsirCache(key) {
+  try {
+    const raw = localStorage.getItem(TAFSIR_CACHE_PREFIX + key);
+    if (!raw) return null;
+    const obj = JSON.parse(raw);
+    if (Date.now() - obj.time > 1000 * 60 * 60 * 24 * 7) {
+      localStorage.removeItem(TAFSIR_CACHE_PREFIX + key);
+      return null;
+    }
+    return obj.data;
+  } catch { return null; }
+}
+
+function setTafsirCache(key, data) {
+  try {
+    localStorage.setItem(TAFSIR_CACHE_PREFIX + key, JSON.stringify({
+      time: Date.now(),
+      data,
+    }));
+  } catch {}
+}
+
+async function fetchTafsir(surahNum, ayahNum) {
+  const key = `${CURRENT_TAFSIR}_${surahNum}_${ayahNum}`;
+  const cached = getTafsirCache(key);
+  if (cached) return cached;
+
+  const slug = TAFSIR_SLUGS[CURRENT_TAFSIR] || 'ar.muyassar';
+  const url = `${ALQURAN_API}/ayah/${surahNum}:${ayahNum}/${slug}`;
+
+  console.log('📖 جلب التفسير:', url);
+
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+
+  const data = await res.json();
+  if (data.code !== 200 || !data.data || !data.data.text) {
+    throw new Error('لا يوجد تفسير');
+  }
+
+  const cleanText = data.data.text.replace(/<[^>]*>/g, '').trim();
+  setTafsirCache(key, cleanText);
+  return cleanText;
+}
+
+function openTafsir(surahNum, ayahNum, ayahText) {
+  const modal = document.getElementById('tafsirModal');
+  const title = document.getElementById('tafsirTitle');
+  const subtitle = document.getElementById('tafsirSubtitle');
+  const verseBox = document.getElementById('tafsirVerse');
+  const body = document.getElementById('tafsirBody');
+  const sourceEl = document.getElementById('tafsirSource');
+
+  if (!modal) return;
+
+  modal.hidden = false;
+  document.body.style.overflow = 'hidden';
+
+  const tafsirName = CURRENT_TAFSIR === 'jalalayn' ? 'تفسير الجلالين' : 'التفسير الميسر';
+  title.textContent = tafsirName;
+  subtitle.textContent = `سورة ${CURRENT.arabicName} — آية ${toAr(ayahNum)}`;
+  verseBox.textContent = ayahText || '';
+  sourceEl.textContent = 'المصدر: alquran.cloud';
+
+  body.innerHTML = `
+    <div class="tafsir-loading">
+      <span class="spinner"></span>
+      <span>جارٍ تحميل التفسير…</span>
+    </div>
+  `;
+
+  fetchTafsir(surahNum, ayahNum)
+    .then((text) => {
+      const paragraphs = text.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+      body.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+    })
+    .catch((err) => {
+      console.warn('فشل التفسير:', err);
+      body.innerHTML = `<div class="tafsir-error">⚠️ تعذّر تحميل التفسير. تحقق من الاتصال.</div>`;
+    });
+}
+
+function closeTafsir() {
+  const modal = document.getElementById('tafsirModal');
+  if (!modal) return;
+  modal.hidden = true;
+  document.body.style.overflow = '';
+}
+
+function initTafsirEvents() {
+  const modal = document.getElementById('tafsirModal');
+  const closeBtn = document.getElementById('tafsirClose');
+  const backdrop = document.getElementById('tafsirBackdrop');
+  const copyBtn = document.getElementById('tafsirCopy');
+
+  if (closeBtn) closeBtn.addEventListener('click', closeTafsir);
+  if (backdrop) backdrop.addEventListener('click', closeTafsir);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.hidden) closeTafsir();
+  });
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const verseBox = document.getElementById('tafsirVerse');
+      const body = document.getElementById('tafsirBody');
+      const text = `${verseBox.textContent}\n\n[التفسير]\n${body.textContent}`;
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = copyBtn.textContent;
+        copyBtn.textContent = '✓ تم النسخ';
+        setTimeout(() => { copyBtn.textContent = original; }, 1500);
+      } catch {}
+    });
+  }
+
+  /* قراءة التفسير المفضل */
+  const savedSource = localStorage.getItem(TAFSIR_SOURCE_KEY);
+  if (savedSource && TAFSIR_SLUGS[savedSource]) CURRENT_TAFSIR = savedSource;
+}
+
+/* ============================================================
    جلب موقع السورة في المصحف (الجزء والصفحة والحزب)
    ============================================================ */
-async function fetchMushafPosition(surahNum, lastAyah) {
+async function fetchMushafPosition(surahNum) {
   const pick = (obj, ...keys) => {
     for (const k of keys) {
       if (obj && obj[k] !== undefined && obj[k] !== null) return obj[k];
@@ -56,13 +189,11 @@ async function fetchMushafPosition(surahNum, lastAyah) {
     return null;
   };
 
-  /* ===== المحاولة 1: verses/by_chapter ===== */
+  /* المحاولة 1: verses/by_chapter */
   try {
     const url = `${QURAN_API_V4}/verses/by_chapter/${surahNum}?fields=page_number,juz_number,hizb_number&per_page=300`;
     const res = await fetch(url);
     const data = await res.json();
-
-    console.log('📖 verses/by_chapter:', data);
 
     const verses = data.verses || [];
     if (verses.length > 0) {
@@ -84,24 +215,20 @@ async function fetchMushafPosition(surahNum, lastAyah) {
     console.warn('⚠️ verses/by_chapter فشل:', e);
   }
 
-  /* ===== المحاولة 2: chapters/{n} ===== */
+  /* المحاولة 2: chapters/{n} */
   try {
     const url = `${QURAN_API_V4}/chapters/${surahNum}?language=ar`;
     const res = await fetch(url);
     const data = await res.json();
-
-    console.log('📖 chapters:', data);
 
     const chapter = data.chapter || {};
     const pages = chapter.pages || [];
     const pageStart = pages.length > 0 ? pages[0] : 1;
     const pageEnd   = pages.length > 0 ? pages[pages.length - 1] : pageStart;
 
-    /* حساب الجزء تقريبيًا من الصفحة: كل جزء = 20 صفحة تقريبًا */
     const juzStart = Math.max(1, Math.ceil(pageStart / 20));
     const juzEnd   = Math.max(1, Math.ceil(pageEnd / 20));
 
-    /* الحزب = ضعف الجزء (كل جزء حزبان) */
     const hizbStart = (juzStart - 1) * 2 + 1;
     const hizbEnd   = (juzEnd - 1) * 2 + 2;
 
@@ -110,8 +237,7 @@ async function fetchMushafPosition(surahNum, lastAyah) {
     console.warn('⚠️ chapters فشل:', e);
   }
 
-  /* ===== المحاولة 3: قيم افتراضية آمنة ===== */
-  console.warn('❌ جميع المحاولات فشلت، استخدام قيم افتراضية');
+  /* المحاولة 3: قيم افتراضية */
   return {
     juzStart: 1, juzEnd: 1,
     pageStart: 1, pageEnd: 1,
@@ -119,7 +245,6 @@ async function fetchMushafPosition(surahNum, lastAyah) {
   };
 }
 
-/* ---------- عرض شريط المصحف ---------- */
 function renderMushafBar(pos) {
   if (!pos) return;
   const fmt = (a, b) => a === b ? toAr(a) : `${toAr(a)} - ${toAr(b)}`;
@@ -129,7 +254,9 @@ function renderMushafBar(pos) {
   if ($('mbHizb')) $('mbHizb').textContent = fmt(pos.hizbStart, pos.hizbEnd);
 }
 
-/* ---------- جلب السورة ---------- */
+/* ============================================================
+   جلب السورة
+   ============================================================ */
 async function fetchSurah(number) {
   try {
     const infoRes = await fetch(`${QURAN_API_V4}/chapters/${number}?language=ar`);
@@ -148,7 +275,7 @@ async function fetchSurah(number) {
         numberOfAyahs: chapter.verses_count,
         bismillahPre: chapter.bismillah_pre,
         ayahs: versesData.verses.map(v => {
-          const [s, a] = v.verse_key.split(':').map(Number);
+          const [, a] = v.verse_key.split(':').map(Number);
           return {
             numberInSurah: a,
             number: v.id,
@@ -169,7 +296,9 @@ async function fetchSurah(number) {
   return { ...data.data, source: 'ℹ️ alquran.cloud' };
 }
 
-/* ---------- عرض السورة ---------- */
+/* ============================================================
+   عرض السورة
+   ============================================================ */
 function renderSurah(data) {
   CURRENT = data;
 
@@ -226,6 +355,9 @@ function renderSurah(data) {
                   data-tip="مفضلة" aria-label="مفضلة">
             <span class="va-ico">🔖</span>
           </button>
+          <button class="tafsir-btn" data-tip="تفسير" aria-label="تفسير">
+            <span class="va-ico">📖</span>
+          </button>
           <button class="copy-btn" data-tip="نسخ" aria-label="نسخ">
             <span class="va-ico">📋</span>
           </button>
@@ -236,6 +368,7 @@ function renderSurah(data) {
       </div>
     `;
 
+    /* إظهار الأزرار عند الضغط على النص */
     el.querySelector('.v-text').addEventListener('click', (e) => {
       e.stopPropagation();
       const isActive = el.classList.contains('active');
@@ -243,6 +376,7 @@ function renderSurah(data) {
       if (!isActive) el.classList.add('active');
     });
 
+    /* الاستماع */
     el.querySelector('.play-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       document.querySelectorAll('.verse.playing').forEach(v => v.classList.remove('playing'));
@@ -250,12 +384,20 @@ function renderSurah(data) {
       playAyah(data.number, ayah.numberInSurah);
     });
 
+    /* المفضلة */
     el.querySelector('.bookmark-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       const added = toggleBookmark(ayah.numberInSurah);
       e.currentTarget.classList.toggle('active', added);
     });
 
+    /* ✨ التفسير */
+    el.querySelector('.tafsir-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      openTafsir(data.number, ayah.numberInSurah, text.trim());
+    });
+
+    /* النسخ */
     el.querySelector('.copy-btn').addEventListener('click', async (e) => {
       e.stopPropagation();
       const t = `${text} (${data.arabicName || data.name}: ${toAr(ayah.numberInSurah)})`;
@@ -268,6 +410,7 @@ function renderSurah(data) {
       } catch {}
     });
 
+    /* المشاركة */
     el.querySelector('.share-btn').addEventListener('click', async (e) => {
       e.stopPropagation();
       const t = `${text}\n\n[${data.arabicName || data.name}: ${toAr(ayah.numberInSurah)}]`;
@@ -342,7 +485,9 @@ function changeReciter() {
   }
 }
 
-/* ---------- الصوت ---------- */
+/* ============================================================
+   الصوت
+   ============================================================ */
 function initAudio() {
   if (audioEl) return;
   audioEl = new Audio();
@@ -425,18 +570,20 @@ async function copyFullSurah() {
   } catch {}
 }
 
-/* ---------- التهيئة ---------- */
+/* ============================================================
+   التهيئة
+   ============================================================ */
 async function initSurahPage() {
   const params = new URLSearchParams(location.search);
   const num = parseInt(params.get('n'), 10) || 1;
+
+  initTafsirEvents();
 
   try {
     const data = await fetchSurah(num);
     renderSurah(data);
 
-    /* ✅ جلب وعرض موقع السورة في المصحف */
-    const lastAyah = data.ayahs.length;
-    const pos = await fetchMushafPosition(num, lastAyah);
+    const pos = await fetchMushafPosition(num);
     renderMushafBar(pos);
 
     document.getElementById('apPlay').addEventListener('click', () => {

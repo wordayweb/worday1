@@ -70,6 +70,39 @@
   </div>
 </div>
 
+<!-- ============================================
+     📖 نافذة التفسير المنبثقة
+     ============================================ -->
+<div class="tafsir-modal" id="tafsirModal" hidden>
+  <div class="tafsir-backdrop" id="tafsirBackdrop"></div>
+  <div class="tafsir-dialog" role="dialog" aria-modal="true" aria-labelledby="tafsirTitle">
+    <div class="tafsir-header">
+      <div class="tafsir-head-info">
+        <span class="tafsir-ico">📖</span>
+        <div>
+          <h3 id="tafsirTitle">التفسير الميسر</h3>
+          <p id="tafsirSubtitle">—</p>
+        </div>
+      </div>
+      <button class="tafsir-close" id="tafsirClose" aria-label="إغلاق">✕</button>
+    </div>
+
+    <div class="tafsir-verse" id="tafsirVerse"></div>
+
+    <div class="tafsir-body" id="tafsirBody">
+      <div class="tafsir-loading">
+        <span class="spinner"></span>
+        <span>جارٍ تحميل التفسير…</span>
+      </div>
+    </div>
+
+    <div class="tafsir-footer">
+      <span class="tafsir-source" id="tafsirSource">المصدر: alquran.cloud</span>
+      <button class="tafsir-copy" id="tafsirCopy">📋 نسخ التفسير</button>
+    </div>
+  </div>
+</div>
+
 <script src="assets/js/app.js"></script>
 <script src="assets/js/navbar.js"></script>
 <script src="assets/js/header.js"></script>
