@@ -37,7 +37,20 @@
 
   <section id="smartHero" class="fade-in" aria-label="أذكار الوقت الحالي"></section>
 
-  <section class="dashboard-unified fade-in" aria-label="لوحة المتابعة اليومية">
+  
+  <!-- ===== واصل القراءة ===== -->
+<section class="card resume fade-in" aria-label="واصل القراءة">
+    <button class="btn-play" onclick="location.href='quran.html'" aria-label="اذهب إلى آخر ما قرأت">
+      <span class="tri" aria-hidden="true"></span> انتقال
+    </button>
+    <div class="info">
+      <div class="lbl">واصل القراءة</div>
+      <div class="val" id="lastRead">سورة الجن — آية ٢٢</div>
+    </div>
+    <div class="thumb" aria-hidden="true">📖</div>
+  </section>
+  <!-- ===== لوحة المتابعة اليومية ===== -->
+<section class="dashboard-unified fade-in" aria-label="لوحة المتابعة اليومية">
 
     <div class="dash-panel dash-panel-tracker" aria-label="بطاقة الالتزام">
       <div class="tracker-head">
@@ -72,17 +85,6 @@
 
     <div class="dash-panel dash-panel-streak" id="streakSlot" aria-label="سلسلة الأيام"></div>
 
-  </section>
-
-  <section class="card resume fade-in" aria-label="واصل القراءة">
-    <button class="btn-play" onclick="location.href='quran.html'" aria-label="اذهب إلى آخر ما قرأت">
-      <span class="tri" aria-hidden="true"></span> انتقال
-    </button>
-    <div class="info">
-      <div class="lbl">واصل القراءة</div>
-      <div class="val" id="lastRead">سورة الجن — آية ٢٢</div>
-    </div>
-    <div class="thumb" aria-hidden="true">📖</div>
   </section>
 
   <section class="section-group" aria-labelledby="groupWird">
