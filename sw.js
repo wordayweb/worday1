@@ -1,9 +1,9 @@
 /* ============================================================
-   Service Worker — وِرْدِي PWA
-   ⚠️ عند أي تعديل على JS/CSS: غيّر CACHE_NAME أدناه
+   Service Worker — وِرْدِي PWA  (v2 — tolerant caching)
+   ⚠️ عند أي تعديل: غيّر CACHE_NAME أدناه
    ============================================================ */
 
-const CACHE_NAME   = 'wirdi-v2609291530';
+const CACHE_NAME   = 'wirdi-v2609291600';
 const OFFLINE_URL  = './data/offline.html';
 
 const PRECACHE_URLS = [
@@ -26,10 +26,6 @@ const PRECACHE_URLS = [
   './amin.html',
   './favorites.html',
   './settings.html',
-  './contact.html',
-  './privacy.html',
-  './sources.html',
-  './offline.html',
   './manifest.json',
   './assets/css/style.css',
   './assets/css/header.css',
@@ -45,7 +41,6 @@ const PRECACHE_URLS = [
   './assets/css/favorites.css',
   './assets/css/settings.css',
   './assets/css/smart-adhkar.css',
-  './assets/css/adhan.css',
   './assets/css/zakat.css',
   './assets/css/pwa.css',
   './assets/js/app.js',
@@ -68,24 +63,36 @@ const PRECACHE_URLS = [
   './assets/js/tasbih.js',
   './assets/js/zakat.js',
   './assets/js/calendar.js',
-  './assets/js/amin.js',
   './assets/js/favorites.js',
   './assets/js/settings.js',
-  './assets/js/smart-adhkar.js',
   './assets/img/logo.png',
   './assets/img/icon-192.png',
   './assets/img/icon-512.png'
 ];
 
+/* ---------- install (متسامح: كل ملف منفرد) ---------- */
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(PRECACHE_URLS))
-      .catch((err) => console.warn('[SW] بعض الملفات لم تخزن:', err))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => {
+      const failed = [];
+      return Promise.all(
+        PRECACHE_URLS.map((url) =>
+          cache.add(url).catch(() => {
+            failed.push(url);
+          })
+        )
+      ).then(() => {
+        if (failed.length) {
+          console.warn('[SW] ملفات لم تخزن (' + failed.length + '):', failed);
+        } else {
+          console.log('[SW] ✅ تم تخزين كل الملفات');
+        }
+      });
+    }).then(() => self.skipWaiting())
   );
 });
 
+/* ---------- activate ---------- */
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
@@ -96,13 +103,17 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+/* ---------- fetch ---------- */
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  if (req.headers.get('accept') && req.headers.get('accept').includes('text/html')) {
+  const accept = req.headers.get('accept') || '';
+
+  // صفحات HTML: Network-First مع احتياطي offline
+  if (accept.includes('text/html')) {
     event.respondWith(
       fetch(req)
         .then((res) => {
@@ -110,11 +121,14 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((c) => c.put(req, copy));
           return res;
         })
-        .catch(() => caches.match(req).then((r) => r || caches.match(OFFLINE_URL)))
+        .catch(() =>
+          caches.match(req).then((r) => r || caches.match(OFFLINE_URL))
+        )
     );
     return;
   }
 
+  // أصول: Cache-First
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
@@ -127,6 +141,7 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
+/* ---------- messages ---------- */
 self.addEventListener('message', (event) => {
   if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
