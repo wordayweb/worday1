@@ -235,64 +235,9 @@
 
   <script src="assets/js/footer.js"></script>
   <script src="assets/js/interactions.js"></script>
-  <footer class="wirdi-footer" role="contentinfo">
-    
-      <div class="wf-social">
-        <span class="wf-social-label">تابعنا على:</span>
-        <div class="wf-social-links">
-          <a href="https://twitter.com/wirdi" target="_blank" rel="noopener noreferrer" class="wf-social-btn" aria-label="تويتر X">𝕏</a>
-          <a href="https://instagram.com/wirdi" target="_blank" rel="noopener noreferrer" class="wf-social-btn" aria-label="إنستغرام">📷</a>
-          <a href="https://youtube.com/@wirdi" target="_blank" rel="noopener noreferrer" class="wf-social-btn" aria-label="يوتيوب">📺</a>
-          <a href="https://t.me/wirdi" target="_blank" rel="noopener noreferrer" class="wf-social-btn" aria-label="تلغرام">✈️</a>
-        </div>
-      </div>
-    </div>
+  
 
-    <div class="wf-cols">
-      <div class="wf-col">
-        <h4 class="wf-col-title">الموقع</h4>
-        <ul class="wf-links">
-          <li><a href="athkar-morning.html">🌅 أذكار الصباح</a></li>
-          <li><a href="athkar-evening.html">🌆 أذكار المساء</a></li>
-          <li><a href="quran.html">📖 القرآن الكريم</a></li>
-          <li><a href="prayer.html">🕌 مواقيت الصلاة</a></li>
-          <li><a href="tasbih.html">📿 التسبيح</a></li>
-        </ul>
-      </div>
-      <div class="wf-col">
-        <h4 class="wf-col-title">روابط سريعة</h4>
-        <ul class="wf-links">
-          <li><a href="tafsir.html">📖 تفسير القرآن</a></li>
-          <li><a href="calendar.html">📅 التقويم</a></li>
-          <li><a href="zakat.html">💰 حساب الزكاة</a></li>
-          <li><a href="notifications.html">🔔 الإشعارات</a></li>
-          <li><a href="stats.html">📊 إحصائياتي</a></li>
-        </ul>
-      </div>
-      <div class="wf-col">
-        <h4 class="wf-col-title">المساعدة</h4>
-        <ul class="wf-links">
-          <li><a href="contact.html">📞 تواصل معنا</a></li>
-          <li><a href="support.html">💚 ادعمنا</a></li>
-          <li><a href="sources.html">📚 مصادرنا</a></li>
-          <li><a href="privacy.html">🔒 سياسة الخصوصية</a></li>
-          <li><a href="settings.html">⚙️ الإعدادات</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="wf-bottom">
-      <p class="wf-copy">© وِرْدِي — مجاني لله، بدون إعلانات</p>
-      <div class="wf-credit">
-        <span class="wf-credit-label">الإشراف الاستشاري في التطوير والبرمجة</span>
-        <span class="wf-credit-name">محمد العالم</span>
-      </div>
-    </div>
-  </footer>
-
-  <button type="button" class="wirdi-top-btn" id="wirdiTop" aria-label="العودة إلى الأعلى" title="العودة إلى الأعلى">
-    <span aria-hidden="true">↑</span>
-  </button>
+  
 
   <script>
   (function(){
@@ -307,6 +252,76 @@
     function render(t){var order=['Fajr','Dhuhr','Asr','Maghrib','Isha'];var names={Fajr:'الفجر',Dhuhr:'الظهر',Asr:'العصر',Maghrib:'المغرب',Isha:'العشاء'};var nx=gn(t);return order.map(function(k){var iN=k===nx;return '<div class="phb-item'+(iN?' phb-next':'')+'">'+(iN?'<span class="phb-badge">القادمة</span>':'')+'<span class="phb-name">'+names[k]+'</span><span class="phb-time">'+fmt(t[k])+'</span></div>';}).join('');}
     function load(){var inner=document.getElementById('phbInner');if(!inner)return;var c=rc();if(c){inner.innerHTML=render(c);return;}var city=DEF;try{var s=localStorage.getItem(CY);if(s){var o=JSON.parse(s);if(o&&typeof o.lat==='number'&&typeof o.lng==='number')city=o;}}catch(e){}var url='https://api.aladhan.com/v1/timings/'+tk()+'?latitude='+city.lat+'&longitude='+city.lng+'&method=4';fetch(url).then(function(r){return r.json();}).then(function(data){if(!data||!data.data||!data.data.timings){inner.innerHTML='<div class="phb-error">تعذّر تحميل المواقيت</div>';return;}var t=data.data.timings;var clean={Fajr:t.Fajr,Sunrise:t.Sunrise,Dhuhr:t.Dhuhr,Asr:t.Asr,Maghrib:t.Maghrib,Isha:t.Isha};try{localStorage.setItem(PC,JSON.stringify({date:tk(),city:city.name,timings:clean}));}catch(e){}inner.innerHTML=render(clean);}).catch(function(){inner.innerHTML='<div class="phb-error">تعذّر تحميل المواقيت</div>';});}
     load();
+  })();
+  </script>
+
+
+  <footer class="wirdi-footer" role="contentinfo">
+
+    <!-- الصف الرئيسي -->
+    <div class="wf-inner">
+
+      <!-- وِرْدِي -->
+      <div class="wf-brand">
+        <div class="wf-brand-mark">و</div>
+        <div class="wf-brand-text">
+          <span class="wf-brand-name">وِرْدِي</span>
+          <span class="wf-brand-tag">رفيقك اليومي لذكر الله 🌿</span>
+        </div>
+      </div>
+
+      <!-- الروابط -->
+      <nav class="wf-links-row" aria-label="روابط الفوتر">
+        <a href="quran.html">📖 القرآن</a>
+        <span class="wf-sep">•</span>
+        <a href="athkar-morning.html">🌅 الصباح</a>
+        <span class="wf-sep">•</span>
+        <a href="athkar-evening.html">🌆 المساء</a>
+        <span class="wf-sep">•</span>
+        <a href="prayer.html">🕌 الصلاة</a>
+        <span class="wf-sep">•</span>
+        <a href="tasbih.html">📿 التسبيح</a>
+        <span class="wf-sep">•</span>
+        <a href="tafsir.html">📚 التفسير</a>
+        <span class="wf-sep">•</span>
+        <a href="support.html">💚 ادعمنا</a>
+        <span class="wf-sep">•</span>
+        <a href="contact.html">📞 تواصل</a>
+      </nav>
+
+      <!-- التواصل -->
+      <div class="wf-social" aria-label="تابعنا على">
+        <a href="https://twitter.com/wirdi" target="_blank" rel="noopener noreferrer" aria-label="تويتر X">𝕏</a>
+        <a href="https://instagram.com/wirdi" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام">📷</a>
+        <a href="https://youtube.com/@wirdi" target="_blank" rel="noopener noreferrer" aria-label="يوتيوب">📺</a>
+        <a href="https://t.me/wirdi" target="_blank" rel="noopener noreferrer" aria-label="تلغرام">✈️</a>
+      </div>
+
+    </div>
+
+    <!-- الفاصل -->
+    <div class="wf-divider"></div>
+
+    <!-- السطر السفلي -->
+    <div class="wf-bottom">
+      <p class="wf-copy">© وِرْدِي — مجاني لله، بدون إعلانات</p>
+      <span class="wf-bottom-sep">•</span>
+      <p class="wf-credit">الإشراف الاستشاري: <strong>محمد العالم</strong></p>
+    </div>
+
+  </footer>
+
+  <button type="button" class="wirdi-top-btn" id="wirdiTop" aria-label="العودة إلى الأعلى" title="العودة إلى الأعلى">
+    <span aria-hidden="true">↑</span>
+  </button>
+
+  <script>
+  (function(){
+    var top=document.getElementById('wirdiTop');
+    if(top){
+      window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>400);},{passive:true});
+      top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+    }
   })();
   </script>
 
