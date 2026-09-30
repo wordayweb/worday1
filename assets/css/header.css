@@ -740,3 +740,6 @@ body.dark .top-nav .chip[data-period="evening"].active {
   padding: 8px 16px 12px;
   margin-bottom: 10px;
 }
+
+/* ============ إخفاء سطر الساعة ============ */
+.clock-line { display: none !important; }
