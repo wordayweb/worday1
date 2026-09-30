@@ -596,3 +596,20 @@ body.dark .wf-social {
     margin: 0 auto;
   }
 }
+
+/* ═══════════════════════════════════════════
+   🔧 إصلاح وضوح شعار الفوتر
+   ═══════════════════════════════════════════ */
+.wf-logo {
+  width: 72px !important;
+  height: 72px !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 4px 16px rgba(228, 204, 110, 0.55)) brightness(1.2) contrast(1.15) !important;
+  mix-blend-mode: normal !important;
+}
+
+.wf-brand {
+  font-size: 26px !important;
+  color: #F5E5A0 !important;
+  text-shadow: 0 2px 10px rgba(228, 204, 110, 0.4);
+}
