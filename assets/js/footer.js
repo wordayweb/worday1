@@ -26,6 +26,139 @@
     } catch (e) { return new Date().toLocaleDateString('ar-EG'); }
   }
 
+
+  /* ============ 🕌 شريط مواقيت الصلاة ============ */
+  var PRAYER_CACHE = 'wirdi_prayer_timings';
+  var PRAYER_CITY  = 'wirdi_prayer_city';
+  var DEFAULT_CITY = { lat: 24.7136, lng: 46.6753, name: 'الرياض' };
+
+  function todayKey() {
+    var d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+
+  function toArabicNum(s) {
+    var ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    return String(s).replace(/[0-9]/g, function (d) { return ar[d]; });
+  }
+
+  function fmtTime(t) {
+    if (!t) return '—';
+    var parts = t.split(':');
+    var h = parseInt(parts[0], 10);
+    var m = parts[1] || '00';
+    var suffix = h < 12 ? 'ص' : 'م';
+    var h12 = h % 12 || 12;
+    return toArabicNum(h12) + ':' + toArabicNum(m) + ' ' + suffix;
+  }
+
+  function readTimings() {
+    try {
+      var raw = localStorage.getItem(PRAYER_CACHE);
+      if (!raw) return null;
+      var obj = JSON.parse(raw);
+      if (!obj || obj.date !== todayKey() || !obj.timings) return null;
+      return obj.timings;
+    } catch (e) { return null; }
+  }
+
+  function fetchTimings() {
+    return new Promise(function (resolve) {
+      var city = DEFAULT_CITY;
+      try {
+        var saved = localStorage.getItem(PRAYER_CITY);
+        if (saved) {
+          var obj = JSON.parse(saved);
+          if (obj && typeof obj.lat === 'number' && typeof obj.lng === 'number') city = obj;
+        }
+      } catch (e) {}
+
+      var url = 'https://api.aladhan.com/v1/timings/' + todayKey() +
+                '?latitude=' + city.lat + '&longitude=' + city.lng + '&method=4';
+
+      fetch(url)
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (!data || !data.data || !data.data.timings) { resolve(null); return; }
+          var t = data.data.timings;
+          var clean = {
+            Fajr: t.Fajr, Sunrise: t.Sunrise, Dhuhr: t.Dhuhr,
+            Asr: t.Asr, Maghrib: t.Maghrib, Isha: t.Isha
+          };
+          try {
+            localStorage.setItem(PRAYER_CACHE, JSON.stringify({
+              date: todayKey(), city: city.name, timings: clean
+            }));
+          } catch (e) {}
+          resolve(clean);
+        })
+        .catch(function () { resolve(null); });
+    });
+  }
+
+  function getNextPrayer(timings) {
+    var order = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+    var names = {
+      Fajr: 'الفجر', Dhuhr: 'الظهر', Asr: 'العصر',
+      Maghrib: 'المغرب', Isha: 'العشاء'
+    };
+    var now = new Date();
+    var nowMin = now.getHours() * 60 + now.getMinutes();
+    for (var i = 0; i < order.length; i++) {
+      var t = timings[order[i]];
+      if (!t) continue;
+      var p = t.split(':');
+      var tMin = parseInt(p[0], 10) * 60 + parseInt(p[1], 10);
+      if (tMin > nowMin) return order[i];
+    }
+    return 'Fajr';
+  }
+
+  function buildPrayerBar(timings) {
+    if (!timings) return '';
+    var next = getNextPrayer(timings);
+    var order = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+    var names = {
+      Fajr: 'الفجر', Dhuhr: 'الظهر', Asr: 'العصر',
+      Maghrib: 'المغرب', Isha: 'العشاء'
+    };
+
+    var items = order.map(function (key) {
+      var isNext = key === next;
+      var cls = 'wf-prayer-item' + (isNext ? ' wf-prayer-next' : '');
+      return '<div class="' + cls + '">' +
+        '<span class="wf-prayer-name">' + names[key] + '</span>' +
+        '<span class="wf-prayer-time">' + fmtTime(timings[key]) + '</span>' +
+        (isNext ? '<span class="wf-prayer-badge">القادمة</span>' : '') +
+      '</div>';
+    }).join('');
+
+    return '<div class="wf-prayers" aria-label="مواقيت الصلاة">' + items + '</div>';
+  }
+
+  /* ============ 📱 وسائل التواصل ============ */
+  function buildSocial() {
+    var items = [
+      { icon: '𝕏', label: 'تويتر X', url: 'https://twitter.com/wirdi' },
+      { icon: '📷', label: 'إنستغرام', url: 'https://instagram.com/wirdi' },
+      { icon: '📺', label: 'يوتيوب', url: 'https://youtube.com/@wirdi' },
+      { icon: '✈️', label: 'تلغرام', url: 'https://t.me/wirdi' }
+    ];
+    var links = items.map(function (it) {
+      return '<a href="' + it.url + '" target="_blank" rel="noopener noreferrer" ' +
+        'class="wf-social-btn" aria-label="' + it.label + '" title="' + it.label + '">' +
+        '<span aria-hidden="true">' + it.icon + '</span>' +
+      '</a>';
+    }).join('');
+
+    return '<div class="wf-social" aria-label="تابعنا على">' +
+      '<span class="wf-social-label">تابعنا على:</span>' +
+      '<div class="wf-social-links">' + links + '</div>' +
+    '</div>';
+  }
+
   function html() {
     var v = VERSES[weekNum() % VERSES.length];
     return '' +
@@ -35,6 +168,10 @@
           '<div class="wf-bismillah">﷽</div>' +
           '<blockquote class="wf-verse-text">«' + v.text + '»</blockquote>' +
           '<cite class="wf-verse-src">' + v.source + '</cite>' +
+        '</div>' +
+
+        '<div class="wf-prayers-wrap" id="wfPrayersWrap">' +
+          '<div class="wf-prayers-loading">⏳ جارٍ تحميل مواقيت الصلاة…</div>' +
         '</div>' +
 
         '<div class="wf-cols">' +
@@ -91,6 +228,8 @@
           '</button>' +
         '</div>' +
 
+        buildSocial() +
+
         '<div class="wf-bottom">' +
           '<p class="wf-copy">© وِرْدِي — مجاني لله، بدون إعلانات</p>' +
           '<div class="wf-credit">' +
@@ -110,6 +249,7 @@
     var app = document.querySelector('.app') || document.body;
     app.insertAdjacentHTML('beforeend', html());
     initTheme(); initInstall(); initTop();
+    loadPrayerTimes();
   }
 
   function initTheme() {
@@ -159,6 +299,22 @@
     window.addEventListener('scroll', check, { passive: true });
     check();
     btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
+
+  function loadPrayerTimes() {
+    var wrap = document.getElementById('wfPrayersWrap');
+    if (!wrap) return;
+
+    var cached = readTimings();
+    if (cached) {
+      wrap.innerHTML = buildPrayerBar(cached);
+      return;
+    }
+
+    fetchTimings().then(function (t) {
+      if (t) wrap.innerHTML = buildPrayerBar(t);
+      else wrap.innerHTML = '<div class="wf-prayers-error">تعذّر تحميل المواقيت</div>';
+    });
   }
 
   if (document.readyState === 'loading') {
