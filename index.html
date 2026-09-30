@@ -288,18 +288,21 @@
 
   
 
-  <script>
-  (function(){
-    var t=document.getElementById('wirdiTop');
-    if(t){window.addEventListener('scroll',function(){t.classList.toggle('show',window.scrollY>400);},{passive:true});t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});}
-  })();
-  </script>
+  
+
+
+  <!-- ═══════════ الفوتر ═══════════ -->
+  
+
+  <!-- زر العودة للأعلى -->
+  
+
+  
 
 
   <!-- ═══════════ الفوتر ═══════════ -->
   <footer style="margin-top:32px;background:linear-gradient(180deg,#1F4E3D 0%,#0F2A20 100%);color:#E8E8E8;font-family:'Tajawal',sans-serif;width:100%;padding:24px 20px 18px;text-align:center;box-sizing:border-box;display:block;">
 
-    <!-- الشعار -->
     <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:10px;margin:0 auto 16px;width:auto;">
       <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#E4CC6E,#C9A227);display:flex;align-items:center;justify-content:center;font-family:'Amiri',serif;font-size:17px;font-weight:700;color:#0F2A20;flex-shrink:0;">و</div>
       <div style="display:flex;flex-direction:column;line-height:1.15;text-align:right;">
@@ -308,31 +311,27 @@
       </div>
     </div>
 
-    <!-- الروابط -->
-    <nav style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 16px;margin:0 auto 16px;padding:0;max-width:800px;width:auto;list-style:none;">
-      <a href="quran.html" style="display:inline-block;width:auto;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 4px;">📖 القرآن</a>
-      <a href="athkar-morning.html" style="display:inline-block;width:auto;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 4px;">🌅 الصباح</a>
-      <a href="athkar-evening.html" style="display:inline-block;width:auto;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 4px;">🌆 المساء</a>
-      <a href="prayer.html" style="display:inline-block;width:auto;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 4px;">🕌 الصلاة</a>
-      <a href="tasbih.html" style="display:inline-block;width:auto;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 4px;">📿 التسبيح</a>
-      <a href="tafsir.html" style="display:inline-block;width:auto;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 4px;">📚 التفسير</a>
-      <a href="support.html" style="display:inline-block;width:auto;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 4px;">💚 ادعمنا</a>
-      <a href="contact.html" style="display:inline-block;width:auto;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;padding:2px 4px;">📞 تواصل</a>
+    <nav style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 16px;margin:0 auto 16px;padding:0;max-width:800px;width:auto;">
+      <a href="quran.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📖 القرآن</a>
+      <a href="athkar-morning.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">🌅 الصباح</a>
+      <a href="athkar-evening.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">🌆 المساء</a>
+      <a href="prayer.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">🕌 الصلاة</a>
+      <a href="tasbih.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📿 التسبيح</a>
+      <a href="tafsir.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📚 التفسير</a>
+      <a href="support.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">💚 ادعمنا</a>
+      <a href="contact.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📞 تواصل</a>
     </nav>
 
-    <!-- التواصل الاجتماعي -->
     <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;gap:8px;margin:0 auto 16px;width:auto;">
-      <a href="https://twitter.com/wirdi" target="_blank" rel="noopener noreferrer" aria-label="تويتر" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;flex-shrink:0;">𝕏</a>
-      <a href="https://instagram.com/wirdi" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;flex-shrink:0;">📷</a>
-      <a href="https://youtube.com/@wirdi" target="_blank" rel="noopener noreferrer" aria-label="يوتيوب" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;flex-shrink:0;">📺</a>
-      <a href="https://t.me/wirdi" target="_blank" rel="noopener noreferrer" aria-label="تلغرام" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;flex-shrink:0;">✈️</a>
+      <a href="https://twitter.com/wirdi" target="_blank" rel="noopener noreferrer" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;">𝕏</a>
+      <a href="https://instagram.com/wirdi" target="_blank" rel="noopener noreferrer" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;">📷</a>
+      <a href="https://youtube.com/@wirdi" target="_blank" rel="noopener noreferrer" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;">📺</a>
+      <a href="https://t.me/wirdi" target="_blank" rel="noopener noreferrer" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;">✈️</a>
     </div>
 
-    <!-- فاصل -->
     <div style="width:200px;height:1px;margin:0 auto 14px;background:linear-gradient(90deg,transparent,rgba(228,204,110,0.35) 50%,transparent);"></div>
 
-    <!-- الحقوق -->
-    <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;font-size:11.5px;width:auto;">
+    <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;font-size:11.5px;">
       <span style="color:#E4CC6E;font-weight:600;">© وِرْدِي — مجاني لله، بدون إعلانات</span>
       <span style="color:rgba(228,204,110,0.35);">•</span>
       <span style="color:#A8C4B8;">الإشراف: <strong style="color:#E4CC6E;font-family:'Amiri',serif;font-size:13px;">محمد العالم</strong></span>
@@ -340,7 +339,6 @@
 
   </footer>
 
-  <!-- زر العودة للأعلى -->
   <button type="button" id="wirdiTop" aria-label="العودة إلى الأعلى" style="position:fixed;bottom:24px;left:24px;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#E4CC6E,#C9A227);color:#1F4E3D;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(201,162,39,0.4);opacity:0;pointer-events:none;transition:opacity 0.3s;z-index:900;">↑</button>
 
   <script>
