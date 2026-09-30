@@ -199,8 +199,8 @@
               '<li><a href="tafsir.html">📖 تفسير القرآن</a></li>' +
               '<li><a href="calendar.html">📅 التقويم</a></li>' +
               '<li><a href="zakat.html">💰 حساب الزكاة</a></li>' +
-              '<li><a href="notifications.html">🔔 الإشعارات</a></li>
-              <li><a href="stats.html">📊 إحصائياتي</a></li>' +
+              '<li><a href="notifications.html">🔔 الإشعارات</a></li>' +
+              '<li><a href="stats.html">📊 إحصائياتي</a></li>' +
               '<li><a href="amin.html">👑 وِرْدِي في سطور</a></li>' +
             '</ul>' +
           '</div>' +
