@@ -277,9 +277,15 @@
   
 
 
+  
+
+  
+
+  
+
+
   <footer class="wirdi-footer" role="contentinfo">
 
-    <!-- الشعار -->
     <div class="wf-brand">
       <div class="wf-brand-mark">و</div>
       <div class="wf-brand-text">
@@ -288,7 +294,6 @@
       </div>
     </div>
 
-    <!-- الروابط -->
     <nav class="wf-links-row" aria-label="روابط الفوتر">
       <a href="quran.html">📖 القرآن</a>
       <a href="athkar-morning.html">🌅 الصباح</a>
@@ -300,7 +305,6 @@
       <a href="contact.html">📞 تواصل</a>
     </nav>
 
-    <!-- التواصل -->
     <div class="wf-social" aria-label="تابعنا على">
       <a href="https://twitter.com/wirdi" target="_blank" rel="noopener noreferrer" aria-label="تويتر X">𝕏</a>
       <a href="https://instagram.com/wirdi" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام">📷</a>
@@ -308,10 +312,8 @@
       <a href="https://t.me/wirdi" target="_blank" rel="noopener noreferrer" aria-label="تلغرام">✈️</a>
     </div>
 
-    <!-- الفاصل -->
     <div class="wf-divider"></div>
 
-    <!-- الحقوق -->
     <div class="wf-bottom">
       <p class="wf-copy">© وِرْدِي — مجاني لله، بدون إعلانات</p>
       <span class="wf-bottom-sep">•</span>
@@ -320,17 +322,14 @@
 
   </footer>
 
-  <button type="button" class="wirdi-top-btn" id="wirdiTop" aria-label="العودة إلى الأعلى" title="العودة إلى الأعلى">
+  <button type="button" class="wirdi-top-btn" id="wirdiTop" aria-label="العودة إلى الأعلى">
     <span aria-hidden="true">↑</span>
   </button>
 
   <script>
   (function(){
-    var top=document.getElementById('wirdiTop');
-    if(top){
-      window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>400);},{passive:true});
-      top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-    }
+    var t=document.getElementById('wirdiTop');
+    if(t){window.addEventListener('scroll',function(){t.classList.toggle('show',window.scrollY>400);},{passive:true});t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});}
   })();
   </script>
 
