@@ -287,7 +287,6 @@
         <span class="wf-credit-label">الإشراف الاستشاري في التطوير والبرمجة</span>
         <span class="wf-credit-name">محمد العالم</span>
       </div>
-      <p class="wf-date" id="wfDate"></p>
     </div>
   </footer>
 
@@ -297,8 +296,6 @@
 
   <script>
   (function(){
-    var el=document.getElementById('wfDate');
-    if(el){try{el.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-nu-arab',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date())+' هـ';}catch(e){}}
     var top=document.getElementById('wirdiTop');
     if(top){window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>400);},{passive:true});top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});}
     var PC='wirdi_prayer_timings',CY='wirdi_prayer_city',DEF={lat:24.7136,lng:46.6753,name:'الرياض'};
