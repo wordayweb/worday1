@@ -519,31 +519,9 @@ body.dark
 /* بطاقة "قريبًا" */
 
 
-.sec-card.soon::after {
-  content: 'قريبًا';
-  position: absolute;
-  top: 8px;
-  inset-inline-start: 12px;
-  background: var(--gold, #C9A227);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-family: 'Tajawal', sans-serif;
-  z-index: 5;
-  opacity: 1;
-  box-shadow: 0 2px 6px rgba(0,0,0,.15);
-}
 
-.sec-card.soon 
 
-/* الوضع الليلي */
-body.dark .sec-card {
-  background: linear-gradient(160deg, #1F2B26 0%, #14201C 100%) !important;
-  border-color: var(--gold, #C9A227) !important;
-  box-shadow: 0 4px 14px rgba(0,0,0,.35);
-}
+
 
 body.dark .sec-card::before { border-color: rgba(228,204,110,.35); }
 
@@ -681,61 +659,24 @@ body.dark .sec-card::after {
    🏷️ بطاقات "قريبًا" — تصميم صحيح
    ============================================================ */
 
-.sec-card.soon {
-  pointer-events: none;
-  cursor: default;
-  opacity: 1;
-}
 
-.sec-card.soon .bg {
-  opacity: 0.35;
-}
 
-.sec-card.soon .overlay {
-  opacity: 1;
-}
 
-.sec-card.soon .overlay h4,
-.sec-card.soon .overlay h4 .card-title {
-  color: var(--ink-soft, #6B6B6B) !important;
-}
 
-.sec-card.soon .overlay h4 .card-emoji {
-  background: linear-gradient(135deg, #D4D4D4, #A8A8A8) !important;
-  opacity: 0.8;
-}
+
+
+
+
+
 
 /* شارة "قريبًا" — أعلى يسار البطاقة */
-.sec-card.soon::after {
-  content: 'قريبًا';
-  position: absolute;
-  top: 8px;
-  inset-inline-start: 12px;
-  background: linear-gradient(135deg, #E4CC6E, #C9A227);
-  color: var(--green, #1F4E3D);
-  font-family: 'Tajawal', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 999px;
-  letter-spacing: .3px;
-  z-index: 5;
-  box-shadow: 0 2px 8px rgba(201,162,39,.35);
-}
 
-body.dark .sec-card.soon .bg {
-  opacity: 0.25;
-}
 
-body.dark .sec-card.soon .overlay h4,
-body.dark .sec-card.soon .overlay h4 .card-title {
-  color: #A8A8A8 !important;
-}
+body.dark 
 
-body.dark .sec-card.soon::after {
-  background: linear-gradient(135deg, #E4CC6E, #C9A227);
-  color: #1F4E3D;
-}
+body.dark 
+
+body.dark 
 
 /* ============================================================
    👑 بطاقة وِرْدِي الأمين — إزالة "الشبح"
@@ -754,4 +695,172 @@ body.dark .sec-card.amin-card::before {
 /* بديل: إخفاء الشعار كليًا في بطاقة الأمين */
 .sec-card.amin-card::before {
   display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🏷️ بطاقات "قريبًا" — إصلاح نهائي بـ !important
+   ═══════════════════════════════════════════════════════════ */
+
+.sec-card.soon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  min-height: 140px !important;
+  padding: 20px 14px !important;
+  background: linear-gradient(160deg, #FBF8F1 0%, #F5F1E8 100%) !important;
+  border: 1.5px solid rgba(201, 162, 39, 0.4) !important;
+  border-radius: 18px !important;
+  pointer-events: none !important;
+  cursor: default !important;
+  opacity: 1 !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+/* إخفاء كل الطبقات القديمة */
+.sec-card.soon .bg,
+.sec-card.soon::before {
+  display: none !important;
+}
+
+/* الحاوية الداخلية */
+.sec-card.soon .overlay {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  background: transparent !important;
+  position: static !important;
+  width: 100% !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  inset: auto !important;
+  box-shadow: none !important;
+}
+
+/* العنوان */
+.sec-card.soon .overlay h4 {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #7A7A7A !important;
+  font-family: 'Amiri', serif !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  line-height: 1.4 !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* الأيقونة في دائرة رمادية */
+.sec-card.soon .overlay h4 .card-emoji {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  max-width: 52px !important;
+  min-height: 52px !important;
+  max-height: 52px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #E0E0E0, #B8B8B8) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .12) !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  position: static !important;
+  flex-shrink: 0 !important;
+}
+
+/* النص (بطاقة قريبًا) */
+.sec-card.soon .overlay .card-title {
+  display: block !important;
+  color: #7A7A7A !important;
+  font-family: 'Amiri', serif !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+}
+
+/* الخط الذهبي */
+.sec-card.soon .overlay .underline {
+  width: 36px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, #A8A8A8, transparent) !important;
+  border-radius: 2px !important;
+  margin: 0 !important;
+  opacity: .6 !important;
+}
+
+/* شارة "قريبًا" في الزاوية العلوية اليسرى */
+.sec-card.soon::after {
+  content: 'قريبًا' !important;
+  position: absolute !important;
+  top: 10px !important;
+  inset-inline-start: 10px !important;
+  background: linear-gradient(135deg, #E4CC6E, #C9A227) !important;
+  color: #1F4E3D !important;
+  font-family: 'Tajawal', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 3px 10px !important;
+  border-radius: 999px !important;
+  letter-spacing: .3px !important;
+  z-index: 5 !important;
+  box-shadow: 0 2px 8px rgba(201, 162, 39, .35) !important;
+  pointer-events: none !important;
+}
+
+/* الوضع الليلي */
+body.dark .sec-card.soon {
+  background: linear-gradient(160deg, #1F2B26 0%, #14201C 100%) !important;
+  border-color: rgba(228, 204, 110, 0.3) !important;
+}
+
+body.dark .sec-card.soon .overlay h4,
+body.dark .sec-card.soon .overlay .card-title {
+  color: #909090 !important;
+}
+
+body.dark .sec-card.soon .overlay h4 .card-emoji {
+  background: linear-gradient(135deg, #3A3A3A, #2A2A2A) !important;
+}
+
+/* الجوال */
+@media (max-width: 480px) {
+  .sec-card.soon {
+    min-height: 120px !important;
+    padding: 16px 10px !important;
+  }
+  .sec-card.soon .overlay h4 .card-emoji {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    font-size: 20px !important;
+  }
+  .sec-card.soon .overlay .card-title {
+    font-size: 14px !important;
+  }
 }
