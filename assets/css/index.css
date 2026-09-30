@@ -701,13 +701,56 @@ body.dark .sec-card.amin-card::before {
    🏷️ بطاقات "قريبًا" — إصلاح نهائي بـ !important
    ═══════════════════════════════════════════════════════════ */
 
-.sec-card.soon {
+
+
+/* إخفاء كل الطبقات القديمة */
+
+
+/* الحاوية الداخلية */
+
+
+/* العنوان */
+
+
+/* الأيقونة في دائرة رمادية */
+
+
+/* النص (بطاقة قريبًا) */
+
+
+/* الخط الذهبي */
+
+
+/* شارة "قريبًا" في الزاوية العلوية اليسرى */
+
+
+/* الوضع الليلي */
+body.dark 
+
+body.dark 
+
+body.dark 
+
+/* الجوال */
+@media (max-width: 480px) {
+  
+  
+  
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🏷️ بطاقات "قريبًا" — الحل الحاسم
+   ═══════════════════════════════════════════════════════════ */
+
+/* البطاقة كاملة */
+html body .sec-card.soon {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   position: relative !important;
   min-height: 140px !important;
-  padding: 20px 14px !important;
+  max-height: 180px !important;
+  padding: 22px 14px 18px !important;
   background: linear-gradient(160deg, #FBF8F1 0%, #F5F1E8 100%) !important;
   border: 1.5px solid rgba(201, 162, 39, 0.4) !important;
   border-radius: 18px !important;
@@ -715,38 +758,42 @@ body.dark .sec-card.amin-card::before {
   cursor: default !important;
   opacity: 1 !important;
   filter: none !important;
-  box-shadow: none !important;
+  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.08) !important;
+  overflow: hidden !important;
 }
 
-/* إخفاء كل الطبقات القديمة */
-.sec-card.soon .bg,
-.sec-card.soon::before {
+/* اخفِ كل الطبقات القديمة */
+html body .sec-card.soon .bg,
+html body .sec-card.soon::before {
   display: none !important;
+  background: none !important;
 }
 
 /* الحاوية الداخلية */
-.sec-card.soon .overlay {
+html body .sec-card.soon .overlay {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 10px !important;
   background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
   position: static !important;
   width: 100% !important;
   height: auto !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border: none !important;
+  max-height: 100% !important;
   border-radius: 0 !important;
+  box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   inset: auto !important;
-  box-shadow: none !important;
+  overflow: visible !important;
 }
 
-/* العنوان */
-.sec-card.soon .overlay h4 {
+/* العنوان h4 */
+html body .sec-card.soon .overlay h4 {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
@@ -756,63 +803,89 @@ body.dark .sec-card.amin-card::before {
   border: none !important;
   padding: 0 !important;
   margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   color: #7A7A7A !important;
   font-family: 'Amiri', serif !important;
   font-size: 16px !important;
   font-weight: 700 !important;
   text-align: center !important;
   line-height: 1.4 !important;
-  width: auto !important;
-  height: auto !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  overflow: visible !important;
 }
 
-/* الأيقونة في دائرة رمادية */
-.sec-card.soon .overlay h4 .card-emoji {
+/* الأيقونة في دائرة صغيرة — القاعدة الحاسمة */
+html body .sec-card.soon .card-emoji,
+html body .sec-card.soon .overlay h4 .card-emoji,
+html body .sec-card.soon .overlay h4 > span:first-child {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 52px !important;
-  height: 52px !important;
-  min-width: 52px !important;
-  max-width: 52px !important;
-  min-height: 52px !important;
-  max-height: 52px !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  flex: 0 0 48px !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  aspect-ratio: 1 / 1 !important;
   border-radius: 50% !important;
   background: linear-gradient(135deg, #E0E0E0, #B8B8B8) !important;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, .12) !important;
-  font-size: 24px !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12) !important;
+  font-size: 22px !important;
   line-height: 1 !important;
   padding: 0 !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
   border: none !important;
+  color: #FFF !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
   position: static !important;
-  flex-shrink: 0 !important;
+  transform: none !important;
 }
 
-/* النص (بطاقة قريبًا) */
-.sec-card.soon .overlay .card-title {
+/* النص */
+html body .sec-card.soon .card-title,
+html body .sec-card.soon .overlay h4 .card-title,
+html body .sec-card.soon .overlay h4 > span:last-child {
   display: block !important;
   color: #7A7A7A !important;
   font-family: 'Amiri', serif !important;
   font-size: 16px !important;
   font-weight: 700 !important;
   text-align: center !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  position: static !important;
+  line-height: 1.4 !important;
 }
 
-/* الخط الذهبي */
-.sec-card.soon .overlay .underline {
+/* الخط الذهبي — اجعله رماديًا */
+html body .sec-card.soon .overlay .underline {
   width: 36px !important;
   height: 2px !important;
   background: linear-gradient(90deg, transparent, #A8A8A8, transparent) !important;
   border-radius: 2px !important;
   margin: 0 !important;
-  opacity: .6 !important;
+  padding: 0 !important;
+  opacity: .5 !important;
+  display: block !important;
 }
 
-/* شارة "قريبًا" في الزاوية العلوية اليسرى */
-.sec-card.soon::after {
+/* شارة "قريبًا" */
+html body .sec-card.soon::after {
   content: 'قريبًا' !important;
   position: absolute !important;
   top: 10px !important;
@@ -826,41 +899,53 @@ body.dark .sec-card.amin-card::before {
   border-radius: 999px !important;
   letter-spacing: .3px !important;
   z-index: 5 !important;
-  box-shadow: 0 2px 8px rgba(201, 162, 39, .35) !important;
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.35) !important;
   pointer-events: none !important;
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+  line-height: 1.4 !important;
 }
 
-/* الوضع الليلي */
-body.dark .sec-card.soon {
+/* ═══════════════════════════════════════════
+   🌙 الوضع الليلي
+   ═══════════════════════════════════════════ */
+html body.dark .sec-card.soon {
   background: linear-gradient(160deg, #1F2B26 0%, #14201C 100%) !important;
   border-color: rgba(228, 204, 110, 0.3) !important;
 }
 
-body.dark .sec-card.soon .overlay h4,
-body.dark .sec-card.soon .overlay .card-title {
+html body.dark .sec-card.soon .overlay h4,
+html body.dark .sec-card.soon .card-title,
+html body.dark .sec-card.soon .overlay h4 .card-title {
   color: #909090 !important;
 }
 
-body.dark .sec-card.soon .overlay h4 .card-emoji {
+html body.dark .sec-card.soon .card-emoji,
+html body.dark .sec-card.soon .overlay h4 .card-emoji {
   background: linear-gradient(135deg, #3A3A3A, #2A2A2A) !important;
 }
 
-/* الجوال */
+/* 📱 الجوال */
 @media (max-width: 480px) {
-  .sec-card.soon {
+  html body .sec-card.soon {
     min-height: 120px !important;
-    padding: 16px 10px !important;
+    max-height: 150px !important;
+    padding: 18px 10px 14px !important;
   }
-  .sec-card.soon .overlay h4 .card-emoji {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    max-width: 44px !important;
-    min-height: 44px !important;
-    max-height: 44px !important;
+  html body .sec-card.soon .card-emoji,
+  html body .sec-card.soon .overlay h4 .card-emoji {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
+    min-height: 42px !important;
+    max-height: 42px !important;
+    flex: 0 0 42px !important;
     font-size: 20px !important;
   }
-  .sec-card.soon .overlay .card-title {
+  html body .sec-card.soon .card-title,
+  html body .sec-card.soon .overlay h4 .card-title {
     font-size: 14px !important;
   }
 }
