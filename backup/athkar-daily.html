@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1F4E3D" />
-<title>أذكار الصباح — وِرْدِي</title>
+<title>أذكار اليوم الشاملة — وِرْدِي</title>
 <link rel="icon" type="image/png" href="assets/img/logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,6 +15,7 @@
 
 <link rel="manifest" href="manifest.json" />
 <link rel="stylesheet" href="assets/css/pwa.css" />
+  <link rel="stylesheet" href="assets/css/footer.css" />
 </head>
 <body>
 
@@ -23,7 +24,7 @@
 
   <header class="athkar-header">
     <button class="nav-btn" onclick="location.href='athkar.html'">↪</button>
-    <h2>🌅 أذكار الصباح</h2>
+    <h2>📅 أذكار اليوم</h2>
     <button class="nav-btn" data-reset-all title="تصفير الكل">↻</button>
   </header>
 
@@ -31,7 +32,7 @@
 
   <div class="progress-bar-wrap" id="progressWrap" style="display:none;">
     <div class="pb-info">
-      <span>📊 تقدمك</span>
+      <span>📊 تقدمك الإجمالي</span>
       <span id="pbCounter">٠ / ٠</span>
     </div>
     <div class="pb-track">
@@ -41,11 +42,12 @@
 </div>
 
 <script src="assets/js/app.js"></script>
+<script src="assets/js/navbar.js"></script>
 <script src="assets/js/header.js"></script>
 <script src="assets/js/logo.js"></script>
 <script src="assets/js/athkar-data.js"></script>
 <script src="assets/js/athkar-core.js"></script>
-<script src="assets/js/athkar-morning.js"></script>
+<script src="assets/js/athkar-daily.js"></script>
 <script src="assets/js/seo.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -57,6 +59,8 @@
 
 <script src="assets/js/pwa.js"></script>
 <script src="assets/js/adhan.js"></script>
+  <script src="assets/js/footer.js"></script>
+  <script src="assets/js/interactions.js"></script>
 </body>
 </html>
 

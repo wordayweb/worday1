@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1F4E3D" />
+<meta name="description" content="موقع وِرْدِي: أذكار الصباح والمساء، القرآن الكريم بمصحف المدينة، مواقيت الصلاة، التسبيح، وِرْدِي الأمين. رفيقك اليومي لذكر الله." />
+<meta name="keywords" content="أذكار, أذكار الصباح, أذكار المساء, ورد يومي, القرآن الكريم, تسبيح, مواقيت الصلاة, وِرْدِي" />
+<meta name="author" content="وِرْدِي" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="وِرْدِي" />
+<meta property="og:title" content="وِرْدِي — رفيقك اليومي لذكر الله" />
+<meta property="og:description" content="أذكار، قرآن، مواقيت صلاة، تسابيح، وِرْدِي الأمين." />
+<meta property="og:locale" content="ar_SA" />
+<title>وِرْدِي — رفيقك اليومي لذكر الله</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="apple-touch-icon" href="assets/img/icon-192.png" />
+<link rel="manifest" href="manifest.json" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://api.quran.com" />
+<link rel="preconnect" href="https://api.aladhan.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&display=swap" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="stylesheet" href="assets/css/smart-adhkar.css" />
+<link rel="stylesheet" href="assets/css/smart-adhkar-sky.css" />
+<link rel="stylesheet" href="assets/css/index.css" />
+<link rel="stylesheet" href="assets/css/pwa.css" />
+</head>
+<body>
+
+<div id="wirdi-live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div class="app">
+
+  <div data-header-target></div>
+
+  <section id="smartHero" class="fade-in" aria-label="أذكار الوقت الحالي"></section>
+
+  <!-- ===== لوحة اليوم الموحّدة ===== -->
+  <section class="dashboard-unified fade-in" aria-label="لوحة اليوم">
+
+    <a href="quran.html" class="dash-resume-header" aria-label="اذهب إلى آخر ما قرأت">
+      <span class="drh-ico" aria-hidden="true">📖</span>
+      <div class="drh-info">
+        <span class="drh-lbl">واصل القراءة</span>
+        <span class="drh-val" id="lastRead">سورة الجن — آية ٢٢</span>
+      </div>
+      <span class="drh-btn">انتقال ←</span>
+    </a>
+
+    <div class="dash-body">
+
+      <div class="dash-panel dash-panel-tracker" aria-label="بطاقة الالتزام">
+        <div class="tracker-head">
+          <div class="progress-ring" id="progressRing">
+            <span id="progressTxt">٠٪</span>
+          </div>
+          <div class="headline">
+            <h3 id="dayGreeting">🌙 ليلة هادئة بذكر الله</h3>
+            <p>🔥 أنت ملتزم لليوم الـ <span id="streak">١</span> على التوالي</p>
+          </div>
+        </div>
+
+        <div class="tasks" id="tasks">
+          <label class="task"><span>الفجر</span><input type="checkbox" data-k="fajr" aria-label="الفجر"></label>
+          <label class="task"><span>الصباح</span><input type="checkbox" data-k="morning" aria-label="أذكار الصباح"></label>
+          <label class="task"><span>الصلوات</span><input type="checkbox" data-k="prayers" aria-label="الصلوات"></label>
+          <label class="task"><span>المساء</span><input type="checkbox" data-k="evening" aria-label="أذكار المساء"></label>
+          <label class="task"><span>الورد</span><input type="checkbox" data-k="wird" aria-label="الورد"></label>
+          <label class="task"><span>النوم</span><input type="checkbox" data-k="sleep" aria-label="أذكار النوم"></label>
+        </div>
+
+        <hr class="dash-hr">
+
+        <div class="goal-row" onclick="setGoal()" role="button" tabindex="0" aria-label="تحديد هدف اليوم">
+          <span class="plus">+</span>
+          <span class="txt" id="goalTxt">لم يتم تحديد هدف بعد</span>
+          <span class="sq"></span>
+        </div>
+      </div>
+
+      <div class="dash-divider" aria-hidden="true"></div>
+
+      <div class="dash-panel dash-panel-streak" id="streakSlot" aria-label="سلسلة الأيام"></div>
+
+    </div>
+
+  </section>
+
+  <section class="section-group" aria-labelledby="groupWird">
+    <header class="group-head">
+      <h2 class="group-title" id="groupWird">
+        <span class="group-ico" aria-hidden="true">📿</span>
+        الورد اليومي
+      </h2>
+      <span class="group-line" aria-hidden="true"></span>
+    </header>
+
+    <div class="sections-grid">
+      <a href="athkar-morning.html" class="sec-card fade-in" data-period="morning">
+        <div class="bg" style="background:linear-gradient(160deg,#E4B94C,#A8871D);"></div>
+        <div class="overlay"><h4>🌅 أذكار الصباح</h4><div class="underline"></div></div>
+      </a>
+      <a href="athkar-evening.html" class="sec-card fade-in" data-period="evening">
+        <div class="bg" style="background:linear-gradient(160deg,#2C4A6B,#16293A);"></div>
+        <div class="overlay"><h4>🌆 أذكار المساء</h4><div class="underline"></div></div>
+      </a>
+      <a href="quran.html" class="sec-card fade-in">
+        <div class="bg" style="background:linear-gradient(160deg,#4a6b52,#1a2b22);"></div>
+        <div class="overlay"><h4>📖 القرآن الكريم</h4><div class="underline"></div></div>
+      </a>
+      <a href="tasbih.html" class="sec-card fade-in">
+        <div class="bg" style="background:linear-gradient(160deg,#3e6b58,#0f1c16);"></div>
+        <div class="overlay"><h4>📿 التسبيح</h4><div class="underline"></div></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-group" aria-labelledby="groupIbadat">
+    <header class="group-head">
+      <h2 class="group-title" id="groupIbadat">
+        <span class="group-ico" aria-hidden="true">🕋</span>
+        العبادات
+      </h2>
+      <span class="group-line" aria-hidden="true"></span>
+    </header>
+
+    <div class="sections-grid">
+      <a href="prayer.html" class="sec-card fade-in">
+        <div class="bg" style="background:linear-gradient(160deg,#3a5c4a,#132019);"></div>
+        <div class="overlay"><h4>🕌 مواقيت الصلاة</h4><div class="underline"></div></div>
+      </a>
+      <a href="zakat.html" class="sec-card fade-in">
+        <div class="bg" style="background:linear-gradient(160deg,#7a4a2c,#2a1408);"></div>
+        <div class="overlay"><h4>💰 حساب الزكاة</h4><div class="underline"></div></div>
+      </a>
+      <a href="calendar.html" class="sec-card fade-in">
+        <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
+        <div class="overlay"><h4>📅 التقويم</h4><div class="underline"></div></div>
+      </a>
+      <a href="notifications.html" class="sec-card fade-in">
+        <div class="bg" style="background:linear-gradient(160deg,#5b4a7a,#1f1530);"></div>
+        <div class="overlay"><h4>🔔 الإشعارات</h4><div class="underline"></div></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-group" aria-labelledby="groupMaarifa">
+    <header class="group-head">
+      <h2 class="group-title" id="groupMaarifa">
+        <span class="group-ico" aria-hidden="true">📚</span>
+        المعرفة
+      </h2>
+      <span class="group-line" aria-hidden="true"></span>
+    </header>
+
+    <div class="sections-grid">
+      <a href="tafsir.html" class="sec-card fade-in">
+        <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
+        <div class="overlay"><h4>📖 تفسير القرآن</h4><div class="underline"></div></div>
+      </a>
+      <a href="#" class="sec-card fade-in soon" aria-disabled="true">
+        <div class="bg" style="background:linear-gradient(160deg,#1F4E3D,#0F2A20);"></div>
+        <div class="overlay">
+          <h4>📗 التجويد</h4>
+          <div class="underline"></div>
+          <span class="soon-badge">قريبًا</span>
+        </div>
+      </a>
+      <a href="#" class="sec-card fade-in soon" aria-disabled="true">
+        <div class="bg" style="background:linear-gradient(160deg,#6b3a5c,#2a1020);"></div>
+        <div class="overlay">
+          <h4>💖 زاد القلوب</h4>
+          <div class="underline"></div>
+          <span class="soon-badge">قريبًا</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-group" aria-labelledby="groupWirdi">
+    <header class="group-head">
+      <h2 class="group-title" id="groupWirdi">
+        <span class="group-ico" aria-hidden="true">👑</span>
+        وِرْدِي
+      </h2>
+      <span class="group-line" aria-hidden="true"></span>
+    </header>
+
+    <div class="sections-grid wirdi-unified-grid">
+
+      <a href="amin.html" class="sec-card amin-card fade-in wirdi-span-full" aria-label="وِرْدِي في سطور">
+        <div class="bg" style="background:linear-gradient(140deg,#6b5b3a 0%,#3a2f18 60%,#2a1f10 100%);"></div>
+        <div class="overlay">
+          <h4>👑 وِرْدِي في سطور</h4>
+          <p class="amin-desc">الرؤية · الأهداف · الهيكل الإداري</p>
+          <div class="underline"></div>
+        </div>
+      </a>
+
+      <a href="support.html" class="sec-card fade-in" aria-label="ادعم مشروع وِرْدِي الخيري">
+        <div class="bg" style="background:linear-gradient(160deg,#3a6b5c,#0f2a1f);"></div>
+        <div class="overlay"><h4 class="long-text">💚 ادعم مشروع وِرْدِي الخيري</h4><div class="underline"></div></div>
+      </a>
+      <a href="contact.html" class="sec-card fade-in" aria-label="تواصل معنا">
+        <div class="bg" style="background:linear-gradient(160deg,#4a4a6b,#18182a);"></div>
+        <div class="overlay"><h4>📞 تواصل معنا</h4><div class="underline"></div></div>
+      </a>
+      <a href="sources.html" class="sec-card fade-in" aria-label="مصادرنا">
+        <div class="bg" style="background:linear-gradient(160deg,#6b4a3a,#2a1410);"></div>
+        <div class="overlay"><h4>📚 مصادرنا</h4><div class="underline"></div></div>
+      </a>
+
+    </div>
+  </section>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/logo.js"></script>
+<script src="assets/js/smart-adhkar.js"></script>
+<script src="assets/js/seo.js"></script>
+<script src="assets/js/pwa.js"></script>
+<script src="assets/js/adhan.js"></script>
+<script src="assets/js/notifications.js"></script>
+<script src="assets/js/streak.js" defer></script>
+<script src="assets/js/index.js" defer></script>
+
+<!-- ═══════════ الفوتر (inline) ═══════════ -->
+<footer style="margin-top:32px;background:linear-gradient(180deg,#1F4E3D 0%,#0F2A20 100%);color:#E8E8E8;font-family:'Tajawal',sans-serif;width:100%;padding:24px 20px 18px;text-align:center;box-sizing:border-box;display:block;">
+
+  <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:10px;margin:0 auto 16px;width:auto;">
+    <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#E4CC6E,#C9A227);display:flex;align-items:center;justify-content:center;font-family:'Amiri',serif;font-size:17px;font-weight:700;color:#0F2A20;flex-shrink:0;">و</div>
+    <div style="display:flex;flex-direction:column;line-height:1.15;text-align:right;">
+      <span style="font-family:'Amiri',serif;font-size:16px;font-weight:700;color:#F5E5A0;">وِرْدِي</span>
+      <span style="font-size:10px;color:#A8C4B8;margin-top:1px;">رفيقك اليومي لذكر الله 🌿</span>
+    </div>
+  </div>
+
+  <nav style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 16px;margin:0 auto 16px;padding:0;max-width:800px;width:auto;">
+    <a href="quran.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📖 القرآن</a>
+    <a href="athkar-morning.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">🌅 الصباح</a>
+    <a href="athkar-evening.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">🌆 المساء</a>
+    <a href="prayer.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">🕌 الصلاة</a>
+    <a href="tasbih.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📿 التسبيح</a>
+    <a href="tafsir.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📚 التفسير</a>
+    <a href="support.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">💚 ادعمنا</a>
+    <a href="contact.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📞 تواصل</a>
+  </nav>
+
+  <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;gap:8px;margin:0 auto 16px;width:auto;">
+    <a href="https://twitter.com/wirdi" target="_blank" rel="noopener noreferrer" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;">𝕏</a>
+    <a href="https://instagram.com/wirdi" target="_blank" rel="noopener noreferrer" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;">📷</a>
+    <a href="https://youtube.com/@wirdi" target="_blank" rel="noopener noreferrer" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;">📺</a>
+    <a href="https://t.me/wirdi" target="_blank" rel="noopener noreferrer" style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:rgba(228,204,110,0.1);border:1px solid rgba(228,204,110,0.25);color:#E4CC6E;align-items:center;justify-content:center;font-size:15px;text-decoration:none;">✈️</a>
+  </div>
+
+  <div style="width:200px;height:1px;margin:0 auto 14px;background:linear-gradient(90deg,transparent,rgba(228,204,110,0.35) 50%,transparent);"></div>
+
+  <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;font-size:11.5px;">
+    <span style="color:#E4CC6E;font-weight:600;">© وِرْدِي — مجاني لله، بدون إعلانات</span>
+    <span style="color:rgba(228,204,110,0.35);">•</span>
+    <span style="color:#A8C4B8;">الإشراف: <strong style="color:#E4CC6E;font-family:'Amiri',serif;font-size:13px;">محمد العالم</strong></span>
+  </div>
+
+</footer>
+
+<!-- زر العودة للأعلى -->
+<button type="button" id="wirdiTop" aria-label="العودة إلى الأعلى" style="position:fixed;bottom:24px;left:24px;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#E4CC6E,#C9A227);color:#1F4E3D;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(201,162,39,0.4);opacity:0;pointer-events:none;transition:opacity 0.3s;z-index:900;">↑</button>
+
+<script>
+(function(){
+  var t=document.getElementById('wirdiTop');
+  if(t){
+    window.addEventListener('scroll',function(){
+      if(window.scrollY>400){t.style.opacity='1';t.style.pointerEvents='auto';}
+      else{t.style.opacity='0';t.style.pointerEvents='none';}
+    },{passive:true});
+    t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  }
+})();
+</script>
+
+</body>
+</html>
