@@ -1,4 +1,4 @@
-/* ============ أذكار الصلاة - النسخة الكاملة (محدث) ============ */
+/* ============ أذكار الصلاة - مع مسبحة تفاعلية ============ */
 
 const SALAH_ATHKAR_DATA = [
   {
@@ -120,7 +120,7 @@ const SALAH_ATHKAR_DATA = [
       { id: "after_10", text: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ: قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، مِنْ شَرِّ مَا خَلَقَ، وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ، وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ", count: 1, condition: "بعد كل صلاة (3 مرات بعد المغرب والفجر)", virtue: "سورة الفلق", source: "رواه أبو داود" },
       { id: "after_11", text: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ: قُلْ أَعُوذُ بِرَبِّ النَّاسِ، مَلِكِ النَّاسِ، إِلَهِ النَّاسِ، مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ، الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ، مِنَ الْجِنَّةِ وَالنَّاسِ", count: 1, condition: "بعد كل صلاة (3 مرات بعد المغرب والفجر)", virtue: "سورة الناس", source: "رواه أبو داود" },
       { id: "after_12", text: "آيَةُ الْكُرْسِيِّ: اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ، لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ، لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ، مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ، يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ، وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ، وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ، وَلَا يَئُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ", count: 1, condition: "بعد كل صلاة", virtue: "لم يمنعه من دخول الجنة إلا أن يموت", source: "رواه النسائي" },
-      { id: "after_13", text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ", count: 10, condition: "بعد الفجر والمغرب فقط", virtue: "كان النبي  يقولها دبر صلاة الصبح والمغرب", source: "رواه الترمذي" },
+      { id: "after_13", text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ", count: 10, condition: "بعد الفجر والمغرب فقط", virtue: "كان النبي ﷺ يقولها دبر صلاة الصبح والمغرب", source: "رواه الترمذي" },
       { id: "after_14", text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا", count: 1, condition: "بعد الفجر فقط", virtue: "دعاء بعد الفجر", source: "رواه ابن ماجه" },
       { id: "after_15", text: "اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ", count: 7, condition: "بعد الفجر والمغرب فقط", virtue: "دعاء بعد الفجر والمغرب", source: "رواه أبو داود" }
     ]
@@ -128,7 +128,7 @@ const SALAH_ATHKAR_DATA = [
   {
     category: "🕌 صلاة الجمعة",
     items: [
-      { id: "jumuah_1", text: "الإكثار من الصلاة على النبي  يوم الجمعة وليلتها", count: 1, condition: "يوم الجمعة", virtue: "عرضها على النبي ﷺ", source: "رواه أبو داود" },
+      { id: "jumuah_1", text: "الإكثار من الصلاة على النبي ﷺ يوم الجمعة وليلتها", count: 1, condition: "يوم الجمعة", virtue: "عرضها على النبي ﷺ", source: "رواه أبو داود" },
       { id: "jumuah_2", text: "قراءة سورة الكهف", count: 1, condition: "يوم الجمعة", virtue: "أضاء له من النور ما بين الجمعتين", source: "رواه الحاكم" }
     ]
   }
@@ -137,7 +137,7 @@ const SALAH_ATHKAR_DATA = [
 const PROGRESS_KEY = 'wirdi_salah_athkar_progress';
 
 function toAr(s) { 
-  return String(s).replace(/[0-9]/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]); 
+  return String(s).replace(/[0-9]/g, d => ['٠','','٢','٣','٤','','٦','٧','٨',''][d]); 
 }
 
 function getProgress() { 
@@ -182,10 +182,38 @@ function renderAthkar() {
       const currentCount = progress[item.id] === 'done' ? 0 : (progress[item.id] || item.count);
       const isCompleted = currentCount === 0;
       const card = document.createElement('div');
-      card.className = `dhikr-card ${isCompleted ? 'completed' : ''}`;
+      card.className = `dhikr-card ${isCompleted ? 'completed' : ''} ${item.count >= 33 ? 'high-count' : ''}`;
       card.id = `card-${item.id}`;
       
       const conditionBadge = item.condition ? `<span class="meta-badge condition">🕰️ ${item.condition}</span>` : '';
+      
+      // تحديد نوع العرض بناءً على عدد التكرار
+      const needsCounter = item.count > 1;
+      const counterHTML = needsCounter ? `
+        <div class="counter-display">
+          <div class="counter-circle" data-progress="${((item.count - currentCount) / item.count) * 100}">
+            <svg viewBox="0 0 36 36" class="progress-ring">
+              <path class="progress-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="progress-ring-fill" stroke-dasharray="${((item.count - currentCount) / item.count) * 100}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            </svg>
+            <div class="counter-number">
+              <span class="current">${toAr(item.count - currentCount)}</span>
+              <span class="separator">/</span>
+              <span class="total">${toAr(item.count)}</span>
+            </div>
+          </div>
+          <div class="counter-controls">
+            <button class="counter-btn minus" onclick="decrementCount('${item.id}', ${item.count})" ${isCompleted ? 'disabled' : ''}>−</button>
+            <button class="counter-btn plus" onclick="incrementCount('${item.id}', ${item.count})" ${currentCount >= item.count ? 'disabled' : ''}>+</button>
+          </div>
+        </div>
+      ` : `
+        <div class="single-action">
+          <button class="count-btn" id="btn-${item.id}" ${isCompleted ? 'disabled' : ''} onclick="decrementCount('${item.id}', ${item.count})">
+            ${isCompleted ? '✓ تم' : '📿 ذكر'}
+          </button>
+        </div>
+      `;
 
       card.innerHTML = `
         <p class="dhikr-text">${item.text}</p>
@@ -194,12 +222,8 @@ function renderAthkar() {
           ${item.virtue ? `<span class="meta-badge">💡 ${item.virtue}</span>` : ''}
           <span class="meta-badge source">📚 ${item.source}</span>
         </div>
-        <div class="dhikr-actions">
-          <span class="count-display">المتبقي: <strong id="count-${item.id}">${toAr(currentCount)}</strong></span>
-          <button class="count-btn" id="btn-${item.id}" ${isCompleted ? 'disabled' : ''} onclick="decrementCount('${item.id}', ${item.count})">
-            ${isCompleted ? '✓ تم' : '📿 ذكر'}
-          </button>
-        </div>`;
+        ${counterHTML}
+      `;
       container.appendChild(card);
     });
   });
@@ -214,17 +238,56 @@ function decrementCount(id, maxCount) {
     current--;
     saveProgress(id, current);
     
-    const countEl = document.getElementById(`count-${id}`);
+    const countEl = document.querySelector(`#card-${id} .current`);
     const btnEl = document.getElementById(`btn-${id}`);
     const cardEl = document.getElementById(`card-${id}`);
+    const circleEl = document.querySelector(`#card-${id} .progress-ring-fill`);
+    const minusBtn = document.querySelector(`#card-${id} .counter-btn.minus`);
+    const plusBtn = document.querySelector(`#card-${id} .counter-btn.plus`);
     
-    if (countEl) countEl.textContent = toAr(current);
+    if (countEl) countEl.textContent = toAr(maxCount - current);
+    if (circleEl) circleEl.setAttribute('stroke-dasharray', `${((maxCount - current) / maxCount) * 100}, 100`);
     
     if (current === 0) {
       if (btnEl) { btnEl.disabled = true; btnEl.innerHTML = '✓ تم'; }
       if (cardEl) cardEl.classList.add('completed');
-      if (navigator.vibrate) navigator.vibrate(50);
+      if (minusBtn) minusBtn.disabled = true;
+      if (plusBtn) plusBtn.disabled = true;
+      if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
+    } else {
+      if (navigator.vibrate) navigator.vibrate(30);
     }
+  }
+}
+
+function incrementCount(id, maxCount) {
+  const progress = getProgress();
+  let current = progress[id] === 'done' ? 0 : (progress[id] || maxCount);
+  
+  if (current < maxCount) {
+    current++;
+    saveProgress(id, current);
+    
+    const countEl = document.querySelector(`#card-${id} .current`);
+    const cardEl = document.getElementById(`card-${id}`);
+    const circleEl = document.querySelector(`#card-${id} .progress-ring-fill`);
+    const minusBtn = document.querySelector(`#card-${id} .counter-btn.minus`);
+    const plusBtn = document.querySelector(`#card-${id} .counter-btn.plus`);
+    
+    if (countEl) countEl.textContent = toAr(maxCount - current);
+    if (circleEl) circleEl.setAttribute('stroke-dasharray', `${((maxCount - current) / maxCount) * 100}, 100`);
+    
+    if (current === 0) {
+      if (cardEl) cardEl.classList.remove('completed');
+      if (minusBtn) minusBtn.disabled = false;
+    }
+    if (current >= maxCount) {
+      if (plusBtn) plusBtn.disabled = true;
+    } else {
+      if (plusBtn) plusBtn.disabled = false;
+    }
+    
+    if (navigator.vibrate) navigator.vibrate(20);
   }
 }
 
