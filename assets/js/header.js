@@ -1,4 +1,4 @@
-/* ============ الهيدر الموحّد المتجاوب ============ */
+/* ============ الهيدر الموحّد المتكامل ============ */
 
 (function () {
   const IS_HOME = (() => {
@@ -7,18 +7,18 @@
   })();
 
   const ALL_NAV_ITEMS = [
-    { href: 'index.html',          icon: '🏠', label: 'الرئيسية',    key: 'home',    priority: 1 },
-    { href: 'quran.html',          icon: '📖', label: 'القرآن',      key: 'quran',   priority: 1 },
-    { href: 'athkar-morning.html', icon: '🌅', label: 'أذكار الصباح',key: 'morning', priority: 1 },
-    { href: 'athkar-evening.html', icon: '🌆', label: 'أذكار المساء',key: 'evening', priority: 1 },
-    { href: 'prayer.html',         icon: '🕌', label: 'مواقيت الصلاة',key: 'prayer', priority: 1 },
-    { href: 'tasbih.html',         icon: '📿', label: 'التسبيح',     key: 'tasbih',  priority: 2 },
-    { href: 'salah-method.html',   icon: '🤲', label: 'طريقة الصلاة',key: 'salah',  priority: 2 },
-    { href: 'tafsir.html',         icon: '📚', label: 'التفسير',     key: 'tafsir',  priority: 2 },
-    { href: 'calendar.html',       icon: '📅', label: 'التقويم',     key: 'calendar',priority: 2 },
-    { href: 'zakat.html',          icon: '💰', label: 'الزكاة',      key: 'zakat',   priority: 2 },
-    { href: 'zad-alquloob.html',   icon: '', label: 'زاد القلوب',  key: 'zad',     priority: 2 },
-    { href: 'support.html',        icon: '💚', label: 'ادعمنا',      key: 'support', priority: 2 },
+    { href: 'index.html',          icon: '🏠', label: 'الرئيسية',     key: 'home' },
+    { href: 'quran.html',          icon: '', label: 'القرآن الكريم', key: 'quran' },
+    { href: 'athkar-morning.html', icon: '🌅', label: 'أذكار الصباح', key: 'morning' },
+    { href: 'athkar-evening.html', icon: '', label: 'أذكار المساء', key: 'evening' },
+    { href: 'prayer.html',         icon: '', label: 'مواقيت الصلاة', key: 'prayer' },
+    { href: 'tasbih.html',         icon: '📿', label: 'التسبيح',      key: 'tasbih' },
+    { href: 'salah-method.html',   icon: '🤲', label: 'طريقة الصلاة', key: 'salah' },
+    { href: 'tafsir.html',         icon: '📚', label: 'التفسير',      key: 'tafsir' },
+    { href: 'calendar.html',       icon: '📅', label: 'التقويم',      key: 'calendar' },
+    { href: 'zakat.html',          icon: '', label: 'الزكاة',       key: 'zakat' },
+    { href: 'zad-alquloob.html',   icon: '💖', label: 'زاد القلوب',  key: 'zad' },
+    { href: 'support.html',        icon: '💚', label: 'ادعم وِرْدِي', key: 'support' },
   ];
 
   function getCurrentKey() {
@@ -38,18 +38,16 @@
     return 'other';
   }
 
-  function buildDesktopNav() {
-    const current = getCurrentKey();
-    // على الكمبيوتر: نعرض الأولويات 1 فقط في الشريط الرئيسي
-    const primaryItems = ALL_NAV_ITEMS.filter(i => i.priority === 1);
-    
-    return primaryItems.map(item => {
-      const active = item.key === current ? 'active' : '';
-      return `<a href="${item.href}" class="desktop-nav-link ${active}">
-                <span class="nav-ico">${item.icon}</span>
-                <span class="nav-label">${item.label}</span>
-              </a>`;
-    }).join('');
+  function getTimeGreeting() {
+    const h = new Date().getHours();
+    if (h >= 4 && h < 12)  return { text: 'صباح مبارك',  icon: '' };
+    if (h >= 12 && h < 17) return { text: 'نهار طيب',    icon: '️' };
+    if (h >= 17 && h < 21) return { text: 'مساء مبارك',  icon: '🌆' };
+    return { text: 'ليلة هادئة', icon: '🌙' };
+  }
+
+  function toAr(s) {
+    return String(s).replace(/[0-9]/g, d => ['٠','١','','٣','٤','٥','','٧','٨','٩'][d]);
   }
 
   function buildMobileMenu() {
@@ -64,33 +62,58 @@
   }
 
   function buildHeader() {
+    const g = getTimeGreeting();
+    
     return `
-      <div class="responsive-header">
-        <!-- الشريط العلوي -->
-        <div class="top-bar">
+      <div class="unified-header">
+        <!-- القسم العلوي: الشعار + التحية + الإجراءات -->
+        <div class="header-top">
           <div class="brand-section">
-            <img src="assets/img/logo.png" alt="وِرْدِي" class="header-logo" />
+            <img src="assets/img/logo.png" alt="وِرْدِي" class="main-logo" />
             <div class="brand-info">
-              <span class="brand-name">وِرْدِي</span>
-              ${IS_HOME ? '<span class="brand-tagline">رفيقك اليومي</span>' : ''}
+              <h1 class="brand-title">وِرْدِي</h1>
+              <p class="brand-subtitle">رفيقك اليومي لذكر الله</p>
             </div>
           </div>
           
           <div class="header-actions">
-            <button class="icon-btn theme-toggle" id="themeToggle" aria-label="الوضع الليلي">🌙</button>
-            <button class="menu-toggle-btn" id="menuToggle" aria-label="القائمة">
-              <span class="hamburger-icon">☰</span>
-              <span class="menu-label">القائمة</span>
+            <div class="greeting-badge">
+              <span class="greeting-ico">${g.icon}</span>
+              <span class="greeting-text">${g.text}</span>
+            </div>
+            <button class="action-btn theme-btn" id="themeToggle" aria-label="الوضع الليلي">🌙</button>
+            <button class="action-btn lang-btn" id="langToggle" aria-label="اللغة">EN</button>
+            <button class="menu-btn" id="menuToggle" aria-label="القائمة">
+              <span class="hamburger">☰</span>
+              <span class="menu-text">القائمة</span>
             </button>
           </div>
         </div>
 
-        <!-- التنقل للكمبيوتر (يظهر فقط على الشاشات الكبيرة) -->
-        <nav class="desktop-nav" role="navigation">
-          ${buildDesktopNav()}
-        </nav>
+        <!-- القسم الأوسط: التاريخ والساعة والصلاة القادمة -->
+        <div class="header-info-bar">
+          <div class="info-item">
+            <span class="info-ico">📅</span>
+            <span id="gregDate" class="info-text">...</span>
+          </div>
+          <div class="info-separator">•</div>
+          <div class="info-item">
+            <span class="info-ico"></span>
+            <span id="hijriDate" class="info-text">...</span>
+          </div>
+          <div class="info-separator">•</div>
+          <div class="info-item">
+            <span class="info-ico">🕐</span>
+            <span id="liveClock" class="info-text clock-text">00:00</span>
+          </div>
+          <div class="info-separator">•</div>
+          <div class="info-item prayer-next">
+            <span class="info-ico">🕌</span>
+            <span id="nextPrayerTxt" class="info-text">جاري التحميل...</span>
+          </div>
+        </div>
 
-        <!-- القائمة المنزلاقة للجوال -->
+        <!-- القائمة المنزلاقة -->
         <div class="mobile-menu-overlay" id="mobileMenu" hidden>
           <div class="mobile-menu-backdrop" id="menuBackdrop"></div>
           <div class="mobile-menu-content">
@@ -105,6 +128,79 @@
         </div>
       </div>
     `;
+  }
+
+  function initDatesAndClock() {
+    const hijriEl = document.getElementById('hijriDate');
+    const gregEl = document.getElementById('gregDate');
+    const clockEl = document.getElementById('liveClock');
+    const d = new Date();
+
+    try {
+      if (gregEl) {
+        gregEl.textContent = new Intl.DateTimeFormat('ar-EG', { day: 'numeric', month: 'long' }).format(d);
+      }
+      if (hijriEl) {
+        hijriEl.textContent = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-nu-arab', {
+          day: 'numeric', month: 'long', year: 'numeric'
+        }).format(d) + ' هـ';
+      }
+    } catch (e) { console.error(e); }
+
+    if (clockEl) {
+      const tick = function () {
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        clockEl.textContent = toAr(hh + ':' + mm);
+      };
+      tick();
+      setInterval(tick, 30000);
+    }
+  }
+
+  function initNextPrayer() {
+    const txt = document.getElementById('nextPrayerTxt');
+    if (!txt) return;
+
+    const ORDER = [
+      { key: 'Fajr', ar: 'الفجر' },
+      { key: 'Dhuhr', ar: 'الظهر' },
+      { key: 'Asr', ar: 'العصر' },
+      { key: 'Maghrib', ar: 'المغرب' },
+      { key: 'Isha', ar: 'العشاء' }
+    ];
+
+    function update() {
+      const cached = localStorage.getItem('wirdi_prayer_timings');
+      if (!cached) { txt.textContent = '—'; return; }
+      
+      try {
+        const obj = JSON.parse(cached);
+        if (!obj.timings) return;
+        
+        const now = new Date();
+        const nowMin = now.getHours() * 60 + now.getMinutes();
+        
+        for (let p of ORDER) {
+          const t = obj.timings[p.key];
+          if (!t) continue;
+          const parts = t.split(':');
+          const tMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+          if (tMin > nowMin) {
+            const diff = tMin - nowMin;
+            const h = Math.floor(diff / 60);
+            const m = diff % 60;
+            txt.textContent = `${p.ar} بعد ${h > 0 ? toAr(h) + ' س ' : ''}${toAr(m)} د`;
+            return;
+          }
+        }
+        txt.textContent = 'الفجر غداً';
+      } catch (e) {}
+    }
+
+    update();
+    setInterval(update, 60000);
   }
 
   function initMobileMenu() {
@@ -126,17 +222,14 @@
     if (toggle) toggle.addEventListener('click', openMenu);
     if (close) close.addEventListener('click', closeMenu);
     if (backdrop) backdrop.addEventListener('click', closeMenu);
-    
-    // إغلاق القائمة عند الضغط على ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !menu.hidden) closeMenu();
-    });
   }
 
   function injectHeader() {
     const target = document.querySelector('[data-header-target]');
     if (!target) return;
     target.innerHTML = buildHeader();
+    initDatesAndClock();
+    initNextPrayer();
     initMobileMenu();
   }
 

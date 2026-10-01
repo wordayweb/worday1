@@ -1,291 +1,34 @@
-/* ============ الهيدر الموحّد المُطوّر ============ */
+/* ============ الهيدر الموحّد المتكامل ============ */
 
-.main-header {
+.unified-header {
   width: 100%;
-  background: var(--white);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  background: linear-gradient(180deg, var(--white) 0%, var(--cream-2) 100%);
+  box-shadow: 0 4px 20px rgba(31, 78, 61, 0.08);
+  border-bottom: 2px solid var(--gold);
 }
 
-/* 1. الشريط العلوي المضغوط */
-.compact-top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--line);
-}
-
-.brand-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.mini-logo {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.brand-name {
-  font-family: 'Amiri', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--green);
-}
-
-.brand-tagline-mini {
-  font-family: 'Tajawal', sans-serif;
-  font-size: 11px;
-  color: var(--ink-soft);
-  font-weight: 500;
-}
-
-.top-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.icon-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--cream);
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: background 0.2s, transform 0.2s;
-}
-
-.icon-btn:hover {
-  background: var(--green-light);
-  transform: scale(1.05);
-}
-
-/* 2. قسم الترحيب (للفحة الرئيسية فقط) */
-.hero-greeting {
-  display: flex;
-  justify-content: center;
-  padding: 12px 16px 4px;
-}
-
-.greeting-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  color: var(--green);
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-family: 'Tajawal', sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  box-shadow: 0 4px 10px rgba(201,162,39,0.2);
-}
-
-/* 3. شريط التنقل السريع */
-.primary-nav {
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 8px 12px;
-  gap: 4px;
-}
-
-.nav-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
-  border-radius: 12px;
-  text-decoration: none;
-  color: var(--ink-soft);
-  font-family: 'Tajawal', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  transition: all 0.2s;
-  flex: 1;
-  max-width: 80px;
-}
-
-.nav-chip .chip-ico {
-  font-size: 20px;
-  transition: transform 0.2s;
-}
-
-.nav-chip:hover {
-  background: var(--cream);
-  color: var(--green);
-}
-
-.nav-chip:hover .chip-ico {
-  transform: translateY(-2px);
-}
-
-.nav-chip.active {
-  background: var(--green);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(31, 78, 61, 0.3);
-}
-
-/* 4. القائمة الجانبية المنسدلة (Drawer) */
-.nav-drawer {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-}
-
-.nav-drawer[hidden] {
-  display: none;
-}
-
-.drawer-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  animation: fadeIn 0.3s ease;
-}
-
-.drawer-content {
-  position: absolute;
-  top: 0;
-  left: 0; /* للغة العربية سيكون right: 0، لكننا نستخدم dir="rtl" لذا left هو الصحيح للظهور من اليسار أو العكس حسب التفضيل */
-  right: 0;
-  width: min(300px, 85vw);
-  height: 100%;
-  background: var(--white);
-  box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-  animation: slideIn 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-
-.drawer-header {
+/* القسم العلوي */
+.header-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--line);
-}
-
-.drawer-header h3 {
-  margin: 0;
-  font-family: 'Amiri', serif;
-  font-size: 20px;
-  color: var(--green);
-}
-
-.drawer-links {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  overflow-y: auto;
-}
-
-.drawer-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  text-decoration: none;
-  color: var(--ink);
-  font-family: 'Tajawal', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  transition: background 0.2s;
-}
-
-.drawer-link:hover {
-  background: var(--cream);
-  color: var(--green);
-}
-
-.link-ico {
-  font-size: 20px;
-  width: 32px;
-  text-align: center;
-}
-
-/* 5. تعديلات الصفحات الداخلية */
-.main-header.inner-page .hero-greeting {
-  display: none;
-}
-
-/* 6. الوضع الليلي */
-body.dark .main-header {
-  background: #1F2B26;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-body.dark .compact-top-bar {
-  border-bottom-color: rgba(255,255,255,0.1);
-}
-body.dark .brand-name { color: var(--gold-light); }
-body.dark .brand-tagline-mini { color: #A8A8A8; }
-body.dark .icon-btn { background: rgba(255,255,255,0.05); color: #fff; }
-body.dark .icon-btn:hover { background: rgba(255,255,255,0.1); }
-body.dark .nav-chip { color: #A8A8A8; }
-body.dark .nav-chip:hover { background: rgba(255,255,255,0.05); color: var(--gold-light); }
-body.dark .drawer-content { background: #1F2B26; }
-body.dark .drawer-header { border-bottom-color: rgba(255,255,255,0.1); }
-body.dark .drawer-link { color: #E8E8E8; }
-body.dark .drawer-link:hover { background: rgba(255,255,255,0.05); color: var(--gold-light); }
-
-/* 7. التجاوب مع الشاشات الكبيرة */
-@media (min-width: 768px) {
-  .compact-top-bar { padding: 12px 32px; }
-  .mini-logo { width: 42px; height: 42px; }
-  .brand-name { font-size: 24px; }
-  .primary-nav { justify-content: center; gap: 16px; padding: 12px 32px; }
-  .nav-chip { flex-direction: row; max-width: none; padding: 8px 20px; font-size: 14px; }
-  .nav-chip .chip-ico { font-size: 18px; }
-}
-/* ============================================================
-   📱 الهيدر المتجاوب (جوال vs كمبيوتر)
-   ============================================================ */
-
-.responsive-header {
-  width: 100%;
-  background: var(--white);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-/* الشريط العلوي (مشترك) */
-.top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--line);
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .brand-section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
+  flex: 1;
 }
 
-.header-logo {
-  width: 40px;
-  height: 40px;
+.main-logo {
+  width: 64px;
+  height: 64px;
   object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(201, 162, 39, 0.2));
 }
 
 .brand-info {
@@ -294,55 +37,150 @@ body.dark .drawer-link:hover { background: rgba(255,255,255,0.05); color: var(--
   line-height: 1.2;
 }
 
-.brand-name {
+.brand-title {
   font-family: 'Amiri', serif;
-  font-size: 22px;
+  font-size: 32px;
   font-weight: 700;
   color: var(--green);
+  margin: 0;
+  letter-spacing: 1px;
 }
 
-.brand-tagline {
+.brand-subtitle {
   font-family: 'Tajawal', sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--ink-soft);
+  margin: 2px 0 0;
+  font-weight: 500;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-/* زر القائمة للجوال */
-.menu-toggle-btn {
+.greeting-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  color: var(--green);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.25);
+}
+
+.greeting-ico {
+  font-size: 16px;
+}
+
+.action-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--line);
+  font-size: 18px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+}
+
+.action-btn:hover {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+  transform: translateY(-2px);
+}
+
+.menu-btn {
   display: flex;
   align-items: center;
   gap: 6px;
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
   color: var(--green);
   border: none;
-  border-radius: 10px;
-  padding: 8px 14px;
+  border-radius: 12px;
+  padding: 10px 18px;
   font-family: 'Tajawal', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 3px 10px rgba(201,162,39,0.3);
+  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.35);
   transition: all 0.3s;
 }
 
-.menu-toggle-btn:hover {
+.menu-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(201,162,39,0.4);
+  box-shadow: 0 6px 18px rgba(201, 162, 39, 0.5);
 }
 
-.hamburger-icon {
-  font-size: 20px;
+.hamburger {
+  font-size: 22px;
   line-height: 1;
   font-weight: 900;
 }
 
-/* القائمة المنزلاقة للجوال */
+/* القسم الأوسط: المعلومات */
+.header-info-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, var(--green) 0%, var(--green-2) 100%);
+  color: #fff;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.info-ico {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.info-text {
+  white-space: nowrap;
+}
+
+.clock-text {
+  font-family: 'Amiri', serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.info-separator {
+  color: var(--gold-light);
+  opacity: 0.6;
+  font-size: 12px;
+}
+
+.prayer-next {
+  background: rgba(255,255,255,0.15);
+  padding: 4px 12px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+/* القائمة المنزلاقة */
 .mobile-menu-overlay {
   position: fixed;
   inset: 0;
@@ -365,10 +203,10 @@ body.dark .drawer-link:hover { background: rgba(255,255,255,0.05); color: var(--
   position: absolute;
   top: 0;
   right: 0;
-  width: min(320px, 85vw);
+  width: min(340px, 85vw);
   height: 100%;
   background: var(--white);
-  box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+  box-shadow: -4px 0 24px rgba(0,0,0,0.2);
   animation: slideFromRight 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -381,54 +219,62 @@ body.dark .drawer-link:hover { background: rgba(255,255,255,0.05); color: var(--
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 20px 24px;
   background: linear-gradient(135deg, var(--green), var(--green-2));
   color: #fff;
+  border-bottom: 2px solid var(--gold);
 }
 
 .mobile-menu-header h3 {
   margin: 0;
   font-family: 'Amiri', serif;
-  font-size: 22px;
+  font-size: 24px;
 }
 
 .close-menu-btn {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: rgba(255,255,255,0.2);
   border: none;
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
   display: grid;
   place-items: center;
+  transition: background 0.2s;
+}
+
+.close-menu-btn:hover {
+  background: rgba(255,255,255,0.3);
 }
 
 .mobile-nav-items {
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   overflow-y: auto;
 }
 
 .mobile-nav-link {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border-radius: 12px;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 14px;
   text-decoration: none;
   color: var(--ink);
   font-family: 'Tajawal', sans-serif;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   transition: all 0.2s;
+  border: 1px solid transparent;
 }
 
 .mobile-nav-link:hover {
   background: var(--cream);
+  border-color: var(--gold);
   transform: translateX(-4px);
 }
 
@@ -436,131 +282,141 @@ body.dark .drawer-link:hover { background: rgba(255,255,255,0.05); color: var(--
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
   color: var(--green);
   font-weight: 700;
+  border-color: var(--gold);
+  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.25);
 }
 
 .link-ico {
-  font-size: 24px;
-  width: 36px;
+  font-size: 26px;
+  width: 40px;
   text-align: center;
 }
 
-/* التنقل للكمبيوتر (مخفي على الجوال) */
-.desktop-nav {
-  display: none;
-  padding: 12px 20px;
-  gap: 12px;
-  border-top: 1px solid var(--line);
-}
-
-.desktop-nav-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 10px;
-  text-decoration: none;
-  color: var(--ink-soft);
-  font-family: 'Tajawal', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.desktop-nav-link:hover {
-  background: var(--cream);
-  color: var(--green);
-}
-
-.desktop-nav-link.active {
-  background: var(--green);
-  color: #fff;
-}
-
-/* ============================================================
-   ️ للشاشات الكبيرة (كمبيوتر/تابلت)
-   ============================================================ */
-@media (min-width: 768px) {
-  .top-bar {
-    padding: 14px 32px;
+/* التجاوب */
+@media (max-width: 767px) {
+  .header-top {
+    padding: 12px 14px;
   }
   
-  .header-logo {
-    width: 48px;
-    height: 48px;
+  .main-logo {
+    width: 52px;
+    height: 52px;
   }
   
-  .brand-name {
+  .brand-title {
     font-size: 26px;
   }
   
-  /* إظهار التنقل للكمبيوتر */
-  .desktop-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  .brand-subtitle {
+    font-size: 11px;
   }
   
-  /* إخفاء زر قائمة الجوال على الكمبيوتر */
-  .menu-toggle-btn {
+  .greeting-badge {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .action-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+  
+  .menu-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  
+  .hamburger {
+    font-size: 20px;
+  }
+  
+  .header-info-bar {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  
+  .info-item {
+    font-size: 12px;
+  }
+  
+  .info-ico {
+    font-size: 14px;
+  }
+  
+  .clock-text {
+    font-size: 14px;
+  }
+  
+  .info-separator {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-subtitle {
     display: none;
   }
   
-  .mobile-menu-content {
-    width: 400px;
-  }
-}
-
-/* ============================================================
-   📱 للجوال (أقل من 768px)
-   ============================================================ */
-@media (max-width: 767px) {
-  .brand-tagline {
-    display: none; /* توفير مساحة */
+  .greeting-text {
+    display: none;
   }
   
-  .menu-label {
-    display: none; /* إبقاء الأيقونة فقط على الشاشات الصغيرة جداً */
+  .greeting-badge {
+    padding: 8px;
   }
   
-  .menu-toggle-btn {
-    padding: 10px 12px;
-  }
-  
-  .hamburger-icon {
-    font-size: 24px;
-  }
-}
-
-@media (max-width: 360px) {
-  .brand-name {
+  .greeting-ico {
     font-size: 18px;
   }
   
-  .header-logo {
-    width: 36px;
-    height: 36px;
+  .menu-text {
+    display: none;
+  }
+  
+  .menu-btn {
+    padding: 10px 12px;
   }
 }
 
 /* الوضع الليلي */
-body.dark .responsive-header {
-  background: #1F2B26;
+body.dark .unified-header {
+  background: linear-gradient(180deg, #1F2B26 0%, #14201C 100%);
+  border-bottom-color: var(--gold);
 }
-body.dark .top-bar {
-  border-bottom-color: rgba(255,255,255,0.1);
-}
-body.dark .brand-name {
+
+body.dark .brand-title {
   color: var(--gold-light);
 }
+
+body.dark .brand-subtitle {
+  color: #A8A8A8;
+}
+
+body.dark .action-btn {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+body.dark .action-btn:hover {
+  background: var(--gold);
+  color: #0F2A20;
+  border-color: var(--gold);
+}
+
 body.dark .mobile-menu-content {
   background: #1F2B26;
 }
+
 body.dark .mobile-nav-link {
   color: #E8E8E8;
 }
+
 body.dark .mobile-nav-link:hover {
   background: rgba(255,255,255,0.05);
 }
+
 body.dark .mobile-nav-link.active {
   background: linear-gradient(135deg, var(--gold), #a8871d);
   color: #0F2A20;
