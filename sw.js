@@ -1,13 +1,12 @@
 /* ============================================================
-   Service Worker — وِرْدِي PWA  (v3 — نظيف)
-   ⚠️ عند أي تعديل على JS/CSS: غيّر CACHE_NAME أدناه
+   Service Worker — وِرْدِي PWA
+   ⚠️ عند أي تعديل: غيّر CACHE_NAME أدناه
    ============================================================ */
 
-const CACHE_NAME   = 'wirdi-v20261001-clean';
+const CACHE_NAME   = 'wirdi-v20261002-v4';
 const OFFLINE_URL  = './offline.html';
 
 const PRECACHE_URLS = [
-  /* صفحات HTML */
   './',
   './index.html',
   './more.html',
@@ -32,7 +31,6 @@ const PRECACHE_URLS = [
   './offline.html',
   './manifest.json',
 
-  /* CSS — فقط الملفات الموجودة */
   './assets/css/style.css',
   './assets/css/header.css',
   './assets/css/index.css',
@@ -57,7 +55,6 @@ const PRECACHE_URLS = [
   './assets/css/adhan.css',
   './assets/css/pwa.css',
 
-  /* JS — فقط الملفات الموجودة */
   './assets/js/app.js',
   './assets/js/header.js',
   './assets/js/logo.js',
@@ -88,14 +85,11 @@ const PRECACHE_URLS = [
   './assets/js/settings.js',
   './assets/js/share-image.js',
 
-  /* صور — فقط الملفات الموجودة */
   './assets/img/logo.png',
   './assets/img/icon-192.png',
   './assets/img/icon-512.png'
-  /* ⚠️ تم حذف islamic-bg.svg, wirdi-manuscript.svg, ... لأنها غير موجودة */
 ];
 
-/* ---------- install (متسامح) ---------- */
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -115,7 +109,6 @@ self.addEventListener('install', (event) => {
   );
 });
 
-/* ---------- activate ---------- */
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
@@ -126,7 +119,6 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-/* ---------- fetch ---------- */
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
@@ -135,7 +127,6 @@ self.addEventListener('fetch', (event) => {
 
   const accept = req.headers.get('accept') || '';
 
-  // صفحات HTML: Network-First
   if (accept.includes('text/html')) {
     event.respondWith(
       fetch(req)
@@ -151,7 +142,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // أصول: Cache-First
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
@@ -164,7 +154,6 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-/* ---------- messages ---------- */
 self.addEventListener('message', (event) => {
   if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
