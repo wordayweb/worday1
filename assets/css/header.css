@@ -1,824 +1,259 @@
-/* ============ الهيدر الموحّد ============ */
+/* ============ الهيدر الموحّد المُطوّر ============ */
 
-.main-header { width: 100%; }
-
-/* ============================================================
-   ✨ التحية الزمنية
-   ============================================================ */
-.greeting-block {
-  display: flex;
-  justify-content: center;
-  padding: 14px 16px 0;
-}
-
-.greeting-block .greeting-txt {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, var(--gold-light, #E4CC6E), var(--gold, #C9A227));
-  color: var(--green, #1F4E3D);
-  padding: 6px 18px;
-  border-radius: 999px;
-  font-family: 'Tajawal', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  box-shadow: 0 4px 14px rgba(201,162,39,.28);
-  transition: transform .25s;
-}
-
-.greeting-block .greeting-ico {
-  font-size: 16px;
-  line-height: 1;
-}
-
-.greeting-block:hover .greeting-txt {
-  transform: translateY(-1px);
-}
-
-body.dark .greeting-block .greeting-txt {
-  background: linear-gradient(135deg, var(--gold-light, #E4CC6E), var(--gold, #C9A227));
-  color: #0F2A20;
-}
-
-/* ============================================================
-   🖼️ الشعار
-   ============================================================ */
-.top-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 16px 0;
-}
-
-.top-logo img {
-  width: clamp(140px, 22vw, 220px);
-  height: auto;
-  display: block;
-  mix-blend-mode: multiply;
-  filter: contrast(1.15) saturate(1.25) brightness(0.94);
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 30%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 70%, transparent 88%);
-  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 30%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 70%, transparent 88%);
-  animation: logoGlow 3s ease-in-out infinite;
-}
-
-@keyframes logoGlow {
-  0%, 100% {
-    filter: contrast(1.15) saturate(1.25) brightness(0.94)
-            drop-shadow(0 4px 12px rgba(201, 162, 39, .08));
-  }
-  50% {
-    filter: contrast(1.15) saturate(1.25) brightness(0.94)
-            drop-shadow(0 8px 22px rgba(201, 162, 39, .22));
-  }
-}
-
-/* ============================================================
-   📝 كتلة العنوان
-   ============================================================ */
-.title-block {
-  text-align: center;
-  padding: 8px 16px 0;
-}
-
-.main-title {
-  font-family: 'Amiri', serif;
-  font-size: clamp(36px, 8vw, 56px);
-  font-weight: 700;
-  color: var(--green);
-  letter-spacing: 1px;
-  line-height: 1.2;
-  margin: 0;
-  text-shadow: 0 2px 4px rgba(201, 162, 39, .12);
-}
-
-.brand-tagline {
-  font-family: 'Amiri', serif;
-  font-size: clamp(15px, 3vw, 22px);
-  font-weight: 700;
-  color: var(--green);
-  letter-spacing: .5px;
-  line-height: 1.5;
-  margin: 4px 0 0;
-  opacity: .85;
-  text-shadow: 0 1px 2px rgba(201, 162, 39, .08);
-}
-
-.title-divider {
-  width: 100px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  border-radius: 2px;
-  margin: 12px auto 0;
-  opacity: .65;
-}
-
-/* ============================================================
-   🌐 شريط اللغة + زر الوضع الليلي
-   ============================================================ */
-.lang-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 14px 16px 8px;
-}
-
-.lang-sep {
-  color: var(--gold);
-  opacity: .5;
-  font-size: 14px;
-}
-
-.lang-btn {
-  padding: 7px 20px;
-  border-radius: 999px;
+.main-header {
+  width: 100%;
   background: var(--white);
-  border: 1px solid var(--line);
-  color: var(--green);
-  font-family: inherit;
-  font-size: 13.5px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* 1. الشريط العلوي المضغوط */
+.compact-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mini-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-name {
+  font-family: 'Amiri', serif;
+  font-size: 20px;
   font-weight: 700;
-  cursor: pointer;
-  transition: all .2s;
-  white-space: nowrap;
-}
-.lang-btn:hover {
-  background: var(--green-light);
-  border-color: var(--green);
-}
-.lang-btn.active {
-  background: var(--green);
-  color: #fff;
-  border-color: var(--green);
-  box-shadow: 0 4px 12px rgba(31, 78, 61, .25);
+  color: var(--green);
 }
 
-/* ============================================================
-   🌙 زر الوضع الليلي السريع
-   ============================================================ */
-.lang-bar .theme-toggle {
-  padding: 7px 14px;
-  font-size: 15px;
-  line-height: 1;
-  min-width: auto;
-  transition: transform .2s, background .2s, color .2s;
-}
-.lang-bar .theme-toggle:hover {
-  transform: rotate(15deg) scale(1.05);
-}
-.lang-bar .theme-toggle:active {
-  transform: scale(.95);
-}
-
-body.dark .lang-bar .theme-toggle {
-  background: var(--green);
-  color: #fff;
-  border-color: var(--green);
-}
-
-/* ============================================================
-   📅 التاريخ + الساعة + الصلاة القادمة
-   ============================================================ */
-.datetime-line {
-  text-align: center;
-  padding: 6px 16px 16px;
-}
-
-.date-line {
-  text-align: center;
-  font-size: 13.5px;
+.brand-tagline-mini {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 11px;
   color: var(--ink-soft);
   font-weight: 500;
-  line-height: 1.6;
-  margin-bottom: 8px;
+}
+
+.top-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.icon-btn:hover {
+  background: var(--green-light);
+  transform: scale(1.05);
+}
+
+/* 2. قسم الترحيب (للفحة الرئيسية فقط) */
+.hero-greeting {
   display: flex;
   justify-content: center;
+  padding: 12px 16px 4px;
+}
+
+.greeting-badge {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  flex-wrap: wrap;
-}
-
-.date-line .dot {
-  color: var(--gold);
-  margin: 0 4px;
-  font-size: 9px;
-  vertical-align: middle;
-}
-
-/* عناصر داخلية (تاريخ/وقت) */
-.dt-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  white-space: nowrap;
-}
-
-.dt-ico {
-  font-size: 13px;
-  opacity: .75;
-  line-height: 1;
-}
-
-.clock-line {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 5px 16px;
-  font-family: 'Tajawal', monospace;
-  font-size: 14px;
-  font-weight: 700;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
   color: var(--green);
-  box-shadow: var(--shadow-sm);
-  flex-wrap: wrap;
-  justify-content: center;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 4px 10px rgba(201,162,39,0.2);
 }
 
-.clock-line .clock-ico { font-size: 14px; opacity: .7; line-height: 1; }
-
-#liveClock {
-  letter-spacing: 1px;
-  font-variant-numeric: tabular-nums;
-  direction: ltr;
-  display: inline-block;
+/* 3. شريط التنقل السريع */
+.primary-nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 8px 12px;
+  gap: 4px;
 }
 
-.clock-line .dot {
-  color: var(--gold);
-  font-size: 10px;
-  opacity: .7;
-}
-
-/* الصلاة القادمة */
-#nextPrayerWrap {
-  display: inline-flex;
+.nav-chip {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 5px;
-}
-
-#nextPrayerWrap[hidden] { display: none; }
-
-#nextPrayerTxt {
-  color: var(--ink);
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 12px;
   font-weight: 600;
-  font-size: 12.5px;
+  transition: all 0.2s;
+  flex: 1;
+  max-width: 80px;
 }
 
-body.dark #nextPrayerTxt {
-  color: #E8E8E8;
+.nav-chip .chip-ico {
+  font-size: 20px;
+  transition: transform 0.2s;
 }
 
-/* ============================================================
-   🧭 شريط التنقل
-   ============================================================ */
-.top-nav {
-  padding: 8px 0 16px;
-  border-bottom: 1px dashed var(--line);
-  margin-bottom: 14px;
+.nav-chip:hover {
+  background: var(--cream);
+  color: var(--green);
 }
 
-/* ============================================================
-   🎯 حالة الصفحات الداخلية
-   ============================================================ */
-.main-header.inner-page .greeting-block { display: none; }
-.main-header.inner-page .top-logo { padding: 12px 16px 0; }
-.main-header.inner-page .top-logo img { width: clamp(90px, 14vw, 130px); }
-
-.main-header.inner-page .title-block { padding: 4px 16px 0; }
-.main-header.inner-page .main-title { font-size: clamp(28px, 5vw, 40px); }
-.main-header.inner-page .brand-tagline { font-size: clamp(13px, 2.2vw, 16px); }
-.main-header.inner-page .title-divider { width: 70px; margin: 8px auto 0; }
-
-.main-header.inner-page .lang-bar { padding: 10px 16px 6px; gap: 10px; }
-.main-header.inner-page .lang-btn { padding: 6px 16px; font-size: 12.5px; }
-
-.main-header.inner-page .datetime-line { padding: 4px 16px 12px; }
-.main-header.inner-page .date-line { font-size: 12px; margin-bottom: 6px; }
-.main-header.inner-page .clock-line { padding: 3px 12px; font-size: 13px; }
-
-.main-header.inner-page .chips { padding: 4px 0 12px; }
-.main-header.inner-page .chip { padding: 8px 16px; font-size: 13px; }
-
-.main-header.inner-page .top-nav {
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+.nav-chip:hover .chip-ico {
+  transform: translateY(-2px);
 }
 
-/* ============================================================
-   🌙 الوضع الليلي
-   ============================================================ */
-body.dark .top-logo img {
-  mix-blend-mode: screen;
-  filter: contrast(1.15) saturate(1.3) brightness(1.2);
-}
-
-body.dark .main-title,
-body.dark .brand-tagline {
-  color: var(--gold);
-}
-
-body.dark .lang-btn {
-  background: var(--white);
-  color: var(--gold);
-  border-color: var(--line);
-}
-body.dark .lang-btn:hover {
-  background: rgba(255, 255, 255, .06);
-  border-color: var(--gold);
-}
-body.dark .lang-btn.active {
+.nav-chip.active {
   background: var(--green);
   color: #fff;
+  box-shadow: 0 4px 12px rgba(31, 78, 61, 0.3);
 }
 
-body.dark .clock-line {
-  background: var(--white);
-  border-color: var(--line);
-  color: var(--gold);
+/* 4. القائمة الجانبية المنسدلة (Drawer) */
+.nav-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
 }
 
-/* ============================================================
-   📱 استجابة كاملة
-   ============================================================ */
-
-/* ===== 📱 صغير جداً (320-359) ===== */
-@media (max-width: 359px) {
-  .greeting-block { padding: 10px 12px 0; }
-  .greeting-block .greeting-txt { font-size: 12px; padding: 5px 14px; }
-
-  .top-logo { padding: 14px 12px 0; }
-  .top-logo img { width: clamp(100px, 35vw, 140px); }
-
-  .main-title { font-size: 28px; }
-  .brand-tagline { font-size: 13px; }
-  .title-divider { width: 70px; margin: 8px auto 0; }
-
-  .lang-bar { padding: 10px 12px 6px; gap: 8px; }
-  .lang-btn { padding: 6px 14px; font-size: 11.5px; }
-  .lang-sep { font-size: 12px; }
-  .lang-bar .theme-toggle { padding: 6px 10px; font-size: 13px; }
-
-  .datetime-line { padding: 4px 12px 12px; }
-  .date-line { font-size: 10.5px; gap: 4px; }
-  .clock-line { padding: 3px 10px; font-size: 11.5px; gap: 6px; }
-  #nextPrayerTxt { font-size: 11px; }
-
-  .chips { padding: 3px 0 8px; gap: 5px; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
-  .chip { padding: 6px 10px; font-size: 11px; }
-  .top-nav { padding-bottom: 6px; margin-bottom: 6px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(70px, 20vw, 100px); }
-  .main-header.inner-page .main-title { font-size: 24px; }
-  .main-header.inner-page .brand-tagline { font-size: 12px; }
-  .main-header.inner-page .lang-btn { padding: 5px 12px; font-size: 11px; }
-  .main-header.inner-page .date-line { font-size: 10px; }
-  .main-header.inner-page .clock-line { padding: 2px 10px; font-size: 11px; }
-  .main-header.inner-page .chip { padding: 6px 10px; font-size: 11px; }
+.nav-drawer[hidden] {
+  display: none;
 }
 
-/* ===== 📱 Galaxy S23, iPhone SE/mini (360-389) ===== */
-@media (min-width: 360px) and (max-width: 389px) {
-  .greeting-block { padding: 12px 14px 0; }
-  .greeting-block .greeting-txt { font-size: 12.5px; padding: 5px 15px; }
-
-  .top-logo img { width: clamp(120px, 38vw, 160px); }
-
-  .main-title { font-size: 32px; }
-  .brand-tagline { font-size: 14.5px; }
-
-  .lang-btn { padding: 6px 16px; font-size: 12px; }
-  .lang-bar .theme-toggle { padding: 6px 12px; font-size: 14px; }
-
-  .date-line { font-size: 11.5px; gap: 4px; }
-  .clock-line { font-size: 12.5px; gap: 6px; }
-  #nextPrayerTxt { font-size: 11.5px; }
-
-  .chip { padding: 7px 12px; font-size: 12px; }
-  .chips { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
-
-  .main-header.inner-page .top-logo img { width: clamp(80px, 22vw, 110px); }
-  .main-header.inner-page .main-title { font-size: 26px; }
-  .main-header.inner-page .brand-tagline { font-size: 13px; }
-}
-
-/* ===== 📱 iPhone 12-15 (390-411) ===== */
-@media (min-width: 390px) and (max-width: 411px) {
-  .greeting-block .greeting-txt { font-size: 13px; padding: 6px 16px; }
-
-  .top-logo img { width: clamp(130px, 35vw, 170px); }
-
-  .main-title { font-size: 36px; }
-  .brand-tagline { font-size: 15px; }
-
-  .lang-btn { padding: 7px 18px; font-size: 12.5px; }
-  .lang-bar .theme-toggle { padding: 7px 13px; font-size: 14.5px; }
-
-  .chip { padding: 7px 13px; font-size: 12.5px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(85px, 20vw, 115px); }
-  .main-header.inner-page .main-title { font-size: 28px; }
-  .main-header.inner-page .brand-tagline { font-size: 14px; }
-}
-
-/* ===== 📱 iPhone Plus/Max, Samsung S24 (412-479) ===== */
-@media (min-width: 412px) and (max-width: 479px) {
-  .greeting-block .greeting-txt { font-size: 13.5px; }
-
-  .top-logo img { width: clamp(140px, 32vw, 180px); }
-
-  .main-title { font-size: 40px; }
-  .brand-tagline { font-size: 16px; }
-
-  .lang-btn { padding: 8px 20px; font-size: 13px; }
-  .lang-bar .theme-toggle { padding: 8px 14px; font-size: 15px; }
-  .chip { padding: 8px 15px; font-size: 13px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(90px, 18vw, 120px); }
-  .main-header.inner-page .main-title { font-size: 30px; }
-  .main-header.inner-page .brand-tagline { font-size: 14.5px; }
-}
-
-/* ===== 📱 جوال كبير (480-767) ===== */
-@media (min-width: 480px) and (max-width: 767px) {
-  .top-logo img { width: clamp(160px, 28vw, 220px); }
-
-  .main-title { font-size: 46px; }
-  .brand-tagline { font-size: 18px; }
-  .title-divider { width: 120px; }
-
-  .lang-bar { gap: 16px; }
-  .lang-btn { padding: 8px 22px; font-size: 14px; }
-  .lang-bar .theme-toggle { padding: 8px 16px; font-size: 15px; }
-
-  .date-line { font-size: 14px; }
-  .clock-line { font-size: 15px; }
-  .chip { padding: 8px 16px; font-size: 13.5px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(100px, 16vw, 140px); }
-  .main-header.inner-page .main-title { font-size: 34px; }
-  .main-header.inner-page .brand-tagline { font-size: 15.5px; }
-}
-
-/* ===== 📱 iPad mini (768-819) ===== */
-@media (min-width: 768px) and (max-width: 819px) {
-  .top-logo img { width: clamp(180px, 22vw, 240px); }
-
-  .main-title { font-size: 52px; }
-  .brand-tagline { font-size: 20px; }
-  .title-divider { width: 140px; }
-
-  .lang-btn { padding: 9px 24px; font-size: 15px; }
-  .lang-bar .theme-toggle { padding: 9px 18px; font-size: 16px; }
-  .chips { justify-content: center; flex-wrap: wrap; }
-  .chip { padding: 9px 18px; font-size: 13.5px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(110px, 14vw, 150px); }
-  .main-header.inner-page .main-title { font-size: 38px; }
-  .main-header.inner-page .brand-tagline { font-size: 16px; }
-}
-
-/* ===== 📱 iPad Air (820-1023) ===== */
-@media (min-width: 820px) and (max-width: 1023px) {
-  .top-logo img { width: clamp(200px, 20vw, 260px); }
-
-  .main-title { font-size: 56px; }
-  .brand-tagline { font-size: 22px; }
-
-  .lang-btn { padding: 10px 26px; font-size: 15.5px; }
-  .lang-bar .theme-toggle { padding: 10px 20px; font-size: 17px; }
-  .chips { justify-content: center; flex-wrap: wrap; }
-  .chip { padding: 10px 20px; font-size: 14px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(120px, 13vw, 160px); }
-  .main-header.inner-page .main-title { font-size: 42px; }
-  .main-header.inner-page .brand-tagline { font-size: 17px; }
-}
-
-/* ===== 💻 iPad Pro / لابتوب (1024-1279) ===== */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .top-logo img { width: clamp(220px, 18vw, 280px); }
-
-  .main-title { font-size: 60px; }
-  .brand-tagline { font-size: 24px; }
-
-  .lang-btn { padding: 10px 28px; font-size: 16px; }
-  .lang-bar .theme-toggle { padding: 10px 22px; font-size: 18px; }
-  .chip { padding: 10px 22px; font-size: 14.5px; }
-
-  .date-line { font-size: 14px; }
-  .clock-line { padding: 5px 16px; font-size: 15px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(130px, 12vw, 170px); }
-  .main-header.inner-page .main-title { font-size: 46px; }
-  .main-header.inner-page .brand-tagline { font-size: 18px; }
-}
-
-/* ===== 💻 لابتوب (1280-1439) ===== */
-@media (min-width: 1280px) and (max-width: 1439px) {
-  .top-logo img { width: clamp(240px, 17vw, 300px); }
-
-  .main-title { font-size: 64px; }
-  .brand-tagline { font-size: 26px; }
-
-  .lang-btn { padding: 11px 30px; font-size: 17px; }
-  .lang-bar .theme-toggle { padding: 11px 24px; font-size: 19px; }
-  .chip { padding: 10px 24px; font-size: 15px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(140px, 11vw, 180px); }
-  .main-header.inner-page .main-title { font-size: 50px; }
-  .main-header.inner-page .brand-tagline { font-size: 19px; }
-}
-
-/* ===== 🖥️ سطح مكتب (1440-1919) ===== */
-@media (min-width: 1440px) and (max-width: 1919px) {
-  .top-logo img { width: clamp(260px, 16vw, 320px); }
-
-  .main-title { font-size: 68px; }
-  .brand-tagline { font-size: 28px; }
-
-  .lang-btn { padding: 12px 32px; font-size: 18px; }
-  .lang-bar .theme-toggle { padding: 12px 26px; font-size: 20px; }
-  .chip { padding: 11px 26px; font-size: 15.5px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(150px, 10vw, 190px); }
-  .main-header.inner-page .main-title { font-size: 54px; }
-  .main-header.inner-page .brand-tagline { font-size: 20px; }
-}
-
-/* ===== 🖥️ شاشة كبيرة (1920+) ===== */
-@media (min-width: 1920px) {
-  .top-logo img { width: clamp(280px, 15vw, 360px); }
-
-  .main-title { font-size: 76px; }
-  .brand-tagline { font-size: 32px; }
-  .title-divider { width: 180px; }
-
-  .lang-btn { padding: 13px 36px; font-size: 19px; }
-  .lang-bar .theme-toggle { padding: 13px 28px; font-size: 21px; }
-  .chip { padding: 12px 28px; font-size: 16px; }
-
-  .main-header.inner-page .top-logo img { width: clamp(160px, 9vw, 210px); }
-  .main-header.inner-page .main-title { font-size: 60px; }
-  .main-header.inner-page .brand-tagline { font-size: 22px; }
-}
-
-/* ===== 📱 شاشات أفقية قصيرة ===== */
-@media (max-height: 500px) and (orientation: landscape) {
-  .greeting-block { display: none; }
-
-  .top-logo { padding: 8px 12px 0; }
-  .top-logo img { width: 80px; }
-
-  .title-block { padding: 4px 12px 0; }
-  .main-title { font-size: 26px; }
-  .brand-tagline { font-size: 13px; }
-  .title-divider { width: 60px; margin: 6px auto 0; }
-
-  .lang-bar { padding: 6px 12px 4px; gap: 10px; }
-  .lang-btn { padding: 5px 14px; font-size: 11.5px; }
-  .lang-bar .theme-toggle { padding: 5px 12px; font-size: 13px; }
-
-  .datetime-line { display: none; }
-
-  .chips { padding: 3px 0 6px; }
-  .main-header.inner-page .top-logo img { width: 60px; }
-  .main-header.inner-page .main-title { font-size: 20px; }
-  .main-header.inner-page .brand-tagline { font-size: 11px; }
-  .main-header.inner-page .title-divider { display: none; }
-}
-
-/* ============================================================
-   🎯 شريط التنقل العلوي — عرض كل الأقسام
-   ============================================================ */
-
-.top-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px 18px;
-  max-width: 1000px;
-  margin: 0 auto 14px;
-  border-bottom: 1px dashed var(--line, #EAE6DD);
-}
-
-.top-nav .chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  background: var(--white, #fff);
-  color: var(--ink, #2B2B2B);
-  border: 1.5px solid var(--line, #EAE6DD);
-  font-family: 'Tajawal', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: all .22s ease;
-  box-shadow: 0 1px 3px rgba(31,78,61,.04);
-}
-
-.top-nav .chip:hover {
-  border-color: var(--gold, #C9A227);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(201,162,39,.22);
-  background: var(--cream-2, #FBF8F1);
-}
-
-.top-nav .chip.active {
-  background: var(--green, #1F4E3D);
-  color: #fff;
-  border-color: var(--green, #1F4E3D);
-  box-shadow: 0 4px 14px rgba(31,78,61,.3);
-}
-
-/* تمييز أذكار الصباح/المساء */
-.top-nav .chip[data-period="morning"] {
-  background: linear-gradient(135deg, #FCEEC8, #F8DCA0);
-  border-color: #E4B94C;
-  color: #6B4A10;
-}
-.top-nav .chip[data-period="morning"]:hover {
-  background: linear-gradient(135deg, #F8DCA0, #E4B94C);
-  border-color: #A8871D;
-}
-.top-nav .chip[data-period="morning"].active {
-  background: linear-gradient(135deg, #E4B94C, #A8871D);
-  color: #fff;
-  border-color: #A8871D;
-}
-
-.top-nav .chip[data-period="evening"] {
-  background: linear-gradient(135deg, #D4E0F0, #B8CCE4);
-  border-color: #7A98BF;
-  color: #1F3A52;
-}
-.top-nav .chip[data-period="evening"]:hover {
-  background: linear-gradient(135deg, #B8CCE4, #7A98BF);
-  border-color: #4A6B92;
-}
-.top-nav .chip[data-period="evening"].active {
-  background: linear-gradient(135deg, #2C4A6B, #1F3A52);
-  color: #fff;
-  border-color: #1F3A52;
-}
-
-/* الوضع الليلي */
-body.dark .top-nav {
-  border-bottom-color: rgba(255,255,255,.08);
-}
-
-body.dark .top-nav .chip {
-  background: #1F2B26;
-  color: #E8E8E8;
-  border-color: rgba(255,255,255,.1);
-}
-
-body.dark .top-nav .chip:hover {
-  border-color: var(--gold, #C9A227);
-  background: #263A32;
-}
-
-body.dark .top-nav .chip.active {
-  background: var(--gold, #C9A227);
-  color: #1F4E3D;
-  border-color: var(--gold, #C9A227);
-}
-
-body.dark .top-nav .chip[data-period="morning"] {
-  background: linear-gradient(135deg, #4A3520, #6B4A28);
-  border-color: #A8871D;
-  color: #FCEEC8;
-}
-body.dark .top-nav .chip[data-period="morning"].active {
-  background: linear-gradient(135deg, #E4B94C, #A8871D);
-  color: #1A1410;
-}
-
-body.dark .top-nav .chip[data-period="evening"] {
-  background: linear-gradient(135deg, #1F2A3A, #2C3A52);
-  border-color: #4A6B92;
-  color: #D4E0F0;
-}
-body.dark .top-nav .chip[data-period="evening"].active {
-  background: linear-gradient(135deg, #2C4A6B, #4A6B92);
-  color: #fff;
-}
-
-/* الجوال — تمرير أفقي */
-@media (max-width: 700px) {
-  .top-nav {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    justify-content: flex-start;
-    padding: 10px 12px 14px;
-    gap: 6px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(201,162,39,.4) transparent;
-    -webkit-overflow-scrolling: touch;
-  }
-  .top-nav::-webkit-scrollbar {
-    height: 4px;
-  }
-  .top-nav::-webkit-scrollbar-thumb {
-    background: rgba(201,162,39,.4);
-    border-radius: 4px;
-  }
-  .top-nav .chip {
-    flex-shrink: 0;
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-}
-
-/* الصفحات الداخلية — تصغير المسافات */
-.main-header.inner-page .top-nav {
-  padding: 8px 16px 12px;
-  margin-bottom: 10px;
-}
-
-/* ============ إخفاء سطر الساعة ============ */
-.clock-line { display: none !important; }
-/* ============================================================
-   🕌 بطاقة مواقيت الصلاة المصغرة (مستوحاة من prayer.css)
-   ============================================================ */
-.mini-prayer-card {
-  background: linear-gradient(160deg, var(--green-2), var(--green));
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  margin-bottom: 16px;
-  color: #fff;
-  box-shadow: 0 12px 30px rgba(31, 78, 61, .28);
-  position: relative;
-  overflow: hidden;
-}
-.mini-prayer-card::before {
-  content: '';
+.drawer-backdrop {
   position: absolute;
-  top: -40px; left: -40px;
-  width: 150px; height: 150px;
-  background: radial-gradient(circle, rgba(201, 162, 39, .35), transparent 70%);
-  pointer-events: none;
-}
-.mpc-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 14px; position: relative; z-index: 1;
-}
-.mpc-loc { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; opacity: .9; }
-.mpc-settings { color: #fff; text-decoration: none; font-size: 16px; opacity: .8; transition: transform .3s; }
-.mpc-settings:hover { transform: rotate(45deg); opacity: 1; }
-
-.mpc-next { text-align: center; position: relative; z-index: 1; margin-bottom: 16px; }
-.mpc-label { font-size: 12px; opacity: .85; font-weight: 600; }
-.mpc-name { font-family: 'Amiri', serif; font-size: 28px; font-weight: 700; margin: 4px 0 12px; color: var(--gold-light); }
-
-.mpc-countdown {
-  display: flex; align-items: center; justify-content: center; gap: 4px;
-  padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, .2);
-}
-.mpc-countdown .cd-box {
-  background: rgba(255, 255, 255, .12); border-radius: 10px;
-  padding: 8px 10px; min-width: 50px; text-align: center;
-}
-.mpc-countdown .cd-num { display: block; font-size: 20px; font-weight: 900; font-variant-numeric: tabular-nums; }
-.mpc-countdown .cd-lbl { display: block; font-size: 10px; opacity: .8; margin-top: 2px; }
-.mpc-countdown .cd-sep { font-size: 20px; font-weight: 900; color: rgba(255, 255, 255, .5); padding: 0 2px; margin-top: -14px; }
-
-.mpc-times {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-  position: relative; z-index: 1;
-}
-.mpc-time-item {
-  background: rgba(255, 255, 255, .08); border-radius: 10px;
-  padding: 8px 4px; text-align: center; display: flex; flex-direction: column; gap: 4px;
-  transition: all .2s ease; border: 1px solid transparent;
-}
-.mpc-time-item.next {
-  background: var(--gold); color: var(--green); font-weight: 700;
-  box-shadow: 0 4px 12px rgba(201, 162, 39, .4); transform: scale(1.03); border-color: rgba(255,255,255,.3);
-}
-.mpc-time-item .mpc-name { font-size: 11px; opacity: .9; }
-.mpc-time-item .mpc-val { font-family: 'Amiri', serif; font-size: 15px; font-weight: 700; direction: ltr; }
-.mpc-loading { grid-column: 1 / -1; text-align: center; padding: 10px; opacity: .8; font-size: 13px; }
-
-/* الجوال */
-@media (max-width: 480px) {
-  .mini-prayer-card { padding: 14px; }
-  .mpc-name { font-size: 24px; }
-  .mpc-countdown .cd-box { min-width: 44px; padding: 6px 8px; }
-  .mpc-countdown .cd-num { font-size: 18px; }
-  .mpc-countdown .cd-lbl { font-size: 9px; }
-  .mpc-times { gap: 6px; }
-  .mpc-time-item .mpc-val { font-size: 14px; }
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
 }
 
-/* الوضع الليلي */
-body.dark .mini-prayer-card {
-  background: linear-gradient(160deg, #14201C, #0F1A15);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, .4);
+.drawer-content {
+  position: absolute;
+  top: 0;
+  left: 0; /* للغة العربية سيكون right: 0، لكننا نستخدم dir="rtl" لذا left هو الصحيح للظهور من اليسار أو العكس حسب التفضيل */
+  right: 0;
+  width: min(300px, 85vw);
+  height: 100%;
+  background: var(--white);
+  box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+  animation: slideIn 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
-body.dark .mpc-countdown .cd-box { background: rgba(255, 255, 255, .08); }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer-header h3 {
+  margin: 0;
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  color: var(--green);
+}
+
+.drawer-links {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.drawer-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.drawer-link:hover {
+  background: var(--cream);
+  color: var(--green);
+}
+
+.link-ico {
+  font-size: 20px;
+  width: 32px;
+  text-align: center;
+}
+
+/* 5. تعديلات الصفحات الداخلية */
+.main-header.inner-page .hero-greeting {
+  display: none;
+}
+
+/* 6. الوضع الليلي */
+body.dark .main-header {
+  background: #1F2B26;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+body.dark .compact-top-bar {
+  border-bottom-color: rgba(255,255,255,0.1);
+}
+body.dark .brand-name { color: var(--gold-light); }
+body.dark .brand-tagline-mini { color: #A8A8A8; }
+body.dark .icon-btn { background: rgba(255,255,255,0.05); color: #fff; }
+body.dark .icon-btn:hover { background: rgba(255,255,255,0.1); }
+body.dark .nav-chip { color: #A8A8A8; }
+body.dark .nav-chip:hover { background: rgba(255,255,255,0.05); color: var(--gold-light); }
+body.dark .drawer-content { background: #1F2B26; }
+body.dark .drawer-header { border-bottom-color: rgba(255,255,255,0.1); }
+body.dark .drawer-link { color: #E8E8E8; }
+body.dark .drawer-link:hover { background: rgba(255,255,255,0.05); color: var(--gold-light); }
+
+/* 7. التجاوب مع الشاشات الكبيرة */
+@media (min-width: 768px) {
+  .compact-top-bar { padding: 12px 32px; }
+  .mini-logo { width: 42px; height: 42px; }
+  .brand-name { font-size: 24px; }
+  .primary-nav { justify-content: center; gap: 16px; padding: 12px 32px; }
+  .nav-chip { flex-direction: row; max-width: none; padding: 8px 20px; font-size: 14px; }
+  .nav-chip .chip-ico { font-size: 18px; }
+}
