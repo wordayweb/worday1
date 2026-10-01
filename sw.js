@@ -1,12 +1,13 @@
 /* ============================================================
-   Service Worker — وِرْدِي PWA  (v2 — tolerant caching)
-   ⚠️ عند أي تعديل: غيّر CACHE_NAME أدناه
+   Service Worker — وِرْدِي PWA  (v3 — نظيف)
+   ⚠️ عند أي تعديل على JS/CSS: غيّر CACHE_NAME أدناه
    ============================================================ */
 
-const CACHE_NAME   = 'wirdi-v2610012700';
-const OFFLINE_URL  = './data/offline.html';
+const CACHE_NAME   = 'wirdi-v20261001-clean';
+const OFFLINE_URL  = './offline.html';
 
 const PRECACHE_URLS = [
+  /* صفحات HTML */
   './',
   './index.html',
   './more.html',
@@ -26,77 +27,82 @@ const PRECACHE_URLS = [
   './amin.html',
   './favorites.html',
   './settings.html',
-  './manifest.json',
-  './assets/css/style.css',
-  './assets/css/stats.css',
-  './assets/css/footer.css',
-  './assets/css/index.css',
-  './assets/css/header.css',
-  './assets/css/quran.css',
-  './assets/css/share-image.css',
-  './assets/css/notifications.css',
   './notifications.html',
   './stats.html',
+  './offline.html',
+  './manifest.json',
+
+  /* CSS — فقط الملفات الموجودة */
+  './assets/css/style.css',
+  './assets/css/header.css',
+  './assets/css/index.css',
+  './assets/css/quran.css',
   './assets/css/tafsir.css',
-  './assets/css/support.css',
   './assets/css/athkar.css',
   './assets/css/tasbih.css',
   './assets/css/prayer.css',
   './assets/css/prayer-settings.css',
+  './assets/css/zakat.css',
   './assets/css/calendar.css',
   './assets/css/amin.css',
   './assets/css/favorites.css',
   './assets/css/settings.css',
+  './assets/css/stats.css',
+  './assets/css/notifications.css',
+  './assets/css/support.css',
   './assets/css/streak.css',
   './assets/css/smart-adhkar.css',
   './assets/css/smart-adhkar-sky.css',
-  './assets/css/zakat.css',
+  './assets/css/share-image.css',
+  './assets/css/adhan.css',
   './assets/css/pwa.css',
+
+  /* JS — فقط الملفات الموجودة */
   './assets/js/app.js',
-  './assets/js/stats.js',
-  './assets/js/footer.js',
-  './assets/js/interactions.js',
-  './assets/js/index.js',
   './assets/js/header.js',
-  './assets/js/navbar.js',
   './assets/js/logo.js',
   './assets/js/seo.js',
   './assets/js/pwa.js',
   './assets/js/quran.js',
-  './assets/js/share-image.js',
-  './assets/js/notifications.js',
   './assets/js/surah.js',
   './assets/js/tafsir.js',
   './assets/js/support.js',
+  './assets/js/smart-adhkar.js',
+  './assets/js/adhan.js',
+  './assets/js/notifications.js',
+  './assets/js/index.js',
+  './assets/js/streak.js',
+  './assets/js/stats.js',
   './assets/js/athkar-core.js',
   './assets/js/athkar-data.js',
-  './assets/js/athkar-daily.js',
   './assets/js/athkar-morning.js',
   './assets/js/athkar-evening.js',
+  './assets/js/athkar-daily.js',
   './assets/js/prayer.js',
   './assets/js/prayer-settings.js',
   './assets/js/tasbih.js',
   './assets/js/zakat.js',
   './assets/js/calendar.js',
+  './assets/js/amin.js',
   './assets/js/favorites.js',
   './assets/js/settings.js',
-  './assets/js/streak.js',
+  './assets/js/share-image.js',
+
+  /* صور — فقط الملفات الموجودة */
   './assets/img/logo.png',
-  './assets/img/islamic-pattern.svg',
   './assets/img/icon-192.png',
   './assets/img/icon-512.png'
+  /* ⚠️ تم حذف islamic-bg.svg, wirdi-manuscript.svg, ... لأنها غير موجودة */
 ];
 
-/* ---------- install (متسامح: كل ملف منفرد) ---------- */
+/* ---------- install (متسامح) ---------- */
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       const failed = [];
       return Promise.all(
         PRECACHE_URLS.map((url) =>
-          cache.add(url).catch(() => {
-            failed.push(url);
-          })
+          cache.add(url).catch(() => { failed.push(url); })
         )
       ).then(() => {
         if (failed.length) {
@@ -129,7 +135,7 @@ self.addEventListener('fetch', (event) => {
 
   const accept = req.headers.get('accept') || '';
 
-  // صفحات HTML: Network-First مع احتياطي offline
+  // صفحات HTML: Network-First
   if (accept.includes('text/html')) {
     event.respondWith(
       fetch(req)
