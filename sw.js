@@ -3,7 +3,7 @@
    ⚠️ عند أي تعديل: غيّر CACHE_NAME أدناه
    ============================================================ */
 
-const CACHE_NAME = 'wirdi-v2609291432';
+const CACHE_NAME = 'wirdi-v2609291433';
 const OFFLINE_URL  = './offline.html';
 
 const PRECACHE_URLS = [
