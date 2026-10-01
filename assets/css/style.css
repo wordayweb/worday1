@@ -42,8 +42,8 @@ img { max-width: 100%; height: auto; display: block; }
 .app {
   width: 100%;
   min-height: 100vh;
-  background: var(--cream);
-  padding-bottom: calc(110px + var(--safe-bottom));
+  background: transparent;   /* ✅ الشفافية كي تظهر الخلفية */
+  padding-bottom: calc(24px + var(--safe-bottom));   /* ✅ خُفّض من 110px */
   padding-top: var(--safe-top);
   padding-left: max(clamp(16px, 4vw, 80px), var(--safe-left));
   padding-right: max(clamp(16px, 4vw, 80px), var(--safe-right));
@@ -336,35 +336,8 @@ img { max-width: 100%; height: auto; display: block; }
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
 }
-.sec-card {
-  position: relative;
-  height: 170px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  cursor: pointer;
-  text-decoration: none;
-  display: block;
-  transition: transform .2s, box-shadow .2s;
-}
-.sec-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.sec-card .bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
-.sec-card .overlay {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: 16px 14px 14px;
-  background: linear-gradient(to top, rgba(20, 55, 42, .95) 20%, rgba(20, 55, 42, .65) 60%, transparent 100%);
-  color: #fff;
-  text-align: center;
-}
-.sec-card .overlay h4 { font-family: 'Tajawal', sans-serif; font-size: 16px; font-weight: 700; }
-.sec-card .overlay .underline {
-  display: inline-block;
-  width: 40px; height: 2px;
-  background: var(--gold);
-  margin-top: 8px;
-  border-radius: 2px;
-}
+
+/* ✅ ملاحظة: أنماط .sec-card تُعرَّف بالكامل في index.css */
 
 /* ===== الهيدر الموحد ===== */
 .athkar-header {
@@ -511,7 +484,6 @@ body.dark {
   --line: #2A3630;
   --green-light: #1C3229;
 }
-body.dark .sec-card .overlay { background: linear-gradient(to top, rgba(0,0,0,.95) 20%, rgba(0,0,0,.6) 60%, transparent 100%); }
 body.dark .top-logo img { mix-blend-mode: screen; filter: contrast(1.15) saturate(1.3) brightness(1.2); }
 body.dark .clock-line { background: var(--white); border-color: var(--line); color: var(--gold); }
 body.dark .bottom-nav { background: var(--white); border-top-color: var(--line); }
@@ -521,24 +493,19 @@ body.dark .bn-item:hover { background: rgba(255, 255, 255, .04); }
    🌙 تحسينات إضافية للوضع الليلي
    ============================================================ */
 
-/* هالة الشعار — إزالة السواد */
 body.dark .top-logo img {
   filter: brightness(1.1) contrast(1.05)
           drop-shadow(0 6px 18px rgba(201, 162, 39, .35));
   background: transparent;
 }
 
-/* التاريخ والساعة — ألوان أوضح */
-body.dark .date-line {
-  color: #d4c08a;
-}
+body.dark .date-line { color: #d4c08a; }
 body.dark .clock-line {
   background: #1A241F;
   border-color: var(--line);
   color: var(--gold);
 }
 
-/* شرائح التنقل — أنعم على العين */
 body.dark .chip {
   background: #1A241F;
   border-color: var(--line);
@@ -554,7 +521,6 @@ body.dark .chip.active {
   border-color: var(--green);
 }
 
-/* البطاقات الداكنة */
 body.dark .card {
   background: #1A241F;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
@@ -562,7 +528,6 @@ body.dark .card {
 body.dark .card .info .lbl { color: var(--gold-light); }
 body.dark .card .info .val { color: var(--gold); }
 
-/* زر الوضع الليلي */
 body.dark .lang-bar .theme-toggle {
   background: rgba(201, 162, 39, .15);
   color: var(--gold);
@@ -572,7 +537,6 @@ body.dark .lang-bar .theme-toggle:hover {
   background: rgba(201, 162, 39, .25);
 }
 
-/* القوائم في «المزيد» */
 body.dark .menu-item {
   background: #1A241F;
   color: var(--ink);
@@ -586,7 +550,6 @@ body.dark .menu-section-title {
   border-bottom-color: var(--line);
 }
 
-/* الحقول في النماذج */
 body.dark input,
 body.dark select,
 body.dark textarea {
@@ -605,9 +568,8 @@ body.dark textarea:focus {
    📱 استجابة كاملة
    ============================================================ */
 
-/* 📱 صغير جداً (320-359) — iPhone SE قديم، Galaxy Fold */
 @media (max-width: 359px) {
-  .app { padding-left: 12px; padding-right: 12px; padding-bottom: calc(95px + var(--safe-bottom)); }
+  .app { padding-left: 12px; padding-right: 12px; padding-bottom: calc(20px + var(--safe-bottom)); }
   .title-bar h1 { font-size: 32px; }
   .title-bar { gap: 8px; }
   .lang-btn { padding: 6px 12px; font-size: 11px; }
@@ -617,8 +579,6 @@ body.dark textarea:focus {
   .chips { justify-content: flex-start; flex-wrap: nowrap; gap: 6px; padding: 4px 0 10px; }
   .chip { padding: 7px 12px; font-size: 11.5px; }
   .sections { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .sec-card { height: 120px; }
-  .sec-card .overlay h4 { font-size: 12px; }
   .card { padding: 14px; }
   .tasks { gap: 10px 6px; }
   .task { font-size: 12px; gap: 5px; }
@@ -639,15 +599,12 @@ body.dark textarea:focus {
   .athkar-header .nav-btn { width: 36px; height: 36px; font-size: 17px; }
 }
 
-/* 📱 Galaxy S23, iPhone SE/mini (360-389) */
 @media (min-width: 360px) and (max-width: 389px) {
   .app { padding-left: 14px; padding-right: 14px; }
   .title-bar h1 { font-size: 38px; }
   .top-logo img { width: clamp(180px, 52vw, 240px); }
   .chips { justify-content: flex-start; flex-wrap: nowrap; }
   .sections { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .sec-card { height: 140px; }
-  .sec-card .overlay h4 { font-size: 13.5px; }
   .card { padding: 16px; }
   .tasks { gap: 12px 8px; }
   .task { font-size: 13px; }
@@ -661,12 +618,10 @@ body.dark textarea:focus {
   .menu-item { padding: 13px 15px; font-size: 13.5px; }
 }
 
-/* 📱 iPhone 12-15, Xiaomi, Honor, Motorola Edge (390-411) */
 @media (min-width: 390px) and (max-width: 411px) {
   .title-bar h1 { font-size: 42px; }
   .top-logo img { width: clamp(200px, 50vw, 260px); }
   .sections { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .sec-card { height: 155px; }
   .card { padding: 18px 20px; }
   .tasks { gap: 14px 12px; }
   .task { font-size: 14.5px; }
@@ -677,13 +632,10 @@ body.dark textarea:focus {
   .bn-item .lbl { font-size: 10.5px; }
 }
 
-/* 📱 iPhone Plus/Max, Samsung S24/A54, Huawei, Moto G (412-479) */
 @media (min-width: 412px) and (max-width: 479px) {
   .title-bar h1 { font-size: 44px; }
   .top-logo img { width: clamp(210px, 48vw, 280px); }
   .sections { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .sec-card { height: 165px; }
-  .sec-card .overlay h4 { font-size: 15.5px; }
   .card { padding: 20px 22px; }
   .tasks { gap: 15px 13px; }
   .task { font-size: 15px; }
@@ -693,13 +645,10 @@ body.dark textarea:focus {
   .bn-item .ico { font-size: 21px; }
 }
 
-/* 📱 جوال كبير / Foldable (480-767) */
 @media (min-width: 480px) and (max-width: 767px) {
   .title-bar h1 { font-size: 48px; }
   .top-logo img { width: clamp(220px, 45vw, 320px); }
   .sections { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .sec-card { height: 175px; }
-  .sec-card .overlay h4 { font-size: 17px; }
   .card { padding: 22px 26px; }
   .tasks { gap: 16px 14px; }
   .task { font-size: 15.5px; }
@@ -708,14 +657,11 @@ body.dark textarea:focus {
   .bn-item .ico { font-size: 23px; }
 }
 
-/* 📱 iPad mini (768-819) */
 @media (min-width: 768px) and (max-width: 819px) {
   .title-bar h1 { font-size: 50px; }
   .top-logo img { width: clamp(240px, 32vw, 320px); }
   .chips { justify-content: center; flex-wrap: wrap; }
   .sections { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .sec-card { height: 190px; }
-  .sec-card .overlay h4 { font-size: 17px; }
   .card { padding: 22px 26px; }
   .task { font-size: 16px; }
   .task input { width: 26px; height: 26px; }
@@ -725,13 +671,11 @@ body.dark textarea:focus {
   .menu-list { max-width: 760px; margin: 0 auto; }
 }
 
-/* 📱 iPad Air (820-1023) */
 @media (min-width: 820px) and (max-width: 1023px) {
   .title-bar h1 { font-size: 52px; }
   .top-logo img { width: clamp(260px, 28vw, 340px); }
   .chips { justify-content: center; flex-wrap: wrap; }
   .sections { grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .sec-card { height: 200px; }
   .card { padding: 24px 28px; }
   .tasks { gap: 18px 16px; }
   .task { font-size: 16px; }
@@ -743,14 +687,11 @@ body.dark textarea:focus {
   .stat-val { font-size: 22px; }
 }
 
-/* 💻 iPad Pro 12.9 / لابتوب صغير (1024-1279) */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .app { padding-left: 50px; padding-right: 50px; }
   .title-bar h1 { font-size: 56px; }
   .top-logo img { width: clamp(280px, 22vw, 360px); }
   .sections { grid-template-columns: repeat(4, 1fr); gap: 18px; }
-  .sec-card { height: 210px; }
-  .sec-card .overlay h4 { font-size: 18px; }
   .card { padding: 24px 28px; }
   .tasks { gap: 18px 16px; }
   .task { font-size: 16px; }
@@ -758,43 +699,36 @@ body.dark textarea:focus {
   .bottom-nav { max-width: 720px; left: 50%; right: auto; transform: translateX(-50%); border-radius: 20px 20px 0 0; border: 1px solid var(--line); border-bottom: none; }
 }
 
-/* 💻 لابتوب (1280-1439) */
 @media (min-width: 1280px) and (max-width: 1439px) {
   .app { padding-left: 60px; padding-right: 60px; }
   .title-bar h1 { font-size: 58px; }
   .top-logo img { width: clamp(300px, 20vw, 380px); }
   .sections { grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .sec-card { height: 220px; }
   .card { padding: 26px 30px; }
   .menu-list { max-width: 950px; margin: 0 auto; }
   .bottom-nav { max-width: 800px; left: 50%; right: auto; transform: translateX(-50%); border-radius: 20px 20px 0 0; border: 1px solid var(--line); border-bottom: none; }
 }
 
-/* 🖥️ سطح مكتب (1440-1919) */
 @media (min-width: 1440px) and (max-width: 1919px) {
   .app { max-width: 1500px; padding-left: 80px; padding-right: 80px; }
   .title-bar h1 { font-size: 62px; }
   .top-logo img { width: clamp(320px, 18vw, 400px); }
   .sections { grid-template-columns: repeat(4, 1fr); gap: 22px; }
-  .sec-card { height: 230px; }
   .card { padding: 28px 32px; }
   .menu-list { max-width: 1000px; margin: 0 auto; }
   .bottom-nav { max-width: 900px; left: 50%; right: auto; transform: translateX(-50%); border-radius: 20px 20px 0 0; border: 1px solid var(--line); border-bottom: none; }
 }
 
-/* 🖥️ شاشة كبيرة (1920+) */
 @media (min-width: 1920px) {
   .app { max-width: 1700px; }
   .title-bar h1 { font-size: 68px; }
   .top-logo img { width: 420px; }
   .sections { grid-template-columns: repeat(4, 1fr); gap: 26px; }
-  .sec-card { height: 250px; }
   .card { padding: 30px 36px; }
   .menu-list { max-width: 1100px; margin: 0 auto; }
   .bottom-nav { max-width: 1000px; left: 50%; right: auto; transform: translateX(-50%); border-radius: 20px 20px 0 0; border: 1px solid var(--line); border-bottom: none; }
 }
 
-/* ===== شاشات أفقية قصيرة (Landscape phones) ===== */
 @media (max-height: 500px) and (orientation: landscape) {
   .top-logo { padding: 8px 16px 0; }
   .top-logo img { width: clamp(100px, 18vw, 150px); }
@@ -807,12 +741,10 @@ body.dark textarea:focus {
   .bn-item .lbl { font-size: 9px; }
 }
 
-/* ===== منع التمرير الأفقي على أي جهاز ===== */
 @media (max-width: 480px) {
   html, body { overflow-x: hidden; }
 }
 
-/* ===== أزرار اللمس (للأجهزة اللمسية) ===== */
 @media (hover: none) and (pointer: coarse) {
   .chip, .bn-item, .menu-item, .lang-btn, .athkar-header .nav-btn {
     min-height: 44px;
@@ -821,7 +753,6 @@ body.dark textarea:focus {
   .bn-item { min-height: 52px; }
 }
 
-/* ===== تقليل الحركة ===== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
@@ -830,12 +761,10 @@ body.dark textarea:focus {
   }
 }
 
-/* ===== دعم الشاشات العالية الدقة (Retina) ===== */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .top-logo img { image-rendering: -webkit-optimize-contrast; }
 }
 
-/* ============ sr-only — لقارئ الشاشة فقط ============ */
 .sr-only {
   position: absolute !important;
   width: 1px;
@@ -849,48 +778,42 @@ body.dark textarea:focus {
 }
 
 /* ============================================================
-   📜 الخلفية الإسلامية — المخطوطة العتيقة
-   3 طبقات: قاعدة كريمية + نجوم إسلامية + خط «وِرْدِي»
+   📜 الخلفية الإسلامية — نقوش CSS خالصة (بدون صور خارجية)
+   ✅ السبب: 4 ملفات SVG المذكورة سابقًا غير موجودة على السيرفر
    ============================================================ */
 
 html, body {
   background-color: #F0EADA;
-
-  /* الطبقة العليا: «وِرْدِي» بخط أميري  */
-  /* الطبقة الوسطى: النجوم الثمانية       */
-  /* الطبقة السفلى: اللون الكريمي          */
   background-image:
-    url('../img/wirdi-manuscript.svg'),
-    url('../img/islamic-bg.svg');
-  background-size: 240px 240px, 140px 140px;
-  background-repeat: repeat, repeat;
-  background-position: center top, center top;
+    /* نجمة إسلامية بسيطة: نقطتان متقاطعتان */
+    radial-gradient(circle at 50% 50%, rgba(201, 162, 39, 0.08) 1px, transparent 1.5px),
+    radial-gradient(circle at 0 0,     rgba(31, 78, 61, 0.04) 1px, transparent 1.5px);
+  background-size: 24px 24px, 24px 24px;
+  background-position: 0 0, 12px 12px;
   background-attachment: fixed, fixed;
 }
 
 body.dark {
   background-color: #0A1510 !important;
-
   background-image:
-    url('../img/wirdi-manuscript-dark.svg'),
-    url('../img/islamic-bg-dark.svg') !important;
-  background-size: 240px 240px, 140px 140px !important;
-  background-repeat: repeat, repeat !important;
-  background-position: center top, center top !important;
+    radial-gradient(circle at 50% 50%, rgba(228, 204, 110, 0.06) 1px, transparent 1.5px),
+    radial-gradient(circle at 0 0,     rgba(255, 255, 255, 0.03) 1px, transparent 1.5px) !important;
+  background-size: 24px 24px, 24px 24px !important;
+  background-position: 0 0, 12px 12px !important;
   background-attachment: fixed, fixed !important;
 }
 
-/* على الجوال — تصغير الطبقتين */
 @media (max-width: 700px) {
   html, body {
-    background-size: 180px 180px, 110px 110px;
+    background-size: 20px 20px, 20px 20px;
+    background-position: 0 0, 10px 10px;
   }
   body.dark {
-    background-size: 180px 180px, 110px 110px !important;
+    background-size: 20px 20px, 20px 20px !important;
+    background-position: 0 0, 10px 10px !important;
   }
 }
 
-/* الطبقات الشفافة فوق الخلفية */
 .app,
 .container,
 main {
@@ -901,7 +824,6 @@ main {
    ✨ تفاعلات وتحسينات بصرية
    ============================================================ */
 
-/* Scroll Reveal */
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(20px);
@@ -914,7 +836,6 @@ main {
   transform: translateY(0);
 }
 
-/* Ripple Effect */
 .wirdi-ripple {
   position: absolute;
   border-radius: 50%;
@@ -932,7 +853,6 @@ main {
   }
 }
 
-/* Header shrink on scroll */
 .main-header.scrolled {
   padding-top: 4px !important;
 }
@@ -955,7 +875,6 @@ main {
   display: none;
 }
 
-/* Smooth scroll */
 html { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
