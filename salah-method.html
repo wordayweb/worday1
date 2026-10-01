@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#1F4E3D" />
+<title>طريقة صلاة النبي ﷺ — وِرْدِي</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="stylesheet" href="assets/css/salah-method.css" />
+</head>
+<body>
+<div class="app">
+  <div data-header-target></div>
+  <header class="salah-header">
+    <button class="nav-btn" onclick="history.back()">↪</button>
+    <h2>طريقة صلاة النبي ﷺ</h2>
+    <button class="nav-btn" id="expandAllBtn">📖</button>
+  </header>
+  <div class="intro-card">
+    <div class="intro-icon">🕌</div>
+    <h3>صلّ كما رأيتني أصلّي</h3>
+    <p>دليلك الشامل لصلاة النبي محمد ﷺ بجميع أنواعها.</p>
+  </div>
+  <nav class="tabs-container">
+    <button class="tab-btn active" data-tab="fard">🕋 الفرائض</button>
+    <button class="tab-btn" data-tab="sunnah">🌟 السنن</button>
+    <button class="tab-btn" data-tab="qiyam">🌙 قيام الليل</button>
+    <button class="tab-btn" data-tab="istikhara">🤲 الاستخارة</button>
+    <button class="tab-btn" data-tab="eid">🎉 العيد</button>
+  </nav>
+  <main id="salahStepsContainer" class="salah-container"><div class="loading">⏳ جارٍ التحميل…</div></main>
+  <div class="related-section">
+    <h3>📿 أكمل صلاتك بأذكار ما بعدها</h3>
+    <a href="athkar-salah.html" class="related-link"><span>انتقال إلى أذكار الصلاة</span><span class="arrow">←</span></a>
+  </div>
+</div>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/salah-method.js"></script>
+</body>
+</html>
