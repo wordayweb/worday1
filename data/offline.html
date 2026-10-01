@@ -4,25 +4,28 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1F4E3D" />
+<meta name="robots" content="noindex, nofollow" />
 <title>لا يوجد اتصال — وِرْدِي</title>
 <link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="apple-touch-icon" href="assets/img/icon-192.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&display=swap" />
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/header.css" />
 <style>
   .offline-wrap {
-    min-height: 70vh;
+    min-height: 60vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 40px 20px;
+    padding: 40px 20px 20px;
   }
   .offline-icon {
-    font-size: clamp(80px, 20vw, 140px);
-    margin-bottom: 20px;
+    font-size: clamp(70px, 18vw, 120px);
+    margin-bottom: 18px;
     animation: offlinePulse 3s ease-in-out infinite;
     display: inline-block;
   }
@@ -37,13 +40,104 @@
     margin-bottom: 12px;
     font-weight: 700;
   }
-  .offline-wrap p {
+  .offline-wrap p.offline-desc {
     font-size: clamp(14px, 3vw, 17px);
     color: var(--ink-soft);
     line-height: 1.8;
     max-width: 500px;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
   }
+
+  /* ===== 🕌 بطاقة الصلاة القادمة ===== */
+  .offline-next-prayer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg,
+      rgba(31, 78, 61, .06) 0%,
+      rgba(201, 162, 39, .12) 100%);
+    border: 1px solid rgba(201, 162, 39, .3);
+    border-radius: 18px;
+    max-width: 480px;
+    width: 100%;
+    margin-bottom: 24px;
+    text-align: start;
+    box-shadow: 0 4px 16px rgba(31, 78, 61, .05);
+  }
+  .offline-next-prayer[hidden] { display: none; }
+
+  .offline-next-prayer .onp-icon {
+    font-size: 40px;
+    flex-shrink: 0;
+    animation: offlinePulse 3.5s ease-in-out infinite;
+    line-height: 1;
+  }
+
+  .offline-next-prayer .onp-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .offline-next-prayer .onp-label {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    letter-spacing: .3px;
+  }
+
+  .offline-next-prayer .onp-name {
+    font-family: 'Amiri', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.2;
+  }
+
+  .offline-next-prayer .onp-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    margin-top: 3px;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  .offline-next-prayer .onp-time {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .offline-next-prayer .onp-diff {
+    color: var(--green-2);
+    font-weight: 600;
+  }
+
+  .offline-next-prayer .onp-city {
+    color: var(--ink-soft);
+    font-size: 11.5px;
+    margin-top: 2px;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  body.dark .offline-next-prayer {
+    background: linear-gradient(135deg,
+      rgba(228, 204, 110, .08) 0%,
+      rgba(201, 162, 39, .05) 100%);
+    border-color: rgba(228, 204, 110, .25);
+  }
+  body.dark .offline-next-prayer .onp-name {
+    color: var(--gold-light);
+  }
+  body.dark .offline-next-prayer .onp-diff {
+    color: var(--gold-light);
+  }
+
+  /* ===== الآية ===== */
   .offline-ayah {
     font-family: 'Amiri', serif;
     font-size: clamp(16px, 4vw, 22px);
@@ -54,6 +148,14 @@
     border-right: 3px solid var(--gold);
     max-width: 500px;
     margin-bottom: 28px;
+  }
+
+  /* ===== الأزرار ===== */
+  .offline-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .offline-btn {
     display: inline-flex;
@@ -76,6 +178,17 @@
     transform: translateY(-2px);
     box-shadow: 0 12px 26px rgba(31, 78, 61, .35);
   }
+  .offline-btn.secondary {
+    background: var(--white);
+    color: var(--green);
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 12px rgba(31, 78, 61, .08);
+  }
+  body.dark .offline-btn.secondary {
+    background: var(--white);
+    color: var(--gold);
+    border-color: var(--line);
+  }
 </style>
 </head>
 <body>
@@ -86,21 +199,163 @@
   <section class="offline-wrap">
     <div class="offline-icon">📡</div>
     <h1>لا يوجد اتصال بالإنترنت</h1>
-    <p>يبدو أنك غير متصل بالإنترنت الآن. يمكنك الاستمرار في استخدام التطبيق — الملفات مخزّنة مسبقًا.</p>
+    <p class="offline-desc">يبدو أنك غير متصل بالإنترنت. يمكنك الاستمرار في استخدام التطبيق — الملفات مخزّنة مسبقًا.</p>
+
+    <!-- 🕌 بطاقة الصلاة القادمة (تُملأ من localStorage) -->
+    <div class="offline-next-prayer" id="nextPrayerCard" hidden>
+      <div class="onp-icon">🕌</div>
+      <div class="onp-info">
+        <span class="onp-label">الصلاة القادمة</span>
+        <span class="onp-name" id="onpName">—</span>
+        <div class="onp-meta">
+          <span class="onp-time" id="onpTime">—</span>
+          <span class="onp-diff" id="onpDiff">—</span>
+        </div>
+        <span class="onp-city" id="onpCity"></span>
+      </div>
+    </div>
+
     <div class="offline-ayah">
       ﴿ فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ ﴾
       <span style="display:block;font-size:13px;color:var(--ink-soft);margin-top:8px;">— البقرة: ١٥٢</span>
     </div>
-    <button class="offline-btn" onclick="location.reload()">
-      <span>🔄</span>
-      <span>حاول مجددًا</span>
-    </button>
+
+    <div class="offline-actions">
+      <button class="offline-btn" onclick="location.reload()">
+        <span>🔄</span>
+        <span>حاول مجددًا</span>
+      </button>
+      <a class="offline-btn secondary" href="index.html">
+        <span>🏠</span>
+        <span>الصفحة الرئيسية</span>
+      </a>
+    </div>
   </section>
 </div>
 
 <script src="assets/js/app.js"></script>
-<script src="assets/js/navbar.js"></script>
 <script src="assets/js/header.js"></script>
 <script src="assets/js/logo.js"></script>
+<script src="assets/js/adhan.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     🕌 الصلاة القادمة — من localStorage (يعمل بدون إنترنت)
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  const PC = 'wirdi_prayer_timings';
+  const CY = 'wirdi_prayer_city';
+
+  const ORDER = [
+    { key: 'Fajr',    ar: 'الفجر',   icon: '🌅' },
+    { key: 'Dhuhr',   ar: 'الظهر',   icon: '☀️' },
+    { key: 'Asr',     ar: 'العصر',   icon: '🌤️' },
+    { key: 'Maghrib', ar: 'المغرب',  icon: '🌆' },
+    { key: 'Isha',    ar: 'العشاء',  icon: '🌙' }
+  ];
+
+  function tAr(s) {
+    const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    return String(s).replace(/[0-9]/g, d => ar[d]);
+  }
+
+  function todayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+
+  function readCached() {
+    try {
+      const raw = localStorage.getItem(PC);
+      if (!raw) return null;
+      const o = JSON.parse(raw);
+      if (!o || o.date !== todayKey() || !o.timings) return null;
+      return o;
+    } catch (e) { return null; }
+  }
+
+  function readCity() {
+    try {
+      const raw = localStorage.getItem(CY);
+      if (!raw) return '';
+      const o = JSON.parse(raw);
+      return (o && o.name) ? o.name : '';
+    } catch (e) { return ''; }
+  }
+
+  function computeNext(timings) {
+    const now = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+
+    for (let i = 0; i < ORDER.length; i++) {
+      const p = ORDER[i];
+      const t = timings[p.key];
+      if (!t) continue;
+      const parts = String(t).split(':');
+      const tMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+      if (tMin > nowMin) {
+        return { name: p.ar, icon: p.icon, time: t, diff: tMin - nowMin };
+      }
+    }
+    // بعد العشاء → الفجر التالي
+    const fajr = timings.Fajr || '05:00';
+    const parts = String(fajr).split(':');
+    return {
+      name: 'الفجر', icon: '🌅', time: fajr,
+      diff: (24 * 60 - nowMin) + parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10)
+    };
+  }
+
+  function formatTime(t) {
+    if (!t) return '—';
+    const p = String(t).split(':');
+    const h = parseInt(p[0], 10);
+    const m = p[1] || '00';
+    const sf = h < 12 ? 'ص' : 'م';
+    const h12 = h % 12 || 12;
+    return tAr(h12) + ':' + tAr(m) + ' ' + sf;
+  }
+
+  function formatDiff(min) {
+    const h = Math.floor(min / 60);
+    const m = min % 60;
+    if (h > 0 && m > 0) return 'بعد ' + tAr(h) + ' س و' + tAr(m) + ' د';
+    if (h > 0) return 'بعد ' + tAr(h) + ' ساعة';
+    return 'بعد ' + tAr(m) + ' دقيقة';
+  }
+
+  function render() {
+    const card = document.getElementById('nextPrayerCard');
+    if (!card) return;
+
+    const cached = readCached();
+    if (!cached) {
+      card.hidden = true;
+      return;
+    }
+
+    const next = computeNext(cached.timings);
+    const city = cached.city || readCity();
+
+    document.getElementById('onpName').textContent = next.name;
+    document.getElementById('onpTime').textContent = formatTime(next.time);
+    document.getElementById('onpDiff').textContent = formatDiff(next.diff);
+    document.getElementById('onpCity').textContent = city ? '📍 ' + city : '';
+
+    card.hidden = false;
+  }
+
+  render();
+  setInterval(render, 60000);
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) render();
+  });
+})();
+</script>
+
 </body>
 </html>
