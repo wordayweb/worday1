@@ -2,43 +2,66 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1F4E3D" />
 <title>طريقة صلاة النبي ﷺ — وِرْدِي</title>
 <link rel="icon" type="image/png" href="assets/img/logo.png" />
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/header.css" />
 <link rel="stylesheet" href="assets/css/salah-method.css" />
+<link rel="manifest" href="manifest.json" />
 </head>
 <body>
+
+<div id="wirdi-live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
 <div class="app">
   <div data-header-target></div>
+
   <header class="salah-header">
-    <button class="nav-btn" onclick="history.back()">↪</button>
+    <button class="nav-btn" onclick="history.back()" aria-label="العودة">↪</button>
     <h2>طريقة صلاة النبي ﷺ</h2>
-    <button class="nav-btn" id="expandAllBtn">📖</button>
+    <button class="nav-btn" id="expandAllBtn" aria-label="توسيع الكل">📖</button>
   </header>
+
   <div class="intro-card">
     <div class="intro-icon">🕌</div>
     <h3>صلّ كما رأيتني أصلّي</h3>
-    <p>دليلك الشامل لصلاة النبي محمد ﷺ بجميع أنواعها.</p>
+    <p>دليلك الشامل لصلاة النبي محمد ﷺ بجميع أنواعها: الفرائض، السنن، النوافل، والصلوات الخاصة.</p>
+    <div class="intro-source">المصادر: صحيح البخاري · صحيح مسلم · صفة صلاة النبي للألباني · فقه السنة</div>
   </div>
-  <nav class="tabs-container">
-    <button class="tab-btn active" data-tab="fard">🕋 الفرائض</button>
-    <button class="tab-btn" data-tab="sunnah">🌟 السنن</button>
-    <button class="tab-btn" data-tab="qiyam">🌙 قيام الليل</button>
-    <button class="tab-btn" data-tab="istikhara">🤲 الاستخارة</button>
-    <button class="tab-btn" data-tab="eid">🎉 العيد</button>
+
+  <nav class="tabs-container" role="tablist" aria-label="أنواع الصلوات">
+    <button class="tab-btn active" data-tab="fard" role="tab" aria-selected="true">🕋 الفرائض</button>
+    <button class="tab-btn" data-tab="sunnah" role="tab" aria-selected="false"> السنن الرواتب</button>
+    <button class="tab-btn" data-tab="qiyam" role="tab" aria-selected="false"> قيام الليل</button>
+    <button class="tab-btn" data-tab="tarawih" role="tab" aria-selected="false">🌙 التراويح</button>
+    <button class="tab-btn" data-tab="istikhara" role="tab" aria-selected="false">🤲 الاستخارة</button>
+    <button class="tab-btn" data-tab="hajah" role="tab" aria-selected="false">🎯 الحاجة</button>
+    <button class="tab-btn" data-tab="eid" role="tab" aria-selected="false"> العيد</button>
+    <button class="tab-btn" data-tab="kusuf" role="tab" aria-selected="false">🌑 الكسوف</button>
+    <button class="tab-btn" data-tab="khawf" role="tab" aria-selected="false">⚔️ الخوف</button>
   </nav>
-  <main id="salahStepsContainer" class="salah-container"><div class="loading">⏳ جارٍ التحميل…</div></main>
+
+  <main id="salahStepsContainer" class="salah-container">
+    <div class="loading">⏳ جارٍ تحميل الخطوات…</div>
+  </main>
+
   <div class="related-section">
     <h3>📿 أكمل صلاتك بأذكار ما بعدها</h3>
-    <a href="athkar-salah.html" class="related-link"><span>انتقال إلى أذكار الصلاة</span><span class="arrow">←</span></a>
+    <a href="athkar-salah.html" class="related-link">
+      <span>انتقال إلى أذكار الصلاة</span>
+      <span class="arrow">←</span>
+    </a>
   </div>
 </div>
+
 <script src="assets/js/app.js"></script>
 <script src="assets/js/header.js"></script>
 <script src="assets/js/salah-method.js"></script>
+<script src="assets/js/pwa.js"></script>
 </body>
 </html>
