@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1F4E3D" />
+<title>زاد القلوب — وِرْدِي</title>
+<link rel="icon" type="image/png" href="assets/img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/header.css" />
+<link rel="manifest" href="manifest.json" />
+<style>
+  .coming-soon-container {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--cream-2) 0%, var(--white) 100%);
+  }
+  .coming-soon-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  .coming-soon-title {
+    font-family: 'Amiri', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--green);
+    margin: 0 0 12px;
+  }
+  .coming-soon-subtitle {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 18px;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 0 0 24px;
+    letter-spacing: 1px;
+  }
+  .coming-soon-desc {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    max-width: 500px;
+    margin: 0 auto 32px;
+  }
+  .coming-soon-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+  .feature-tag {
+    background: var(--cream);
+    border: 1px solid var(--gold);
+    color: var(--green);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .back-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.3s;
+    box-shadow: 0 4px 14px rgba(31, 78, 61, 0.25);
+  }
+  .back-home-btn:hover {
+    background: var(--gold);
+    color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(201, 162, 39, 0.35);
+  }
+  .progress-bar-container {
+    width: 100%;
+    max-width: 400px;
+    height: 8px;
+    background: var(--line);
+    border-radius: 99px;
+    overflow: hidden;
+    margin: 0 auto 12px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 15%;
+    background: linear-gradient(90deg, var(--green), var(--gold));
+    border-radius: 99px;
+    animation: progressPulse 2s ease-in-out infinite;
+  }
+  @keyframes progressPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .progress-label {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 32px;
+  }
+  body.dark .coming-soon-container {
+    background: linear-gradient(180deg, #14201C 0%, #1F2B26 100%);
+  }
+  body.dark .coming-soon-title { color: var(--gold-light); }
+  body.dark .coming-soon-desc { color: #A8A8A8; }
+  body.dark .feature-tag {
+    background: rgba(201, 162, 39, 0.1);
+    border-color: rgba(201, 162, 39, 0.3);
+    color: var(--gold-light);
+  }
+  body.dark .progress-bar-container { background: rgba(255,255,255,0.1); }
+</style>
+</head>
+<body>
+
+<div id="wirdi-live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div class="app">
+  <div data-header-target></div>
+
+  <div class="coming-soon-container">
+    <div class="coming-soon-icon">💖</div>
+    <h1 class="coming-soon-title">زاد القلوب</h1>
+    <div class="coming-soon-subtitle">قسم من مجتمع وِرْدِي</div>
+    
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill"></div>
+    </div>
+    <div class="progress-label">جارٍ التجهيز والإعداد...</div>
+
+    <p class="coming-soon-desc">
+      نعمل حالياً على تجهيز هذا القسم ليكون مجتمعاً إيمانياً متكاملاً يجمع القلوب على ذكر الله. 
+      ترقبوا التحديثات قريباً إن شاء الله.
+    </p>
+
+    <div class="coming-soon-features">
+      <span class="feature-tag">📖 قصص إيمانية</span>
+      <span class="feature-tag">💬 نقاشات هادفة</span>
+      <span class="feature-tag">🌟 تجارب روحانية</span>
+      <span class="feature-tag">🤝 تواصل إيماني</span>
+    </div>
+
+    <a href="index.html" class="back-home-btn">
+      <span>العودة للصفحة الرئيسية</span>
+      <span>→</span>
+    </a>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/pwa.js"></script>
+</body>
+</html>
