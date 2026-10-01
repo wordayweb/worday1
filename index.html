@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
@@ -37,36 +37,37 @@
 
   <div data-header-target></div>
 
+  <!-- ===== 🕌 بطاقة مواقيت الصلاة المصغرة (أعلى الصفحة) ===== -->
+  <section class="mini-prayer-card fade-in" aria-label="مواقيت الصلاة">
+    <div class="mpc-header">
+      <div class="mpc-loc">
+        <span class="mpc-ico">📍</span>
+        <span id="mpcCity">جاري تحديد الموقع...</span>
+      </div>
+      <a href="prayer-settings.html" class="mpc-settings" aria-label="إعدادات المواقيت">⚙️</a>
+    </div>
+    
+    <div class="mpc-next">
+      <span class="mpc-label">الصلاة القادمة</span>
+      <h3 class="mpc-name" id="mpcNextName">--</h3>
+      <div class="mpc-countdown" id="mpcCountdown">
+        <div class="cd-box"><span class="cd-num" id="cdH">٠٠</span><span class="cd-lbl">ساعة</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-box"><span class="cd-num" id="cdM">٠٠</span><span class="cd-lbl">دقيقة</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-box"><span class="cd-num" id="cdS">٠٠</span><span class="cd-lbl">ثانية</span></div>
+      </div>
+    </div>
+
+    <div class="mpc-times" id="mpcTimesList">
+      <div class="mpc-loading">⏳ جارٍ تحميل المواقيت…</div>
+    </div>
+  </section>
+
   <section id="smartHero" class="fade-in" aria-label="أذكار الوقت الحالي"></section>
 
   <!-- ===== لوحة اليوم الموحّدة ===== -->
   <section class="dashboard-unified fade-in" aria-label="لوحة اليوم">
-    <!-- ===== بطاقة مواقيت الصلاة المصغرة ===== -->
-    <section class="mini-prayer-card fade-in" aria-label="مواقيت الصلاة">
-      <div class="mpc-header">
-        <div class="mpc-loc">
-          <span class="mpc-ico">📍</span>
-          <span id="mpcCity">جاري تحديد الموقع...</span>
-        </div>
-        <a href="prayer-settings.html" class="mpc-settings" aria-label="إعدادات المواقيت">⚙️</a>
-      </div>
-      
-      <div class="mpc-next">
-        <span class="mpc-label">الصلاة القادمة</span>
-        <h3 class="mpc-name" id="mpcNextName">--</h3>
-        <div class="mpc-countdown" id="mpcCountdown">
-          <div class="cd-box"><span class="cd-num" id="cdH">٠٠</span><span class="cd-lbl">ساعة</span></div>
-          <span class="cd-sep">:</span>
-          <div class="cd-box"><span class="cd-num" id="cdM">٠٠</span><span class="cd-lbl">دقيقة</span></div>
-          <span class="cd-sep">:</span>
-          <div class="cd-box"><span class="cd-num" id="cdS">٠٠</span><span class="cd-lbl">ثانية</span></div>
-        </div>
-      </div>
-
-      <div class="mpc-times" id="mpcTimesList">
-        <div class="mpc-loading">⏳ جارٍ تحميل المواقيت…</div>
-      </div>
-    </section>
     <a href="quran.html" class="dash-resume-header" aria-label="اذهب إلى آخر ما قرأت">
       <span class="drh-ico" aria-hidden="true">📖</span>
       <div class="drh-info">
