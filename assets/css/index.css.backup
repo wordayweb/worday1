@@ -378,6 +378,7 @@ body.dark .group-line {
   isolation: isolate;
   overflow: hidden;
   background:
+    url('../img/islamic-bg.svg') center/180px no-repeat,
     linear-gradient(160deg, #FBF8F1 0%, #F5F1E8 100%) !important;
   border: 2px solid var(--gold, #C9A227) !important;
   border-radius: 18px !important;
