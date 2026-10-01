@@ -77,4 +77,110 @@
     setTimeout(wrapCardEmojis, 1500);
   };
 })();
+  /* ============================================================
+     🕌 بطاقة مواقيت الصلاة المصغرة (الصفحة الرئيسية)
+     ============================================================ */
+  function initMiniPrayerWidget() {
+    if (!isHome()) return;
+    
+    const PRAYER_NAMES = { 
+      Fajr: { ar: 'الفجر' }, Sunrise: { ar: 'الشروق' }, 
+      Dhuhr: { ar: 'الظهر' }, Asr: { ar: 'العصر' }, 
+      Maghrib: { ar: 'المغرب' }, Isha: { ar: 'العشاء' } 
+    };
+    const ORDERED = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+    
+    const toAr = (s) => String(s).replace(/[0-9]/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]);
+    const fmt12 = (t) => {
+      const [h, m] = t.split(':').map(Number);
+      return toAr(`${h % 12 || 12}:${String(m).padStart(2, '0')} ${h >= 12 ? 'م' : 'ص'}`);
+    };
+    const timeToMin = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
 
+    const settings = JSON.parse(localStorage.getItem('prayer_settings') || '{"lat":24.7136,"lng":46.6753,"cityName":"الرياض"}');
+    const cityEl = document.getElementById('mpcCity');
+    if (cityEl) cityEl.textContent = settings.cityName || 'موقعك';
+
+    const today = new Date();
+    const dateStr = `${String(today.getDate()).padStart(2,'0')}-${String(today.getMonth()+1).padStart(2,'0')}-${today.getFullYear()}`;
+    const cacheKey = `prayer_times_cache_${dateStr}_${(settings.lat||0).toFixed(3)}_${(settings.lng||0).toFixed(3)}`;
+    
+    let countdownTimer = null;
+
+    const renderWidget = (timings) => {
+      const list = document.getElementById('mpcTimesList');
+      if (!list) return;
+      list.innerHTML = '';
+      const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+      let nextKey = 'Fajr';
+      
+      ORDERED.forEach(key => {
+        if (timeToMin(timings[key]) > nowMin && nextKey === 'Fajr') nextKey = key;
+        const div = document.createElement('div');
+        div.className = `mpc-time-item ${key === nextKey ? 'next' : ''}`;
+        div.innerHTML = `<span class="mpc-name">${PRAYER_NAMES[key].ar}</span><span class="mpc-val">${fmt12(timings[key])}</span>`;
+        list.appendChild(div);
+      });
+
+      const nextNameEl = document.getElementById('mpcNextName');
+      if (nextNameEl) nextNameEl.textContent = PRAYER_NAMES[nextKey].ar;
+      
+      const tick = () => {
+        const now = new Date();
+        const nowSec = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+        let targetSec = 0, found = false;
+        for (const key of ORDERED) {
+          const [h, m] = timings[key].split(':').map(Number);
+          const tSec = h * 3600 + m * 60;
+          if (tSec > nowSec) { targetSec = tSec; found = true; break; }
+        }
+        if (!found) {
+          const [h, m] = timings.Fajr.split(':').map(Number);
+          targetSec = (24 * 3600) + h * 3600 + m * 60;
+        }
+        let diff = targetSec - nowSec;
+        if (diff < 0) diff = 0;
+        const hh = Math.floor(diff / 3600);
+        const mm = Math.floor((diff % 3600) / 60);
+        const ss = diff % 60;
+        
+        const hEl = document.getElementById('cdH');
+        const mEl = document.getElementById('cdM');
+        const sEl = document.getElementById('cdS');
+        if (hEl) hEl.textContent = toAr(String(hh).padStart(2, '0'));
+        if (mEl) mEl.textContent = toAr(String(mm).padStart(2, '0'));
+        if (sEl) sEl.textContent = toAr(String(ss).padStart(2, '0'));
+        
+        if (diff === 0) setTimeout(() => location.reload(), 2000);
+      };
+      
+      tick();
+      if (countdownTimer) clearInterval(countdownTimer);
+      countdownTimer = setInterval(tick, 1000);
+    };
+
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) {
+      try { renderWidget(JSON.parse(cached)); return; } catch(e) {}
+    }
+
+    // جلب جديد في حال عدم وجود كاش
+    const url = `https://api.aladhan.com/v1/timings/${dateStr}?latitude=${settings.lat}&longitude=${settings.lng}&method=4&school=0`;
+    fetch(url).then(res => res.json()).then(data => {
+      if (data.code === 200) {
+        const t = data.data.timings;
+        const result = { Fajr: t.Fajr, Sunrise: t.Sunrise, Dhuhr: t.Dhuhr, Asr: t.Asr, Maghrib: t.Maghrib, Isha: t.Isha };
+        localStorage.setItem(cacheKey, JSON.stringify(result));
+        renderWidget(result);
+      }
+    }).catch(() => {
+      if (cityEl) cityEl.textContent = 'تعذّر الجلب';
+    });
+  }
+
+  // دمج الاستدعاء مع دالة init الموجودة
+  const _origInitWidget = init;
+  init = function () {
+    _origInitWidget();
+    setTimeout(initMiniPrayerWidget, 800);
+  };
