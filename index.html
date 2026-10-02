@@ -294,22 +294,44 @@
   </div>
 
 </footer>
+<!-- ═══════════ الفوتر بعرض كامل ═══════════ -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="footer-logo">و</div>
+      <div class="footer-brand-text">
+        <span class="footer-title">وِرْدِي</span>
+        <span class="footer-tagline">رفيقك اليومي لذكر الله 🌿</span>
+      </div>
+    </div>
 
-<!-- زر العودة للأعلى -->
-<button type="button" id="wirdiTop" aria-label="العودة إلى الأعلى" style="position:fixed;bottom:24px;left:24px;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#E4CC6E,#C9A227);color:#1F4E3D;border:none;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(201,162,39,0.4);opacity:0;pointer-events:none;transition:opacity 0.3s;z-index:900;">↑</button>
+    <nav class="footer-nav">
+      <a href="quran.html">📖 القرآن</a>
+      <a href="athkar-morning.html">🌅 الصباح</a>
+      <a href="athkar-evening.html">🌆 المساء</a>
+      <a href="prayer.html">🕌 الصلاة</a>
+      <a href="tasbih.html">📿 التسبيح</a>
+      <a href="tafsir.html">📚 التفسير</a>
+      <a href="support.html">💚 ادعمنا</a>
+      <a href="contact.html"> تواصل</a>
+    </nav>
 
-<script>
-(function(){
-  var t=document.getElementById('wirdiTop');
-  if(t){
-    window.addEventListener('scroll',function(){
-      if(window.scrollY>400){t.style.opacity='1';t.style.pointerEvents='auto';}
-      else{t.style.opacity='0';t.style.pointerEvents='none';}
-    },{passive:true});
-    t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-  }
-})();
-</script>
+    <div class="footer-social">
+      <a href="https://twitter.com/wirdi" target="_blank" rel="noopener noreferrer" aria-label="تويتر">𝕏</a>
+      <a href="https://instagram.com/wirdi" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام">📷</a>
+      <a href="https://youtube.com/@wirdi" target="_blank" rel="noopener noreferrer" aria-label="يوتيوب">📺</a>
+      <a href="https://t.me/wirdi" target="_blank" rel="noopener noreferrer" aria-label="تيليجرام">✈️</a>
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© وِرْدِي — مجاني لله، بدون إعلانات</span>
+      <span class="footer-sep">•</span>
+      <span class="footer-supervisor">الإشراف: <strong>محمد العالم</strong></span>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
