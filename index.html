@@ -35,6 +35,7 @@
 
 <div class="app">
 
+  <!-- ===== الهيدر الموحّد (يتم حقنه ديناميكياً) ===== -->
   <div data-header-target></div>
 
   <!-- ===== أذكار الوقت الحالي ===== -->
@@ -43,7 +44,7 @@
   <!-- ===== لوحة اليوم الموحّدة ===== -->
   <section class="dashboard-unified fade-in" aria-label="لوحة اليوم">
     <a href="quran.html" class="dash-resume-header" aria-label="اذهب إلى آخر ما قرأت">
-      <span class="drh-ico" aria-hidden="true"></span>
+      <span class="drh-ico" aria-hidden="true">📖</span>
       <div class="drh-info">
         <span class="drh-lbl">واصل القراءة</span>
         <span class="drh-val" id="lastRead">سورة الجن — آية ٢٢</span>
@@ -59,7 +60,7 @@
             <span id="progressTxt">٠٪</span>
           </div>
           <div class="headline">
-            <h3 id="dayGreeting">🌙 ليلة هادئة بذكر الله</h3>
+            <h3 id="dayGreeting"> ليلة هادئة بذكر الله</h3>
             <p>🔥 أنت ملتزم لليوم الـ <span id="streak">١</span> على التوالي</p>
           </div>
         </div>
@@ -111,7 +112,7 @@
       </a>
       <a href="quran.html" class="sec-card fade-in">
         <div class="bg" style="background:linear-gradient(160deg,#4a6b52,#1a2b22);"></div>
-        <div class="overlay"><h4> القرآن الكريم</h4><div class="underline"></div></div>
+        <div class="overlay"><h4>📖 القرآن الكريم</h4><div class="underline"></div></div>
       </a>
       <a href="tasbih.html" class="sec-card fade-in">
         <div class="bg" style="background:linear-gradient(160deg,#3e6b58,#0f1c16);"></div>
@@ -133,7 +134,7 @@
       <a href="salah-method.html" class="sec-card amin-card fade-in wirdi-span-full" aria-label="طريقة صلاة النبي صلى الله عليه وسلم">
         <div class="bg" style="background:linear-gradient(140deg,#1F4E3D 0%,#0F2A20 60%,#071510 100%);"></div>
         <div class="overlay">
-          <h4>🕌 طريقة صلاة النبي  الشاملة</h4>
+          <h4>🕌 طريقة صلاة النبي ﷺ الشاملة</h4>
           <p class="amin-desc">دليلك التفاعلي المفصل للفرائض، السنن، التراويح، قيام الليل، والصلوات الخاصة</p>
           <div class="underline"></div>
         </div>
@@ -255,7 +256,7 @@
 <script src="assets/js/streak.js" defer></script>
 <script src="assets/js/index.js" defer></script>
 
-<!-- ═══════════ الفوتر (inline) ═══════════ -->
+<!-- ═══════════ الفوتر ═══════════ -->
 <footer style="margin-top:32px;background:linear-gradient(180deg,#1F4E3D 0%,#0F2A20 100%);color:#E8E8E8;font-family:'Tajawal',sans-serif;width:100%;padding:24px 20px 18px;text-align:center;box-sizing:border-box;display:block;">
 
   <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:10px;margin:0 auto 16px;width:auto;">
