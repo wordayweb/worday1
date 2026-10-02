@@ -536,3 +536,10 @@ html, body { margin: 0 !important; padding: 0 !important; min-height: auto !impo
   text-decoration: none !important;
   box-shadow: 0 6px 20px rgba(201, 162, 39, 0.35) !important;
 }
+
+/* إخفاء زر الموقع */
+.location-btn-hidden,
+.set-location-btn-hidden,
+#smartHero button {
+  display: none !important;
+}
