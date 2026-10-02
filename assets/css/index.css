@@ -1251,3 +1251,339 @@ html, body {
 .sec-card .overlay {
   gap: 8px !important;
 }
+/* ============================================================
+    لوحة المتابعة المدمجة داخل بطاقة الأذكار
+   ============================================================ */
+
+/* الفاصل الذهبي بين الأذكار ولوحة المتابعة */
+.smart-hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px 8px;
+  margin-top: 8px;
+}
+
+.smart-hero-divider .divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.4), transparent);
+}
+
+.smart-hero-divider .divider-text {
+  font-family: 'Amiri', serif;
+  font-size: 14px;
+  color: #F5E5A0;
+  font-weight: 700;
+  white-space: nowrap;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* لوحة المتابعة المدمجة - خلفية شفافة */
+.dashboard-embedded {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 8px 16px 16px !important;
+  max-width: 100% !important;
+}
+
+/* تغيير ألوان بطاقة الالتزام للخلفية الداكنة */
+.dashboard-embedded .dash-resume-header {
+  background: rgba(201, 162, 39, 0.08) !important;
+  border-bottom-color: rgba(201, 162, 39, 0.2) !important;
+}
+
+.dashboard-embedded .dash-resume-header:hover {
+  background: rgba(201, 162, 39, 0.14) !important;
+}
+
+.dashboard-embedded .drh-lbl {
+  color: #A8C4B8 !important;
+}
+
+.dashboard-embedded .drh-val {
+  color: #F5E5A0 !important;
+}
+
+.dashboard-embedded .drh-btn {
+  background: var(--gold, #C9A227) !important;
+  color: #0F2A20 !important;
+}
+
+/* تغيير ألوان المهام */
+.dashboard-embedded .task {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(201, 162, 39, 0.2) !important;
+  color: #E8E8E8 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  transition: all 0.2s !important;
+}
+
+.dashboard-embedded .task:hover {
+  background: rgba(201, 162, 39, 0.12) !important;
+  border-color: rgba(201, 162, 39, 0.4) !important;
+}
+
+.dashboard-embedded .task input[type="checkbox"] {
+  accent-color: var(--gold, #C9A227) !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.dashboard-embedded .task span {
+  color: #E8E8E8 !important;
+  font-size: 13px !important;
+}
+
+/* خط الفاصل داخل البطاقة */
+.dashboard-embedded .dash-hr {
+  background: linear-gradient(to right, transparent, rgba(201, 162, 39, 0.3), transparent) !important;
+}
+
+.dashboard-embedded .dash-divider {
+  background: linear-gradient(to bottom, transparent, rgba(201, 162, 39, 0.3), transparent) !important;
+}
+
+/* هدف اليوم */
+.dashboard-embedded .goal-row {
+  background: rgba(201, 162, 39, 0.08) !important;
+  border: 1px dashed rgba(201, 162, 39, 0.3) !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  color: #E8E8E8 !important;
+}
+
+.dashboard-embedded .goal-row:hover {
+  background: rgba(201, 162, 39, 0.14) !important;
+  border-color: rgba(201, 162, 39, 0.5) !important;
+}
+
+.dashboard-embedded .goal-row .plus {
+  color: var(--gold, #C9A227) !important;
+  font-size: 20px !important;
+}
+
+.dashboard-embedded .goal-row .txt {
+  color: #D4E0DC !important;
+  font-size: 13px !important;
+}
+
+/* إخفاء لوحة المتابعة المنفصلة */
+.dashboard-unified:not(.dashboard-embedded):not(#embeddedTracker) {
+  display: none !important;
+}
+
+/* إخفاء سلسلة الأيام */
+#streakSlot,
+.streak-card,
+.streak-container {
+  display: none !important;
+}
+
+/* ===== التجاوب ===== */
+@media (max-width: 700px) {
+  .dashboard-embedded {
+    padding: 6px 12px 12px !important;
+  }
+  
+  .dashboard-embedded .task {
+    padding: 6px 10px !important;
+  }
+  
+  .dashboard-embedded .task span {
+    font-size: 12px !important;
+  }
+  
+  .smart-hero-divider .divider-text {
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-embedded {
+    padding: 4px 10px 10px !important;
+  }
+  
+  .smart-hero-divider {
+    padding: 12px 14px 6px;
+  }
+  
+  .smart-hero-divider .divider-text {
+    font-size: 11px !important;
+  }
+}
+/* ============================================================
+   🔧 إصلاحات لوحة المتابعة المدمجة - تحديث شامل
+   ============================================================ */
+
+/* جعل لوحة المتابعة تندمج مع الخلفية الداكنة */
+.dashboard-embedded .dash-panel-tracker {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(201, 162, 39, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* إصلاح ألوان العناوين */
+.dashboard-embedded .headline h3 {
+  color: #F5E5A0 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  margin: 0 0 4px 0 !important;
+}
+
+.dashboard-embedded .headline p {
+  color: #A8C4B8 !important;
+  font-size: 13px !important;
+  margin: 0 !important;
+}
+
+/* إصلاح عرض نصوص المهام - مهم جداً */
+.dashboard-embedded .tasks {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+  margin: 12px 0 !important;
+}
+
+.dashboard-embedded .task {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(201, 162, 39, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  color: #E8E8E8 !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+.dashboard-embedded .task:hover {
+  background: rgba(201, 162, 39, 0.12) !important;
+  border-color: rgba(201, 162, 39, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+.dashboard-embedded .task span {
+  color: #E8E8E8 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  display: block !important;
+}
+
+.dashboard-embedded .task input[type="checkbox"] {
+  accent-color: #C9A227 !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+}
+
+/* إصلاح حلقة التقدم */
+.dashboard-embedded .progress-ring {
+  background: rgba(201, 162, 39, 0.15) !important;
+  border: 2px solid rgba(201, 162, 39, 0.4) !important;
+  color: #F5E5A0 !important;
+  width: 50px !important;
+  height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+#progressTxt {
+  color: #F5E5A0 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+}
+
+/* إصلاح هدف اليوم */
+.dashboard-embedded .goal-row {
+  background: rgba(201, 162, 39, 0.08) !important;
+  border: 1px dashed rgba(201, 162, 39, 0.3) !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  color: #D4E0DC !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+.dashboard-embedded .goal-row:hover {
+  background: rgba(201, 162, 39, 0.14) !important;
+  border-color: rgba(201, 162, 39, 0.5) !important;
+}
+
+.dashboard-embedded .goal-row .plus {
+  color: #C9A227 !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+}
+
+.dashboard-embedded .goal-row .txt {
+  color: #D4E0DC !important;
+  font-size: 13px !important;
+  flex: 1 !important;
+}
+
+.dashboard-embedded .goal-row .sq {
+  width: 12px !important;
+  height: 12px !important;
+  background: rgba(201, 162, 39, 0.3) !important;
+  border-radius: 3px !important;
+}
+
+/* إصلاح الخط الفاصل */
+.dashboard-embedded .dash-hr {
+  background: linear-gradient(to right, transparent, rgba(201, 162, 39, 0.3), transparent) !important;
+  margin: 12px 0 !important;
+}
+
+.dashboard-embedded .dash-divider {
+  background: linear-gradient(to bottom, transparent, rgba(201, 162, 39, 0.3), transparent) !important;
+}
+
+/* إصلاح tracker-head */
+.dashboard-embedded .tracker-head {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 12px !important;
+}
+
+.dashboard-embedded .headline {
+  flex: 1 !important;
+}
+
+/* إخفاء سلسلة الأيام */
+#streakSlot,
+.streak-card,
+.streak-container,
+.streak-widget {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+/* ===== نقل زر تحديد الموقع للأسفل ===== */
+#smartHero .location-btn,
+#smartHero button[onclick*="location"],
+#smartHero .set-location-btn {
+  order: 10 !important;
+  margin-top: 16px !important;
+  margin-bottom: 8px !important;
+  align-self: center !important;
+  display: block !important;
+}
