@@ -425,3 +425,38 @@ body.dark .site-footer { background: linear-gradient(180deg, #0F1A15 0%, #070D0A
 html, body { margin: 0 !important; padding: 0 !important; min-height: auto !important; }
 .app { min-height: auto !important; padding-bottom: 0 !important; }
 [hidden] { display: none !important; }
+
+/* ===== إخفاء زر الموقع + تحويل رابط المتابعة لزر ذهبي ===== */
+#smartHero .location-btn,
+#smartHero button[onclick*="location"],
+#smartHero .set-location-btn,
+#smartHero .location-link,
+#smartHero .location-text {
+  display: none !important;
+}
+
+#smartHero a[href*="athkar"],
+#smartHero .smart-continue-btn,
+#smartHero .continue-link {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px !important;
+  background: linear-gradient(135deg, #E4CC6E, #C9A227) !important;
+  color: #1F4E3D !important;
+  border-radius: 999px !important;
+  font-family: 'Tajawal', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  box-shadow: 0 6px 20px rgba(201, 162, 39, 0.35) !important;
+  transition: all 0.25s !important;
+  border: none !important;
+}
+
+#smartHero a[href*="athkar"]:hover,
+#smartHero .smart-continue-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 28px rgba(201, 162, 39, 0.5) !important;
+}
