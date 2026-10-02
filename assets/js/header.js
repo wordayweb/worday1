@@ -8,17 +8,28 @@
 
   const ALL_NAV_ITEMS = [
     { href: 'index.html',          icon: '🏠', label: 'الرئيسية',     key: 'home' },
-    { href: 'quran.html',          icon: '', label: 'القرآن الكريم', key: 'quran' },
+    { href: 'quran.html',          icon: '📖', label: 'القرآن الكريم', key: 'quran' },
     { href: 'athkar-morning.html', icon: '🌅', label: 'أذكار الصباح', key: 'morning' },
-    { href: 'athkar-evening.html', icon: '', label: 'أذكار المساء', key: 'evening' },
+    { href: 'athkar-evening.html', icon: '🌆', label: 'أذكار المساء', key: 'evening' },
     { href: 'prayer.html',         icon: '', label: 'مواقيت الصلاة', key: 'prayer' },
     { href: 'tasbih.html',         icon: '📿', label: 'التسبيح',      key: 'tasbih' },
     { href: 'salah-method.html',   icon: '🤲', label: 'طريقة الصلاة', key: 'salah' },
     { href: 'tafsir.html',         icon: '📚', label: 'التفسير',      key: 'tafsir' },
     { href: 'calendar.html',       icon: '📅', label: 'التقويم',      key: 'calendar' },
-    { href: 'zakat.html',          icon: '', label: 'الزكاة',       key: 'zakat' },
+    { href: 'zakat.html',          icon: '💰', label: 'الزكاة',      key: 'zakat' },
     { href: 'zad-alquloob.html',   icon: '💖', label: 'زاد القلوب',  key: 'zad' },
     { href: 'support.html',        icon: '💚', label: 'ادعم وِرْدِي', key: 'support' },
+  ];
+
+  const NAV_BAR_ITEMS = [
+    { href: 'index.html',          label: 'الرئيسية',     key: 'home' },
+    { href: 'quran.html',          label: 'القرآن',       key: 'quran' },
+    { href: 'athkar-morning.html', label: 'أذكار الصباح', key: 'morning' },
+    { href: 'athkar-evening.html', label: 'أذكار المساء', key: 'evening' },
+    { href: 'prayer.html',         label: 'مواقيت الصلاة', key: 'prayer' },
+    { href: 'tasbih.html',         label: 'التسبيح',      key: 'tasbih' },
+    { href: 'salah-method.html',   label: 'طريقة الصلاة', key: 'salah' },
+    { href: 'tafsir.html',         label: 'التفسير',      key: 'tafsir' },
   ];
 
   function getCurrentKey() {
@@ -40,14 +51,14 @@
 
   function getTimeGreeting() {
     const h = new Date().getHours();
-    if (h >= 4 && h < 12)  return { text: 'صباح مبارك',  icon: '' };
-    if (h >= 12 && h < 17) return { text: 'نهار طيب',    icon: '️' };
+    if (h >= 4 && h < 12)  return { text: 'صباح مبارك',  icon: '🌅' };
+    if (h >= 12 && h < 17) return { text: 'نهار طيب',    icon: '☀️' };
     if (h >= 17 && h < 21) return { text: 'مساء مبارك',  icon: '🌆' };
     return { text: 'ليلة هادئة', icon: '🌙' };
   }
 
   function toAr(s) {
-    return String(s).replace(/[0-9]/g, d => ['٠','١','','٣','٤','٥','','٧','٨','٩'][d]);
+    return String(s).replace(/[0-9]/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]);
   }
 
   function buildMobileMenu() {
@@ -58,6 +69,14 @@
                 <span class="link-ico">${item.icon}</span>
                 <span class="link-text">${item.label}</span>
               </a>`;
+    }).join('');
+  }
+
+  function buildNavBar() {
+    const current = getCurrentKey();
+    return NAV_BAR_ITEMS.map(item => {
+      const active = item.key === current ? 'active' : '';
+      return `<a href="${item.href}" class="nav-bar-link ${active}">${item.label}</a>`;
     }).join('');
   }
 
@@ -98,7 +117,7 @@
           </div>
           <div class="info-separator">•</div>
           <div class="info-item">
-            <span class="info-ico"></span>
+            <span class="info-ico">🕌</span>
             <span id="hijriDate" class="info-text">...</span>
           </div>
           <div class="info-separator">•</div>
@@ -112,6 +131,11 @@
             <span id="nextPrayerTxt" class="info-text">جاري التحميل...</span>
           </div>
         </div>
+
+        <!-- شريط التنقل الرئيسي -->
+        <nav class="nav-bar" role="navigation" aria-label="التنقل الرئيسي">
+          ${buildNavBar()}
+        </nav>
 
         <!-- القائمة المنزلاقة -->
         <div class="mobile-menu-overlay" id="mobileMenu" hidden>

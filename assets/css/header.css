@@ -420,4 +420,109 @@ body.dark .mobile-nav-link:hover {
 body.dark .mobile-nav-link.active {
   background: linear-gradient(135deg, var(--gold), #a8871d);
   color: #0F2A20;
+}/* ============================================================
+   ✨ شريط التنقل الرئيسي
+   ============================================================ */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--white);
+  border-top: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-bar::-webkit-scrollbar {
+  height: 4px;
+}
+
+.nav-bar::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 4px;
+}
+
+.nav-bar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nav-bar-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s;
+  border: 1.5px solid transparent;
+  flex-shrink: 0;
+}
+
+.nav-bar-link:hover {
+  background: var(--cream);
+  border-color: var(--gold);
+  color: var(--green);
+  transform: translateY(-2px);
+}
+
+.nav-bar-link.active {
+  background: linear-gradient(135deg, var(--green), var(--green-2));
+  color: #fff;
+  border-color: var(--green);
+  box-shadow: 0 4px 12px rgba(31, 78, 61, 0.25);
+  font-weight: 700;
+}
+
+/* الوضع الليلي */
+body.dark .nav-bar {
+  background: #1F2B26;
+  border-top-color: rgba(255,255,255,0.1);
+}
+
+body.dark .nav-bar-link {
+  color: #E8E8E8;
+}
+
+body.dark .nav-bar-link:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+body.dark .nav-bar-link.active {
+  background: linear-gradient(135deg, var(--gold), #a8871d);
+  color: #0F2A20;
+  border-color: var(--gold);
+}
+
+/* التجاوب مع الجوال */
+@media (max-width: 767px) {
+  .nav-bar {
+    padding: 10px 14px;
+    gap: 6px;
+  }
+  
+  .nav-bar-link {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-bar {
+    padding: 8px 12px;
+    gap: 5px;
+  }
+  
+  .nav-bar-link {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
 }
