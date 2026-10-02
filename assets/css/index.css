@@ -506,3 +506,33 @@ html, body { margin: 0 !important; padding: 0 !important; min-height: auto !impo
   text-decoration: none !important;
   box-shadow: 0 6px 20px rgba(201, 162, 39, 0.35) !important;
 }
+
+/* إخفاء زر تحديد الموقع نهائياً */
+#smartHero button,
+#smartHero .location-btn,
+#smartHero .set-location-btn,
+#smartHero [onclick*="location"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* إظهار زر المتابعة فقط */
+#smartHero a[href*="athkar"] {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px !important;
+  background: linear-gradient(135deg, #E4CC6E, #C9A227) !important;
+  color: #1F4E3D !important;
+  border-radius: 999px !important;
+  font-family: 'Tajawal', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  box-shadow: 0 6px 20px rgba(201, 162, 39, 0.35) !important;
+}
