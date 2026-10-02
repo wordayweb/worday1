@@ -2172,3 +2172,242 @@ html, body {
   .hero-badge { font-size: 12px; padding: 7px 14px; }
   .action-btn { font-size: 13px; padding: 11px 18px; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   🎨 بطاقة الأذكار - تصميم نظيف وشفاف
+   ═══════════════════════════════════════════════════════════ */
+
+/* خلفية شفافة ناعمة بدلاً من التدرج القوي */
+.hero-dhikr-card {
+  position: relative;
+  max-width: 900px;
+  margin: 20px auto;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(251, 248, 241, 0.6) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(201, 162, 39, 0.25);
+  box-shadow: 0 8px 32px rgba(31, 78, 61, 0.08);
+  padding: 32px 28px;
+  min-height: auto;
+}
+
+/* إخفاء الخلفية المتحركة القوية */
+.hero-bg-animation {
+  display: none !important;
+}
+
+/* ترتيب المحتوى عمودياً */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* الشارة العلوية */
+.hero-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 18px;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.25);
+  border-radius: 999px;
+  font-family: 'Tajawal', sans-serif;
+  color: #1F4E3D;
+  font-size: 14px;
+  font-weight: 600;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.badge-icon { font-size: 16px; }
+
+.badge-counter {
+  background: rgba(201, 162, 39, 0.2);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #8B6914;
+}
+
+/* عرض الذكر */
+.dhikr-display {
+  text-align: center;
+  padding: 16px 10px 24px;
+  width: 100%;
+}
+
+.dhikr-number {
+  font-family: 'Amiri', serif;
+  font-size: 16px;
+  color: rgba(201, 162, 39, 0.7);
+  margin-bottom: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.dhikr-text {
+  font-family: 'Amiri', serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  line-height: 1.9;
+  color: #1F4E3D;
+  margin: 0;
+  padding: 0 10px;
+  font-weight: 400;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.dhikr-text.fade-out { opacity: 0; transform: translateY(-10px); }
+.dhikr-text.fade-in { opacity: 1; transform: translateY(0); }
+
+/* شريط التقدم */
+.hero-progress {
+  margin: 0 auto 20px;
+  max-width: 280px;
+  width: 100%;
+}
+
+.progress-bar {
+  height: 4px;
+  background: rgba(201, 162, 39, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #E4CC6E, #C9A227);
+  border-radius: 999px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* أزرار التنقل */
+.hero-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0;
+}
+
+.control-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.25);
+  color: #1F4E3D;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+}
+
+.control-btn:hover {
+  background: rgba(201, 162, 39, 0.2);
+  border-color: rgba(201, 162, 39, 0.5);
+  transform: scale(1.08);
+}
+
+.control-btn:active { transform: scale(0.95); }
+
+.play-btn {
+  width: 58px;
+  height: 58px;
+  background: linear-gradient(135deg, #E4CC6E, #C9A227);
+  color: #1F4E3D;
+  border: none;
+  box-shadow: 0 6px 18px rgba(201, 162, 39, 0.3);
+}
+
+.play-btn:hover {
+  background: linear-gradient(135deg, #F5E5A0, #E4CC6E);
+  color: #1F4E3D;
+  transform: scale(1.08);
+}
+
+/* الأزرار السفلية - ترتيب عمودي */
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 340px;
+  margin: 10px auto 0;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #E4CC6E, #C9A227);
+  color: #1F4E3D;
+  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.25);
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(201, 162, 39, 0.4);
+}
+
+/* إخفاء زر تحديد الموقع نهائياً */
+.hero-dhikr-card .action-btn.secondary,
+.hero-dhikr-card .location-btn,
+.hero-dhikr-card button[onclick*="location"],
+.hero-dhikr-card .set-location-btn,
+.hero-dhikr-card .location-link,
+.hero-dhikr-card .location-text {
+  display: none !important;
+}
+
+/* إخفاء العناصر القديمة */
+.hero-dhikr-card .adhkar-list,
+.hero-dhikr-card .adhkar-items,
+.hero-dhikr-card ul,
+.hero-dhikr-card .greeting-section,
+.hero-dhikr-card .hero-image,
+.hero-dhikr-card .smart-more-btn {
+  display: none !important;
+}
+
+/* ===== التجاوب ===== */
+@media (max-width: 768px) {
+  .hero-dhikr-card {
+    margin: 12px;
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+  .dhikr-text { font-size: clamp(18px, 5vw, 22px); }
+  .control-btn { width: 44px; height: 44px; }
+  .play-btn { width: 52px; height: 52px; }
+}
+
+@media (max-width: 480px) {
+  .hero-dhikr-card { padding: 20px 14px; }
+  .dhikr-text { font-size: 18px; line-height: 1.8; }
+  .hero-badge { font-size: 12px; padding: 7px 14px; }
+  .action-btn { font-size: 13px; padding: 11px 18px; }
+}
