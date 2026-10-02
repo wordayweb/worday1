@@ -568,7 +568,7 @@ body.dark .sec-card.amin-card .amin-desc {
 
 /* ═══════════════════════════════════════════════════════════
    🏷️ بطاقات "قريبًا" — التصميم النهائي
-   ═══════════════════════════════════════════════════════════ */
+   ══════════════════════════════════════════════════════════ */
 html body .sec-card.soon {
   display: flex !important;
   align-items: center !important;
@@ -764,29 +764,29 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
 }
 
 /* ============================================================
-   🕌 بطاقة مواقيت الصلاة المصغرة (النسخة الموحّدة والمضغوطة)
+   🕌 بطاقة مواقيت الصلاة المصغرة (النسخة النهائية المضغوطة)
    ============================================================ */
 .mini-prayer-card {
   background: linear-gradient(135deg, var(--green) 0%, var(--green-2) 100%);
-  border-radius: 16px;
-  padding: 14px 16px;
-  margin: 12px auto;
-  max-width: 600px;
+  border-radius: 14px;
+  padding: 10px 12px;
+  margin: 8px auto;
+  max-width: 500px;
   color: #fff;
-  box-shadow: 0 4px 16px rgba(31, 78, 61, 0.15);
+  box-shadow: 0 3px 12px rgba(31, 78, 61, 0.12);
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(201, 162, 39, 0.2);
+  border: 1px solid rgba(201, 162, 39, 0.15);
 }
 
 .mini-prayer-card::before {
   content: '';
   position: absolute;
-  top: -30px;
-  left: -30px;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, rgba(201, 162, 39, 0.25), transparent 70%);
+  top: -20px;
+  left: -20px;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(201, 162, 39, 0.2), transparent 70%);
   pointer-events: none;
 }
 
@@ -794,7 +794,7 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   position: relative;
   z-index: 1;
 }
@@ -802,18 +802,18 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
 .mpc-loc {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  gap: 4px;
+  font-size: 11px;
   font-weight: 600;
   opacity: 0.9;
 }
 
-.mpc-ico { font-size: 14px; }
+.mpc-ico { font-size: 12px; }
 
 .mpc-settings {
   color: #fff;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   opacity: 0.8;
   transition: transform 0.3s;
 }
@@ -827,11 +827,11 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
   text-align: center;
   position: relative;
   z-index: 1;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .mpc-label {
-  font-size: 11px;
+  font-size: 10px;
   opacity: 0.85;
   font-weight: 600;
   display: block;
@@ -839,9 +839,9 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
 
 .mpc-name {
   font-family: 'Amiri', serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  margin: 2px 0 6px;
+  margin: 1px 0 4px;
   color: var(--gold-light);
   display: block;
 }
@@ -850,22 +850,22 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding-top: 6px;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  gap: 2px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .mpc-countdown .cd-box {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  padding: 4px 6px;
-  min-width: 36px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+  padding: 3px 5px;
+  min-width: 30px;
   text-align: center;
 }
 
 .mpc-countdown .cd-num {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
   line-height: 1;
@@ -873,13 +873,13 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
 
 .mpc-countdown .cd-lbl {
   display: block;
-  font-size: 8px;
+  font-size: 7px;
   opacity: 0.75;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .mpc-countdown .cd-sep {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 900;
   color: rgba(255, 255, 255, 0.5);
   padding: 0 1px;
@@ -888,20 +888,20 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
 .mpc-times {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
+  gap: 4px;
   position: relative;
   z-index: 1;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .mpc-time-item {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 5px 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 4px 3px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   transition: all 0.2s ease;
   border: 1px solid transparent;
 }
@@ -910,19 +910,19 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
   color: var(--green);
   font-weight: 700;
-  box-shadow: 0 3px 10px rgba(201, 162, 39, 0.35);
-  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.3);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .mpc-time-item .mpc-name {
-  font-size: 10px;
+  font-size: 9px;
   opacity: 0.9;
   line-height: 1;
 }
 
 .mpc-time-item .mpc-val {
   font-family: 'Amiri', serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   direction: ltr;
   line-height: 1;
@@ -931,63 +931,64 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
 .mpc-loading {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 8px;
+  padding: 6px;
   opacity: 0.8;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 /* الجوال */
 @media (max-width: 480px) {
   .mini-prayer-card {
-    padding: 10px 12px;
-    margin: 10px auto;
+    padding: 8px 10px;
+    margin: 6px auto;
+    max-width: 100%;
   }
   
   .mpc-name {
-    font-size: 18px;
+    font-size: 16px;
   }
   
   .mpc-countdown .cd-box {
-    min-width: 32px;
-    padding: 3px 5px;
+    min-width: 26px;
+    padding: 2px 4px;
   }
   
   .mpc-countdown .cd-num {
-    font-size: 12px;
+    font-size: 11px;
   }
   
   .mpc-countdown .cd-lbl {
-    font-size: 7px;
+    font-size: 6px;
   }
   
   .mpc-times {
-    gap: 4px;
+    gap: 3px;
   }
   
   .mpc-time-item {
-    padding: 4px 3px;
+    padding: 3px 2px;
   }
   
   .mpc-time-item .mpc-name {
-    font-size: 9px;
+    font-size: 8px;
   }
   
   .mpc-time-item .mpc-val {
-    font-size: 11px;
+    font-size: 10px;
   }
 }
 
 /* الوضع الليلي */
 body.dark .mini-prayer-card {
   background: linear-gradient(135deg, #14201C, #0F1A15);
-  border-color: rgba(201, 162, 39, 0.3);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border-color: rgba(201, 162, 39, 0.25);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
 }
 
 body.dark .mpc-countdown .cd-box {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 body.dark .mpc-time-item {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
 }
