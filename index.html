@@ -625,8 +625,97 @@
   });
 })();
 </script>
+
+<script>
+(function() {
+  const adhkarData = [
+    { text: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ، اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...' },
+    { text: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ...' },
+    { text: 'اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ' },
+    { text: 'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ * مِن شَرِّ مَا خَلَقَ' },
+    { text: 'اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي' },
+    { text: 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ' }
+  ];
+
+  let currentIndex = 0;
+  let autoPlayInterval = null;
+
+  const dhikrText = document.getElementById('dhikrText');
+  const dhikrNumber = document.getElementById('dhikrNumber');
+  const currentNum = document.getElementById('currentDhikrNum');
+  const totalNum = document.getElementById('totalDhikrNum');
+  const progressFill = document.getElementById('progressFill');
+
+  if (totalNum) totalNum.textContent = adhkarData.length;
+
+  function toArabic(num) {
+    const arabicDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    return String(num).replace(/\d/g, d => arabicDigits[d]);
+  }
+
+  function updateDhikr(index) {
+    if (!dhikrText) return;
+    dhikrText.classList.add('fade-out');
+    setTimeout(() => {
+      dhikrText.textContent = adhkarData[index].text;
+      dhikrNumber.textContent = toArabic(index + 1);
+      if (currentNum) currentNum.textContent = index + 1;
+      if (progressFill) progressFill.style.width = ((index + 1) / adhkarData.length * 100) + '%';
+      dhikrText.classList.remove('fade-out');
+      dhikrText.classList.add('fade-in');
+    }, 300);
+  }
+
+  const prevBtn = document.getElementById('prevDhikr');
+  const nextBtn = document.getElementById('nextDhikr');
+  const playBtn = document.getElementById('autoPlayBtn');
+
+  if (prevBtn) prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + adhkarData.length) % adhkarData.length;
+    updateDhikr(currentIndex);
+  });
+
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % adhkarData.length;
+    updateDhikr(currentIndex);
+  });
+
+  if (playBtn) playBtn.addEventListener('click', () => {
+    if (autoPlayInterval) {
+      clearInterval(autoPlayInterval);
+      autoPlayInterval = null;
+      playBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    } else {
+      autoPlayInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % adhkarData.length;
+        updateDhikr(currentIndex);
+      }, 5000);
+      playBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+    }
+  });
+
+  let touchStartX = 0;
+  const heroCard = document.getElementById('smartHero');
+  if (heroCard) {
+    heroCard.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    heroCard.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        currentIndex = diff > 0 ? (currentIndex + 1) % adhkarData.length : (currentIndex - 1 + adhkarData.length) % adhkarData.length;
+        updateDhikr(currentIndex);
+      }
+    }, { passive: true });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { currentIndex = (currentIndex + 1) % adhkarData.length; updateDhikr(currentIndex); }
+    else if (e.key === 'ArrowRight') { currentIndex = (currentIndex - 1 + adhkarData.length) % adhkarData.length; updateDhikr(currentIndex); }
+  });
+})();
+</script>
 </body>
 </html>
+
 
 
 
