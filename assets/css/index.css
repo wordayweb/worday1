@@ -1,4 +1,8 @@
-/* ============ لوحة المتابعة الموحّدة ============ */
+/* ============================================================
+   🎨 وِرْدِي — ملف التنسيقات الرئيسي للصفحة الرئيسية
+   ============================================================ */
+
+/* ===== لوحة المتابعة الموحّدة ===== */
 .dashboard-unified {
   max-width: 900px;
   margin: 18px auto;
@@ -178,7 +182,7 @@ body.dark .dash-hr {
     rgba(255,255,255,.1) 80%, transparent);
 }
 
-/* ============ مجموعات الأقسام ============ */
+/* ===== مجموعات الأقسام ===== */
 .section-group {
   margin: 32px auto 24px;
   max-width: 900px;
@@ -210,7 +214,7 @@ body.dark .dash-hr {
   gap: 14px;
 }
 
-/* ============ 👑 وِرْدِي موحّد ============ */
+/* =====  وِرْدِي موحّد ===== */
 .wirdi-unified-grid {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
@@ -225,7 +229,7 @@ body.dark .dash-hr {
 .sec-card.amin-card .overlay { padding: 22px 24px; }
 .sec-card.amin-card h4 { font-size: 20px; }
 
-/* ============ ✨ بطاقة الأذكار الذكية ============ */
+/* ===== ✨ بطاقة الأذكار الذكية ===== */
 #smartHero .smart-more-btn {
   display: flex; align-items: center; justify-content: center;
   gap: 8px; width: 100%; margin-top: 14px;
@@ -344,9 +348,7 @@ body.dark .group-line {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ============================================================
-   ✨ النصوص الطويلة في بطاقات الأقسام — تصغير تلقائي
-   ============================================================ */
+/* ===== ✨ النصوص الطويلة في بطاقات الأقسام ===== */
 .sec-card h4.long-text {
   font-size: 14px;
   line-height: 1.35;
@@ -366,9 +368,7 @@ body.dark .group-line {
   .sec-card.amin-card h4.long-text { font-size: 14px; }
 }
 
-/* ============================================================
-    بطاقات الأقسام — مصحف المدينة + Watermark + Glass
-   ============================================================ */
+/* ===== بطاقات الأقسام — مصحف المدينة + Watermark + Glass ===== */
 .sec-card {
   position: relative;
   isolation: isolate;
@@ -566,9 +566,7 @@ body.dark .sec-card.amin-card .amin-desc {
   .sec-card.amin-card .overlay h4 .card-title { font-size: 18px; }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   🏷️ بطاقات "قريبًا" — التصميم النهائي
-   ════════════════════════════════════════════════════════ */
+/* ===== 🏷️ بطاقات "قريبًا" ===== */
 html body .sec-card.soon {
   display: flex !important;
   align-items: center !important;
@@ -763,9 +761,7 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
   }
 }
 
-/* ============================================================
-   🕌 بطاقة مواقيت الصلاة المصغرة (النسخة النهائية المضغوطة جداً)
-   ============================================================ */
+/* ===== 🕌 بطاقة مواقيت الصلاة المصغرة ===== */
 .mini-prayer-card {
   background: linear-gradient(135deg, var(--green) 0%, var(--green-2) 100%);
   border-radius: 12px;
@@ -936,7 +932,6 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
   font-size: 10px;
 }
 
-/* الجوال */
 @media (max-width: 480px) {
   .mini-prayer-card {
     padding: 6px 8px;
@@ -944,41 +939,21 @@ html body.dark .sec-card.soon .overlay h4 .card-emoji {
     max-width: 100%;
   }
   
-  .mpc-name {
-    font-size: 14px;
-  }
+  .mpc-name { font-size: 14px; }
   
   .mpc-countdown .cd-box {
     min-width: 22px;
     padding: 2px 3px;
   }
   
-  .mpc-countdown .cd-num {
-    font-size: 10px;
-  }
-  
-  .mpc-countdown .cd-lbl {
-    font-size: 5px;
-  }
-  
-  .mpc-times {
-    gap: 2px;
-  }
-  
-  .mpc-time-item {
-    padding: 2px 2px;
-  }
-  
-  .mpc-time-item .mpc-name {
-    font-size: 7px;
-  }
-  
-  .mpc-time-item .mpc-val {
-    font-size: 9px;
-  }
+  .mpc-countdown .cd-num { font-size: 10px; }
+  .mpc-countdown .cd-lbl { font-size: 5px; }
+  .mpc-times { gap: 2px; }
+  .mpc-time-item { padding: 2px 2px; }
+  .mpc-time-item .mpc-name { font-size: 7px; }
+  .mpc-time-item .mpc-val { font-size: 9px; }
 }
 
-/* الوضع الليلي */
 body.dark .mini-prayer-card {
   background: linear-gradient(135deg, #14201C, #0F1A15);
   border-color: rgba(201, 162, 39, 0.2);
@@ -993,9 +968,7 @@ body.dark .mpc-time-item {
   background: rgba(255, 255, 255, 0.03);
 }
 
-/* ============================================================
-   🚫 إخفاء سلسلة الأيام نهائياً
-   ============================================================ */
+/* ===== 🚫 إخفاء سلسلة الأيام ===== */
 #streakSlot,
 .streak-card,
 .streak-container,
@@ -1006,263 +979,19 @@ body.dark .mpc-time-item {
   height: 0 !important;
   overflow: hidden !important;
 }
-/* ============================================================
-    الفوتر بعرض كامل الصفحة (مثل الهيدر)
-   ============================================================ */
-.site-footer {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  background: linear-gradient(180deg, #1F4E3D 0%, #0F2A20 100%);
-  color: #E8E8E8;
-  font-family: 'Tajawal', sans-serif;
-  padding: 32px 20px 20px;
-  box-sizing: border-box;
-  display: block;
-  position: relative;
-  overflow: hidden;
-  margin-top: 40px;
-}
 
-.site-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold, #C9A227), transparent);
-  opacity: 0.6;
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.footer-logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #E4CC6E, #C9A227);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Amiri', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: #0F2A20;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.35);
-}
-
-.footer-brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-  text-align: right;
-}
-
-.footer-title {
-  font-family: 'Amiri', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: #F5E5A0;
-}
-
-.footer-tagline {
-  font-size: 11px;
-  color: #A8C4B8;
-  margin-top: 2px;
-}
-
-.footer-nav {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 12px 20px;
-  padding: 0;
-  max-width: 800px;
-}
-
-.footer-nav a {
-  display: inline-block;
-  color: #D4E0DC;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-  transition: all 0.2s;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
-
-.footer-nav a:hover {
-  color: #F5E5A0;
-  background: rgba(228, 204, 110, 0.1);
-  transform: translateY(-2px);
-}
-
-.footer-social {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-.footer-social a {
-  display: inline-flex;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(228, 204, 110, 0.1);
-  border: 1px solid rgba(228, 204, 110, 0.25);
-  color: #E4CC6E;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.footer-social a:hover {
-  background: rgba(228, 204, 110, 0.25);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.3);
-}
-
-.footer-divider {
-  width: 240px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(228, 204, 110, 0.4) 50%, transparent);
-  margin: 8px auto;
-}
-
-.footer-bottom {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 8px 16px;
-  font-size: 12px;
-}
-
-.footer-copy {
-  color: #E4CC6E;
-  font-weight: 600;
-}
-
-.footer-sep {
-  color: rgba(228, 204, 110, 0.35);
-}
-
-.footer-supervisor {
-  color: #A8C4B8;
-}
-
-.footer-supervisor strong {
-  color: #E4CC6E;
-  font-family: 'Amiri', serif;
-  font-size: 14px;
-}
-
-/* ===== التجاوب ===== */
-@media (max-width: 767px) {
-  .site-footer {
-    padding: 24px 16px 16px;
-    margin-top: 32px;
-  }
-  
-  .footer-nav {
-    gap: 8px 14px;
-  }
-  
-  .footer-nav a {
-    font-size: 12px;
-  }
-  
-  .footer-title {
-    font-size: 18px;
-  }
-  
-  .footer-logo {
-    width: 38px;
-    height: 38px;
-    font-size: 18px;
-  }
-}
-
-@media (max-width: 480px) {
-  .site-footer {
-    padding: 20px 12px 14px;
-    margin-top: 24px;
-  }
-  
-  .footer-nav {
-    gap: 6px 10px;
-  }
-  
-  .footer-nav a {
-    font-size: 11px;
-    padding: 3px 6px;
-  }
-  
-  .footer-bottom {
-    font-size: 10.5px;
-    gap: 6px 10px;
-  }
-  
-  .footer-social a {
-    width: 34px;
-    height: 34px;
-    font-size: 14px;
-  }
-}
-
-/* ===== الوضع الليلي ===== */
-body.dark .site-footer {
-  background: linear-gradient(180deg, #0F1A15 0%, #070D0A 100%);
-}
-/* ============================================================
-    الفوتر — بنفس عرض الهيدر تماماً
-   ============================================================ */
+/* =====  الفوتر بعرض كامل (مثل الهيدر) ===== */
 .site-footer {
   width: 100%;
-  max-width: 1200px;
-  margin: 40px auto 0;
   background: linear-gradient(180deg, #1F4E3D 0%, #0F2A20 100%);
   color: #E8E8E8;
   font-family: 'Tajawal', sans-serif;
   padding: 36px 20px 22px;
   box-sizing: border-box;
-  border-radius: 16px 16px 0 0;
   position: relative;
   overflow: hidden;
-}
-
-.site-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold, #C9A227), transparent);
-  opacity: 0.7;
+  margin-top: 40px;
+  border-top: 3px solid var(--gold, #C9A227);
 }
 
 .site-footer::after {
@@ -1279,7 +1008,7 @@ body.dark .site-footer {
 }
 
 .footer-inner {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -1436,36 +1165,17 @@ body.dark .site-footer {
   font-size: 14px;
 }
 
-/* ===== التجاوب ===== */
 @media (max-width: 767px) {
   .site-footer {
     padding: 28px 16px 18px;
     margin-top: 32px;
-    border-radius: 12px 12px 0 0;
   }
   
-  .footer-nav {
-    gap: 8px 14px;
-  }
-  
-  .footer-nav a {
-    font-size: 12px;
-  }
-  
-  .footer-title {
-    font-size: 19px;
-  }
-  
-  .footer-logo {
-    width: 40px;
-    height: 40px;
-    font-size: 19px;
-  }
-  
-  .footer-social a {
-    width: 36px;
-    height: 36px;
-  }
+  .footer-nav { gap: 8px 14px; }
+  .footer-nav a { font-size: 12px; }
+  .footer-title { font-size: 19px; }
+  .footer-logo { width: 40px; height: 40px; font-size: 19px; }
+  .footer-social a { width: 36px; height: 36px; }
 }
 
 @media (max-width: 480px) {
@@ -1474,32 +1184,50 @@ body.dark .site-footer {
     margin-top: 24px;
   }
   
-  .footer-nav {
-    gap: 6px 10px;
-  }
-  
-  .footer-nav a {
-    font-size: 11px;
-    padding: 4px 7px;
-  }
-  
-  .footer-bottom {
-    font-size: 10.5px;
-    gap: 6px 10px;
-  }
-  
-  .footer-social a {
-    width: 34px;
-    height: 34px;
-    font-size: 15px;
-  }
-  
-  .footer-brand {
-    padding-bottom: 14px;
-  }
+  .footer-nav { gap: 6px 10px; }
+  .footer-nav a { font-size: 11px; padding: 4px 7px; }
+  .footer-bottom { font-size: 10.5px; gap: 6px 10px; }
+  .footer-social a { width: 34px; height: 34px; font-size: 15px; }
+  .footer-brand { padding-bottom: 14px; }
 }
 
-/* ===== الوضع الليلي ===== */
 body.dark .site-footer {
   background: linear-gradient(180deg, #0F1A15 0%, #070D0A 100%);
+}
+
+/* ===== إصلاح المساحة البيضاء ===== */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: auto !important;
+}
+
+.app {
+  min-height: auto !important;
+  padding-bottom: 0 !important;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.dash-panel-streak:empty,
+#streakSlot:empty {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.section-group {
+  margin: 20px auto 16px !important;
+}
+
+.dashboard-unified {
+  margin: 12px auto !important;
+}
+
+.app > div:empty,
+.app > section:empty {
+  display: none !important;
 }
