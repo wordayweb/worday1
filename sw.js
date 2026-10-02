@@ -3,7 +3,7 @@
    ⚠️ عند أي تعديل: غيّر CACHE_NAME أدناه
    ============================================================ */
 
-const CACHE_NAME = 'wirdi-v2609291440';
+const CACHE_NAME = 'wirdi-v2610022148';
 const OFFLINE_URL  = './offline.html';
 
 const PRECACHE_URLS = [
@@ -157,4 +157,5 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('message', (event) => {
   if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
+
 

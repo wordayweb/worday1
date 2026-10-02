@@ -134,7 +134,7 @@ body.dark .drh-btn {
     padding: 14px 18px;
     gap: 10px;
   }
-  .drh-ico { width: 40px; height: 40px; font-size: 20px; }
+  .drh-ico { width: 46px; height: 46px; font-size: 20px; }
   .drh-val { font-size: 14px; }
   .drh-btn { padding: 7px 14px; font-size: 12px; }
 }
@@ -184,7 +184,7 @@ body.dark .dash-hr {
 
 /* ===== مجموعات الأقسام ===== */
 .section-group {
-  margin: 32px auto 24px;
+  margin: 16px auto 12px !important;
   max-width: 900px;
   padding: 0 16px;
 }
@@ -986,11 +986,11 @@ body.dark .mpc-time-item {
   background: linear-gradient(180deg, #1F4E3D 0%, #0F2A20 100%);
   color: #E8E8E8;
   font-family: 'Tajawal', sans-serif;
-  padding: 36px 20px 22px;
+  padding: 44px 20px 26px;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  margin-top: 40px;
+  margin-top: 16px;
   border-top: 3px solid var(--gold, #C9A227);
 }
 
@@ -1022,7 +1022,7 @@ body.dark .mpc-time-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-bottom: 18px;
+  padding-bottom: 24px;
   border-bottom: 1px solid rgba(228, 204, 110, 0.18);
   width: 100%;
   max-width: 380px;
@@ -1167,28 +1167,28 @@ body.dark .mpc-time-item {
 
 @media (max-width: 767px) {
   .site-footer {
-    padding: 28px 16px 18px;
-    margin-top: 32px;
+    padding: 34px 16px 20px;
+    margin-top: 20px;
   }
   
   .footer-nav { gap: 8px 14px; }
   .footer-nav a { font-size: 12px; }
   .footer-title { font-size: 19px; }
-  .footer-logo { width: 40px; height: 40px; font-size: 19px; }
+  .footer-logo { width: 46px; height: 46px; font-size: 19px; }
   .footer-social a { width: 36px; height: 36px; }
 }
 
 @media (max-width: 480px) {
   .site-footer {
-    padding: 22px 12px 14px;
-    margin-top: 24px;
+    padding: 28px 12px 16px;
+    margin-top: 16px;
   }
   
   .footer-nav { gap: 6px 10px; }
   .footer-nav a { font-size: 11px; padding: 4px 7px; }
   .footer-bottom { font-size: 10.5px; gap: 6px 10px; }
   .footer-social a { width: 34px; height: 34px; font-size: 15px; }
-  .footer-brand { padding-bottom: 14px; }
+  .footer-brand { padding-bottom: 18px; }
 }
 
 body.dark .site-footer {
@@ -1220,7 +1220,7 @@ html, body {
 }
 
 .section-group {
-  margin: 20px auto 16px !important;
+  margin: 14px auto 10px !important;
 }
 
 .dashboard-unified {
@@ -1230,4 +1230,24 @@ html, body {
 .app > div:empty,
 .app > section:empty {
   display: none !important;
+}
+
+/* ===== تحسين مظهر البطاقات ذات المحتوى المحدود ===== */
+.sec-card .overlay h4 {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* جعل الدوائر الذهبية في البطاقات الفارغة أصغر */
+.sec-card .overlay .card-emoji:empty {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 18px !important;
+}
+
+/* تحسين المسافات الداخلية للبطاقات */
+.sec-card .overlay {
+  gap: 8px !important;
 }
