@@ -41,7 +41,7 @@
   <section class="mini-prayer-card fade-in" aria-label="مواقيت الصلاة">
     <div class="mpc-header">
       <div class="mpc-loc">
-        <span class="mpc-ico">📍</span>
+        <span class="mpc-ico"></span>
         <span id="mpcCity">جاري تحديد الموقع...</span>
       </div>
       <a href="prayer-settings.html" class="mpc-settings" aria-label="إعدادات المواقيت">⚙️</a>
@@ -51,11 +51,11 @@
       <span class="mpc-label">الصلاة القادمة</span>
       <h3 class="mpc-name" id="mpcNextName">--</h3>
       <div class="mpc-countdown" id="mpcCountdown">
-        <div class="cd-box"><span class="cd-num" id="cdH">٠٠</span><span class="cd-lbl">ساعة</span></div>
+        <div class="cd-box"><span class="cd-num" id="cdH">٠</span><span class="cd-lbl">ساعة</span></div>
         <span class="cd-sep">:</span>
         <div class="cd-box"><span class="cd-num" id="cdM">٠٠</span><span class="cd-lbl">دقيقة</span></div>
         <span class="cd-sep">:</span>
-        <div class="cd-box"><span class="cd-num" id="cdS">٠٠</span><span class="cd-lbl">ثانية</span></div>
+        <div class="cd-box"><span class="cd-num" id="cdS">٠</span><span class="cd-lbl">ثانية</span></div>
       </div>
     </div>
 
@@ -64,12 +64,13 @@
     </div>
   </section>
 
+  <!-- ===== أذكار الوقت الحالي ===== -->
   <section id="smartHero" class="fade-in" aria-label="أذكار الوقت الحالي"></section>
 
   <!-- ===== لوحة اليوم الموحّدة ===== -->
   <section class="dashboard-unified fade-in" aria-label="لوحة اليوم">
     <a href="quran.html" class="dash-resume-header" aria-label="اذهب إلى آخر ما قرأت">
-      <span class="drh-ico" aria-hidden="true">📖</span>
+      <span class="drh-ico" aria-hidden="true"></span>
       <div class="drh-info">
         <span class="drh-lbl">واصل القراءة</span>
         <span class="drh-val" id="lastRead">سورة الجن — آية ٢٢</span>
@@ -116,6 +117,7 @@
 
   </section>
 
+  <!-- ===== الورد اليومي ===== -->
   <section class="section-group" aria-labelledby="groupWird">
     <header class="group-head">
       <h2 class="group-title" id="groupWird">
@@ -145,7 +147,7 @@
     </div>
   </section>
 
-    <!-- ===== 🕌 قسم رئيسي: تعلم الصلاة ===== -->
+  <!-- ===== تعلم الصلاة ===== -->
   <section class="section-group" aria-labelledby="groupSalah">
     <header class="group-head">
       <h2 class="group-title" id="groupSalah">
@@ -165,7 +167,9 @@
       </a>
     </div>
   </section>
-      <section class="section-group" aria-labelledby="groupIbadat">
+
+  <!-- ===== العبادات ===== -->
+  <section class="section-group" aria-labelledby="groupIbadat">
     <header class="group-head">
       <h2 class="group-title" id="groupIbadat">
         <span class="group-ico" aria-hidden="true">🕋</span>
@@ -179,20 +183,17 @@
         <div class="bg" style="background:linear-gradient(160deg,#3a5c4a,#132019);"></div>
         <div class="overlay"><h4>🕌 مواقيت الصلاة</h4><div class="underline"></div></div>
       </a>
-      
-      <!-- ✅ تمت إضافة بطاقة أذكار الصلاة الجديدة هنا -->
       <a href="athkar-salah.html" class="sec-card fade-in">
         <div class="bg" style="background:linear-gradient(160deg,#1F4E3D,#0F2A20);"></div>
         <div class="overlay"><h4>🕌 أذكار الصلاة</h4><div class="underline"></div></div>
       </a>
-
       <a href="zakat.html" class="sec-card fade-in">
         <div class="bg" style="background:linear-gradient(160deg,#7a4a2c,#2a1408);"></div>
         <div class="overlay"><h4>💰 حساب الزكاة</h4><div class="underline"></div></div>
       </a>
       <a href="calendar.html" class="sec-card fade-in">
         <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
-        <div class="overlay"><h4>📅 التقويم</h4><div class="underline"></div></div>
+        <div class="overlay"><h4> التقويم</h4><div class="underline"></div></div>
       </a>
       <a href="notifications.html" class="sec-card fade-in">
         <div class="bg" style="background:linear-gradient(160deg,#5b4a7a,#1f1530);"></div>
@@ -201,6 +202,7 @@
     </div>
   </section>
 
+  <!-- ===== المعرفة ===== -->
   <section class="section-group" aria-labelledby="groupMaarifa">
     <header class="group-head">
       <h2 class="group-title" id="groupMaarifa">
@@ -215,6 +217,10 @@
         <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
         <div class="overlay"><h4>📖 تفسير القرآن</h4><div class="underline"></div></div>
       </a>
+      <a href="zad-alquloob.html" class="sec-card fade-in">
+        <div class="bg" style="background:linear-gradient(160deg,#6b3a5c,#2a1020);"></div>
+        <div class="overlay"><h4>💖 زاد القلوب</h4><div class="underline"></div></div>
+      </a>
       <a href="#" class="sec-card fade-in soon" aria-disabled="true">
         <div class="bg" style="background:linear-gradient(160deg,#1F4E3D,#0F2A20);"></div>
         <div class="overlay">
@@ -223,17 +229,10 @@
           <span class="soon-badge">قريبًا</span>
         </div>
       </a>
-      <a href="#" class="sec-card fade-in soon" aria-disabled="true">
-        <div class="bg" style="background:linear-gradient(160deg,#6b3a5c,#2a1020);"></div>
-        <div class="overlay">
-          <h4>💖 زاد القلوب</h4>
-          <div class="underline"></div>
-          <span class="soon-badge">قريبًا</span>
-        </div>
-      </a>
     </div>
   </section>
 
+  <!-- ===== وِرْدِي ===== -->
   <section class="section-group" aria-labelledby="groupWirdi">
     <header class="group-head">
       <h2 class="group-title" id="groupWirdi">
@@ -300,7 +299,7 @@
     <a href="athkar-evening.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">🌆 المساء</a>
     <a href="prayer.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">🕌 الصلاة</a>
     <a href="tasbih.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📿 التسبيح</a>
-    <a href="tafsir.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📚 التفسير</a>
+    <a href="tafsir.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;"> التفسير</a>
     <a href="support.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">💚 ادعمنا</a>
     <a href="contact.html" style="display:inline-block;color:#D4E0DC;text-decoration:none;font-size:12px;font-weight:500;white-space:nowrap;">📞 تواصل</a>
   </nav>
