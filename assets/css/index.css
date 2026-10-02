@@ -591,3 +591,29 @@ html, body { margin: 0 !important; padding: 0 !important; min-height: auto !impo
   font-size: 17px !important;
   line-height: 1.9 !important;
 }
+
+/* ===== زر "أكمل متابعة الأذكار" — صلب وبارز ===== */
+#smartHero a[href*="athkar"],
+#smartHero .smart-continue-btn,
+#smartHero .continue-link {
+  background: linear-gradient(135deg, #E4CC6E 0%, #C9A227 100%) !important;
+  color: #1F4E3D !important;
+  border: 2px solid #F5E5A0 !important;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.35), 0 0 0 4px rgba(228,204,110,0.25) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+  font-weight: 800 !important;
+  font-size: 16px !important;
+  padding: 14px 36px !important;
+  text-shadow: none !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+#smartHero a[href*="athkar"]:hover,
+#smartHero .smart-continue-btn:hover {
+  background: linear-gradient(135deg, #F5E5A0 0%, #E4CC6E 100%) !important;
+  transform: translateY(-3px) scale(1.03) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 0 6px rgba(228,204,110,0.35) !important;
+}
