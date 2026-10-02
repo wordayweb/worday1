@@ -289,34 +289,7 @@
 <script src="assets/js/index.js" defer></script>
 
 <!-- سكريبت دمج لوحة المتابعة داخل بطاقة الأذكار -->
-<script>
-(function() {
-  function embedTracker() {
-    var hero = document.getElementById('smartHero');
-    var tracker = document.getElementById('embeddedTracker');
-    if (!hero || !tracker) return;
-    
-    // إضافة فاصل ذهبي قبل لوحة المتابعة
-    var divider = document.createElement('div');
-    divider.className = 'smart-hero-divider';
-    divider.innerHTML = '<span class="divider-line"></span><span class="divider-text">📊 لوحة المتابعة اليومية</span><span class="divider-line"></span>';
-    hero.appendChild(divider);
-    
-    // نقل لوحة المتابعة داخل smartHero
-    hero.appendChild(tracker);
-    tracker.classList.add('embedded');
-  }
-  
-  // تنفيذ بعد تحميل الأذكار
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(embedTracker, 800);
-    });
-  } else {
-    setTimeout(embedTracker, 800);
-  }
-})();
-</script>
+
 
 <script>
 (function(){
@@ -332,66 +305,43 @@
 </script>
 
 
-<!-- ✨ تحسينات بطاقة الأذكار المصغرة -->
+
+
+<!-- 🎯 سكريبت بسيط لبطاقة الأذكار -->
 <script>
 (function() {
-  function enhanceSmartHero() {
+  function setupSmartHero() {
     var hero = document.getElementById('smartHero');
     if (!hero) return;
     
-    // 1. إضافة زر "أكمل متابعة الأذكار" بتصميم أنيق
-    if (!hero.querySelector('.smart-continue-btn')) {
-      var continueBtn = document.createElement('a');
-      continueBtn.className = 'smart-continue-btn';
+    // إضافة زر "عرض الكل"
+    if (!hero.querySelector('.smart-show-all-btn')) {
+      var btn = document.createElement('a');
+      btn.className = 'smart-show-all-btn';
       
       var hour = new Date().getHours();
-      if (hour >= 4 && hour < 17) {
-        continueBtn.href = 'athkar-morning.html';
-      } else {
-        continueBtn.href = 'athkar-evening.html';
-      }
-      continueBtn.innerHTML = '<span class="sparkle">✨</span><span>أكمل متابعة الأذكار</span><span class="arrow">←</span>';
+      btn.href = (hour >= 4 && hour < 17) ? 'athkar-morning.html' : 'athkar-evening.html';
+      btn.textContent = 'عرض كل الأذكار ←';
       
       var adhkarList = hero.querySelector('.adhkar-list, .adhkar-items, ul');
       if (adhkarList) {
-        adhkarList.parentNode.insertBefore(continueBtn, adhkarList.nextSibling);
-      } else {
-        hero.appendChild(continueBtn);
+        adhkarList.parentNode.insertBefore(btn, adhkarList.nextSibling);
       }
     }
     
-    // 2. تحويل زر "تحديد الموقع" إلى أيقونة صغيرة
-    var locationBtn = hero.querySelector('.location-btn, button[onclick*="location"], .set-location-btn');
-    if (locationBtn && !locationBtn.classList.contains('location-processed')) {
-      locationBtn.innerHTML = '📍 الموقع';
-      locationBtn.classList.add('location-processed');
-      locationBtn.onclick = function(e) {
-        e.preventDefault();
+    // تصغير زر الموقع
+    var locationBtn = hero.querySelector('.location-btn, button[onclick*="location"]');
+    if (locationBtn) {
+      locationBtn.textContent = '📍 حدد الموقع';
+      locationBtn.onclick = function() {
         window.location.href = 'prayer-settings.html';
       };
     }
-    
-    // 3. إضافة فاصل أنيق قبل لوحة المتابعة
-    var embeddedTracker = document.getElementById('embeddedTracker');
-    if (embeddedTracker && !hero.querySelector('.smart-hero-divider')) {
-      var divider = document.createElement('div');
-      divider.className = 'smart-hero-divider';
-      divider.innerHTML = '<span class="divider-line"></span><span class="divider-text">📊 لوحة المتابعة اليومية</span><span class="divider-line"></span>';
-      hero.appendChild(divider);
-      hero.appendChild(embeddedTracker);
-      embeddedTracker.classList.add('embedded');
-      embeddedTracker.style.display = 'block';
-    }
   }
   
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(enhanceSmartHero, 700);
-    });
-  } else {
-    setTimeout(enhanceSmartHero, 700);
-  }
+  setTimeout(setupSmartHero, 500);
 })();
 </script>
 </body>
 </html>
+

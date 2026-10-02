@@ -980,221 +980,6 @@ body.dark .mpc-time-item {
   overflow: hidden !important;
 }
 
-/* =====  الفوتر بعرض كامل (مثل الهيدر) ===== */
-.site-footer {
-  width: 100%;
-  background: linear-gradient(180deg, #1F4E3D 0%, #0F2A20 100%);
-  color: #E8E8E8;
-  font-family: 'Tajawal', sans-serif;
-  padding: 44px 20px 26px;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-  margin-top: 16px;
-  border-top: 3px solid var(--gold, #C9A227);
-}
-
-.site-footer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 15% 50%, rgba(201, 162, 39, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 85% 50%, rgba(201, 162, 39, 0.04) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
-  position: relative;
-  z-index: 1;
-}
-
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid rgba(228, 204, 110, 0.18);
-  width: 100%;
-  max-width: 380px;
-  justify-content: center;
-}
-
-.footer-logo {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #E4CC6E, #C9A227);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Amiri', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: #0F2A20;
-  flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.35);
-}
-
-.footer-brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-  text-align: right;
-}
-
-.footer-title {
-  font-family: 'Amiri', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: #F5E5A0;
-  letter-spacing: 0.5px;
-}
-
-.footer-tagline {
-  font-size: 11px;
-  color: #A8C4B8;
-  margin-top: 2px;
-}
-
-.footer-nav {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 10px 20px;
-  padding: 0;
-  max-width: 900px;
-}
-
-.footer-nav a {
-  display: inline-block;
-  color: #D4E0DC;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-  transition: all 0.2s;
-  padding: 5px 10px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-}
-
-.footer-nav a:hover {
-  color: #F5E5A0;
-  background: rgba(228, 204, 110, 0.1);
-  border-color: rgba(228, 204, 110, 0.25);
-  transform: translateY(-2px);
-}
-
-.footer-social {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 0;
-}
-
-.footer-social a {
-  display: inline-flex;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: rgba(228, 204, 110, 0.1);
-  border: 1px solid rgba(228, 204, 110, 0.25);
-  color: #E4CC6E;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  text-decoration: none;
-  transition: all 0.25s;
-}
-
-.footer-social a:hover {
-  background: rgba(228, 204, 110, 0.22);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 14px rgba(201, 162, 39, 0.3);
-  border-color: rgba(228, 204, 110, 0.45);
-}
-
-.footer-divider {
-  width: 260px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(228, 204, 110, 0.45) 50%, transparent);
-  margin: 4px auto;
-}
-
-.footer-bottom {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 8px 18px;
-  font-size: 12px;
-  padding-top: 6px;
-}
-
-.footer-copy {
-  color: #E4CC6E;
-  font-weight: 600;
-}
-
-.footer-sep {
-  color: rgba(228, 204, 110, 0.35);
-}
-
-.footer-supervisor {
-  color: #A8C4B8;
-}
-
-.footer-supervisor strong {
-  color: #E4CC6E;
-  font-family: 'Amiri', serif;
-  font-size: 14px;
-}
-
-@media (max-width: 767px) {
-  .site-footer {
-    padding: 34px 16px 20px;
-    margin-top: 20px;
-  }
-  
-  .footer-nav { gap: 8px 14px; }
-  .footer-nav a { font-size: 12px; }
-  .footer-title { font-size: 19px; }
-  .footer-logo { width: 46px; height: 46px; font-size: 19px; }
-  .footer-social a { width: 36px; height: 36px; }
-}
-
-@media (max-width: 480px) {
-  .site-footer {
-    padding: 28px 12px 16px;
-    margin-top: 16px;
-  }
-  
-  .footer-nav { gap: 6px 10px; }
-  .footer-nav a { font-size: 11px; padding: 4px 7px; }
-  .footer-bottom { font-size: 10.5px; gap: 6px 10px; }
-  .footer-social a { width: 34px; height: 34px; font-size: 15px; }
-  .footer-brand { padding-bottom: 18px; }
-}
-
-body.dark .site-footer {
-  background: linear-gradient(180deg, #0F1A15 0%, #070D0A 100%);
-}
-
 /* ===== إصلاح المساحة البيضاء ===== */
 html, body {
   margin: 0 !important;
@@ -1251,138 +1036,6 @@ html, body {
 .sec-card .overlay {
   gap: 8px !important;
 }
-/* ============================================================
-    لوحة المتابعة المدمجة داخل بطاقة الأذكار
-   ============================================================ */
-
-/* الفاصل الذهبي بين الأذكار ولوحة المتابعة */
-.smart-hero-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px 8px;
-  margin-top: 8px;
-}
-
-.smart-hero-divider .divider-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.4), transparent);
-}
-
-.smart-hero-divider .divider-text {
-  font-family: 'Amiri', serif;
-  font-size: 14px;
-  color: #F5E5A0;
-  font-weight: 700;
-  white-space: nowrap;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-/* لوحة المتابعة المدمجة - خلفية شفافة */
-.dashboard-embedded {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  margin: 0 !important;
-  padding: 8px 16px 16px !important;
-  max-width: 100% !important;
-}
-
-/* تغيير ألوان بطاقة الالتزام للخلفية الداكنة */
-.dashboard-embedded .dash-resume-header {
-  background: rgba(201, 162, 39, 0.08) !important;
-  border-bottom-color: rgba(201, 162, 39, 0.2) !important;
-}
-
-.dashboard-embedded .dash-resume-header:hover {
-  background: rgba(201, 162, 39, 0.14) !important;
-}
-
-.dashboard-embedded .drh-lbl {
-  color: #A8C4B8 !important;
-}
-
-.dashboard-embedded .drh-val {
-  color: #F5E5A0 !important;
-}
-
-.dashboard-embedded .drh-btn {
-  background: var(--gold, #C9A227) !important;
-  color: #0F2A20 !important;
-}
-
-/* تغيير ألوان المهام */
-.dashboard-embedded .task {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(201, 162, 39, 0.2) !important;
-  color: #E8E8E8 !important;
-  border-radius: 8px !important;
-  padding: 8px 12px !important;
-  transition: all 0.2s !important;
-}
-
-.dashboard-embedded .task:hover {
-  background: rgba(201, 162, 39, 0.12) !important;
-  border-color: rgba(201, 162, 39, 0.4) !important;
-}
-
-.dashboard-embedded .task input[type="checkbox"] {
-  accent-color: var(--gold, #C9A227) !important;
-  width: 18px !important;
-  height: 18px !important;
-}
-
-.dashboard-embedded .task span {
-  color: #E8E8E8 !important;
-  font-size: 13px !important;
-}
-
-/* خط الفاصل داخل البطاقة */
-.dashboard-embedded .dash-hr {
-  background: linear-gradient(to right, transparent, rgba(201, 162, 39, 0.3), transparent) !important;
-}
-
-.dashboard-embedded .dash-divider {
-  background: linear-gradient(to bottom, transparent, rgba(201, 162, 39, 0.3), transparent) !important;
-}
-
-/* هدف اليوم */
-.dashboard-embedded .goal-row {
-  background: rgba(201, 162, 39, 0.08) !important;
-  border: 1px dashed rgba(201, 162, 39, 0.3) !important;
-  border-radius: 10px !important;
-  padding: 10px 14px !important;
-  color: #E8E8E8 !important;
-}
-
-.dashboard-embedded .goal-row:hover {
-  background: rgba(201, 162, 39, 0.14) !important;
-  border-color: rgba(201, 162, 39, 0.5) !important;
-}
-
-.dashboard-embedded .goal-row .plus {
-  color: var(--gold, #C9A227) !important;
-  font-size: 20px !important;
-}
-
-.dashboard-embedded .goal-row .txt {
-  color: #D4E0DC !important;
-  font-size: 13px !important;
-}
-
-/* إخفاء لوحة المتابعة المنفصلة */
-.dashboard-unified:not(.dashboard-embedded):not(#embeddedTracker) {
-  display: none !important;
-}
-
-/* إخفاء سلسلة الأيام */
-#streakSlot,
-.streak-card,
-.streak-container {
-  display: none !important;
-}
-
 /* ===== التجاوب ===== */
 @media (max-width: 700px) {
   .dashboard-embedded {
@@ -1728,54 +1381,6 @@ html, body {
   }
 }
 
-/* ============================================================
-   ✨ بطاقة الأذكار المصغرة - تصميم أنيق ومحسّن
-   ============================================================ */
-
-/* إخفاء العنوان والصورة العلوية */
-#smartHero .greeting-section,
-#smartHero .hero-image,
-#smartHero .hero-title,
-#smartHero .hero-subtitle,
-#smartHero .smart-hero-greeting {
-  display: none !important;
-}
-
-/* إخفاء الأذكار بعد الثالث */
-#smartHero .adhkar-item:nth-child(n+4),
-#smartHero .dhikr-item:nth-child(n+4),
-#smartHero .sa-item:nth-child(n+4),
-#smartHero ul li:nth-child(n+4) {
-  display: none !important;
-}
-
-/* تدرج سفلي أنيق */
-#smartHero .adhkar-list,
-#smartHero .adhkar-items,
-#smartHero ul {
-  position: relative;
-  max-height: 200px;
-  overflow: hidden;
-  padding-bottom: 10px;
-}
-
-#smartHero .adhkar-list::after,
-#smartHero .adhkar-items::after,
-#smartHero ul::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background: linear-gradient(to bottom, 
-    transparent 0%, 
-    rgba(30, 20, 40, 0.6) 50%,
-    rgba(30, 20, 40, 0.95) 100%);
-  pointer-events: none;
-  z-index: 2;
-}
-
 /* ===== زر "أكمل متابعة الأذكار" - تصميم أنيق ===== */
 .smart-continue-btn {
   display: flex !important;
@@ -1986,4 +1591,82 @@ html, body {
   .dashboard-embedded {
     padding: 6px 14px 16px !important;
   }
+}
+
+/* ============================================================
+   🎯 تصميم بسيط وأنيق لبطاقة الأذكار
+   ============================================================ */
+
+/* عرض 3 أذكار فقط */
+#smartHero .adhkar-item:nth-child(n+4),
+#smartHero .dhikr-item:nth-child(n+4),
+#smartHero .sa-item:nth-child(n+4),
+#smartHero ul li:nth-child(n+4) {
+  display: none !important;
+}
+
+/* تدرج سفلي بسيط */
+#smartHero .adhkar-list,
+#smartHero .adhkar-items,
+#smartHero ul {
+  position: relative;
+}
+
+#smartHero .adhkar-list::after,
+#smartHero .adhkar-items::after,
+#smartHero ul::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, rgba(30, 20, 40, 0.9));
+  pointer-events: none;
+}
+
+/* زر "عرض الكل" بسيط وأنيق */
+.smart-show-all-btn {
+  display: block;
+  width: 200px;
+  margin: 16px auto 12px;
+  padding: 10px 20px;
+  background: rgba(228, 204, 110, 0.15);
+  border: 1px solid rgba(228, 204, 110, 0.4);
+  border-radius: 999px;
+  color: #F5E5A0;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+
+.smart-show-all-btn:hover {
+  background: rgba(228, 204, 110, 0.25);
+  border-color: rgba(228, 204, 110, 0.7);
+  transform: translateY(-1px);
+}
+
+/* تصغير زر الموقع */
+#smartHero .location-btn,
+#smartHero button[onclick*="location"],
+#smartHero .set-location-btn {
+  padding: 6px 14px !important;
+  font-size: 12px !important;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 999px !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+#smartHero .location-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #F5E5A0 !important;
+}
+
+/* إخفاء لوحة المتابعة المدمجة */
+.dashboard-embedded {
+  display: none !important;
 }
