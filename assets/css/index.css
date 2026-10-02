@@ -483,3 +483,26 @@ html, body { margin: 0 !important; padding: 0 !important; min-height: auto !impo
   text-decoration: none !important;
   box-shadow: 0 6px 20px rgba(201, 162, 39, 0.35) !important;
 }
+
+/* إخفاء زر تحديد الموقع */
+#smartHero button[onclick*="location"],
+#smartHero .location-btn,
+#smartHero .set-location-btn {
+  display: none !important;
+}
+
+/* تحويل رابط المتابعة لزر ذهبي */
+#smartHero a[href*="athkar"] {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px !important;
+  background: linear-gradient(135deg, #E4CC6E, #C9A227) !important;
+  color: #1F4E3D !important;
+  border-radius: 999px !important;
+  font-family: 'Tajawal', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  box-shadow: 0 6px 20px rgba(201, 162, 39, 0.35) !important;
+}
