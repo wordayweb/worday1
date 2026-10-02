@@ -1,88 +1,110 @@
-/* ============ الصفحة الرئيسية — ترتيب ديناميكي + تحسينات ============ */
+/* ============ الصفحة الرئيسية — وِرْدِي ============ */
 
 (function () {
   'use strict';
 
-  function isHome() {
-    const p = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    return p === '' || p === 'index.html';
-  }
-
-  function moveStreak() {
-    if (!isHome()) return;
-    const slot = document.getElementById('streakSlot');
-    if (!slot) return;
-    const streakCard = document.querySelector('.streak-card');
-    if (!streakCard) return;
-    slot.appendChild(streakCard);
-  }
-
-  function addSmartAdhkarMore() {
-    if (!isHome()) return;
-    const hero = document.getElementById('smartHero');
-    if (!hero) return;
-    if (hero.querySelector('.smart-more-btn')) return;
-
-    const items = hero.querySelectorAll('li, .adhkar-item, .dhikr-item, .sa-item, [class*="item"]');
-    if (!items.length) return;
+  /* ============================================================
+     🕐 التحية الزمنية
+     ============================================================ */
+  function updateGreeting() {
+    const el = document.getElementById('greeting-text');
+    const ico = document.getElementById('greeting-ico');
+    if (!el || !ico) return;
 
     const h = new Date().getHours();
-    const isEvening = h >= 17 || h < 4;
-    const link = isEvening ? 'athkar-evening.html' : 'athkar-morning.html';
-    const label = isEvening ? 'عرض كل أذكار المساء' : 'عرض كل أذكار الصباح';
+    let text, icon;
 
-    const btn = document.createElement('a');
-    btn.href = link;
-    btn.className = 'smart-more-btn';
-    btn.setAttribute('aria-label', label);
-    btn.innerHTML = '<span>' + label + '</span><span class="arrow" aria-hidden="true">←</span>';
+    if (h >= 4 && h < 12) {
+      text = 'صباح مبارك';
+      icon = '';
+    } else if (h >= 12 && h < 17) {
+      text = 'نهار طيب';
+      icon = '☀️';
+    } else if (h >= 17 && h < 21) {
+      text = 'مساء مبارك';
+      icon = '🌆';
+    } else {
+      text = 'ليلة هادئة';
+      icon = '🌙';
+    }
 
-    const last = items[items.length - 1];
-    last.parentNode.appendChild(btn);
-  }
-
-  function wrapCardEmojis() {
-    const headings = document.querySelectorAll('.sec-card .overlay h4');
-    headings.forEach(function (h4) {
-      if (h4.querySelector('.card-emoji')) return;
-      const html = h4.innerHTML.trim();
-      const firstChar = Array.from(html)[0];
-      if (!firstChar) return;
-      const isEmoji = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F900}-\u{1F9FF}]/u.test(firstChar);
-      if (!isEmoji) return;
-      const rest = html.slice(firstChar.length).trim();
-      if (!rest) return;
-      h4.innerHTML = '<span class="card-emoji">' + firstChar + '</span><span class="card-title">' + rest + '</span>';
-    });
+    el.textContent = text;
+    ico.textContent = icon;
   }
 
   /* ============================================================
-     🕌 بطاقة مواقيت الصلاة المصغرة (الصفحة الرئيسية)
+      التاريخ والساعة
+     ============================================================ */
+  function updateDateTime() {
+    const gregEl = document.getElementById('greg-date');
+    const hijriEl = document.getElementById('hijri-date');
+    const clockEl = document.getElementById('live-clock');
+
+    const now = new Date();
+
+    if (gregEl) {
+      gregEl.textContent = new Intl.DateTimeFormat('ar-EG', {
+        day: 'numeric',
+        month: 'long'
+      }).format(now);
+    }
+
+    if (hijriEl) {
+      try {
+        hijriEl.textContent = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-nu-arab', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        }).format(now) + ' هـ';
+      } catch (e) {
+        hijriEl.textContent = '—';
+      }
+    }
+
+    if (clockEl) {
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      const timeStr = `${hh}:${mm}`;
+      clockEl.textContent = toArabicNumerals(timeStr);
+    }
+  }
+
+  function toArabicNumerals(str) {
+    const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    return String(str).replace(/[0-9]/g, d => arabicDigits[d]);
+  }
+
+  /* ============================================================
+     🕌 بطاقة مواقيت الصلاة المصغرة (الصفحة الرئيسية) — مُصلح
      ============================================================ */
   function initMiniPrayerWidget() {
-    if (!isHome()) return;
-
     const PRAYER_NAMES = {
-      Fajr: { ar: 'الفجر' }, Sunrise: { ar: 'الشروق' },
-      Dhuhr: { ar: 'الظهر' }, Asr: { ar: 'العصر' },
-      Maghrib: { ar: 'المغرب' }, Isha: { ar: 'العشاء' }
+      Fajr: { ar: 'الفجر' },
+      Sunrise: { ar: 'الشروق' },
+      Dhuhr: { ar: 'الظهر' },
+      Asr: { ar: 'العصر' },
+      Maghrib: { ar: 'المغرب' },
+      Isha: { ar: 'العشاء' }
     };
     const ORDERED = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 
-    const toAr = (s) => String(s).replace(/[0-9]/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]);
+    const toAr = (s) => String(s).replace(/[0-9]/g, d => ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'][d]);
     const fmt12 = (t) => {
       const [h, m] = t.split(':').map(Number);
       return toAr(`${h % 12 || 12}:${String(m).padStart(2, '0')} ${h >= 12 ? 'م' : 'ص'}`);
     };
-    const timeToMin = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    const timeToMin = (t) => {
+      const [h, m] = t.split(':').map(Number);
+      return h * 60 + m;
+    };
 
     const settings = JSON.parse(localStorage.getItem('prayer_settings') || '{"lat":24.7136,"lng":46.6753,"cityName":"الرياض"}');
     const cityEl = document.getElementById('mpcCity');
     if (cityEl) cityEl.textContent = settings.cityName || 'موقعك';
 
     const today = new Date();
-    const dateStr = `${String(today.getDate()).padStart(2,'0')}-${String(today.getMonth()+1).padStart(2,'0')}-${today.getFullYear()}`;
-    const cacheKey = `prayer_times_cache_${dateStr}_${(settings.lat||0).toFixed(3)}_${(settings.lng||0).toFixed(3)}`;
+    const dateStr = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
+    const cacheKey = `prayer_times_cache_${dateStr}_${(settings.lat || 0).toFixed(3)}_${(settings.lng || 0).toFixed(3)}`;
 
     let countdownTimer = null;
 
@@ -90,12 +112,25 @@
       const list = document.getElementById('mpcTimesList');
       if (!list) return;
       list.innerHTML = '';
-      const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
-      let nextKey = 'Fajr';
+
+      const now = new Date();
+      const nowMin = now.getHours() * 60 + now.getMinutes();
+      const nowSec = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+
+      // ✅ إصلاح: تحديد الصلاة القادمة بشكل صحيح
+      let nextKey = null;
+      for (const key of ORDERED) {
+        const tSec = timeToMin(timings[key]) * 60;
+        if (tSec > nowSec) {
+          nextKey = key;
+          break;
+        }
+      }
+      if (!nextKey) nextKey = 'Fajr';
 
       ORDERED.forEach(key => {
-        if (timeToMin(timings[key]) > nowMin && nextKey === 'Fajr') nextKey = key;
         const div = document.createElement('div');
+        // ✅ تمييز الصلاة القادمة فقط
         div.className = `mpc-time-item ${key === nextKey ? 'next' : ''}`;
         div.innerHTML = `<span class="mpc-name">${PRAYER_NAMES[key].ar}</span><span class="mpc-val">${fmt12(timings[key])}</span>`;
         list.appendChild(div);
@@ -108,10 +143,15 @@
         const now = new Date();
         const nowSec = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
         let targetSec = 0, found = false;
+
         for (const key of ORDERED) {
           const [h, m] = timings[key].split(':').map(Number);
           const tSec = h * 3600 + m * 60;
-          if (tSec > nowSec) { targetSec = tSec; found = true; break; }
+          if (tSec > nowSec) {
+            targetSec = tSec;
+            found = true;
+            break;
+          }
         }
         if (!found) {
           const [h, m] = timings.Fajr.split(':').map(Number);
@@ -140,37 +180,50 @@
 
     const cached = localStorage.getItem(cacheKey);
     if (cached) {
-      try { renderWidget(JSON.parse(cached)); return; } catch(e) {}
+      try {
+        renderWidget(JSON.parse(cached));
+        return;
+      } catch (e) {}
     }
 
     const url = `https://api.aladhan.com/v1/timings/${dateStr}?latitude=${settings.lat}&longitude=${settings.lng}&method=4&school=0`;
-    fetch(url).then(res => res.json()).then(data => {
-      if (data.code === 200) {
-        const t = data.data.timings;
-        const result = { Fajr: t.Fajr, Sunrise: t.Sunrise, Dhuhr: t.Dhuhr, Asr: t.Asr, Maghrib: t.Maghrib, Isha: t.Isha };
-        localStorage.setItem(cacheKey, JSON.stringify(result));
-        renderWidget(result);
-      }
-    }).catch(() => {
-      if (cityEl) cityEl.textContent = 'تعذّر الجلب';
-    });
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        if (data.code === 200) {
+          const t = data.data.timings;
+          const result = {
+            Fajr: t.Fajr,
+            Sunrise: t.Sunrise,
+            Dhuhr: t.Dhuhr,
+            Asr: t.Asr,
+            Maghrib: t.Maghrib,
+            Isha: t.Isha
+          };
+          localStorage.setItem(cacheKey, JSON.stringify(result));
+          renderWidget(result);
+        }
+      })
+      .catch(() => {
+        if (cityEl) cityEl.textContent = 'تعذّر الجلب';
+      });
   }
 
+  /* ============================================================
+     🚀 التهيئة عند تحميل الصفحة
+     ============================================================ */
   function init() {
-    if (!isHome()) return;
-    moveStreak();
-    setTimeout(addSmartAdhkarMore, 900);
-    setTimeout(addSmartAdhkarMore, 2500);
-    setTimeout(wrapCardEmojis, 500);
-    setTimeout(wrapCardEmojis, 1500);
-    setTimeout(initMiniPrayerWidget, 800);
+    updateGreeting();
+    updateDateTime();
+    initMiniPrayerWidget();
+
+    setInterval(updateDateTime, 30000);
+    setInterval(updateGreeting, 60000);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      setTimeout(init, 700);
-    });
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    setTimeout(init, 700);
+    init();
   }
 })();
