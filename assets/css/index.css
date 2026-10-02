@@ -698,3 +698,57 @@ html, body { margin: 0 !important; padding: 0 !important; min-height: auto !impo
     grid-template-columns: repeat(3, 1fr) !important;
   }
 }
+
+/* ===== بطاقة "طريقة صلاة النبي ﷺ" — عرض كامل + تكبير ===== */
+.sec-card.amin-card.wirdi-span-full,
+a.sec-card.amin-card.wirdi-span-full {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  min-height: 220px !important;
+  padding: 40px 36px !important;
+}
+
+.sec-card.amin-card.wirdi-span-full .overlay {
+  padding: 30px 34px !important;
+  width: 100% !important;
+}
+
+.sec-card.amin-card.wirdi-span-full .overlay h4 {
+  font-size: 30px !important;
+  gap: 12px !important;
+}
+
+.sec-card.amin-card.wirdi-span-full .overlay h4 .card-emoji {
+  width: 78px !important;
+  height: 78px !important;
+  font-size: 40px !important;
+}
+
+.sec-card.amin-card.wirdi-span-full .overlay h4 .card-title {
+  font-size: 28px !important;
+}
+
+.sec-card.amin-card.wirdi-span-full .amin-desc {
+  font-size: 17px !important;
+  line-height: 1.8 !important;
+  margin-top: 10px !important;
+  max-width: 760px !important;
+  margin-inline: auto !important;
+}
+
+/* الجوال — تبقى عريضة لكن بخط أصغر */
+@media (max-width: 700px) {
+  .sec-card.amin-card.wirdi-span-full {
+    min-height: 170px !important;
+    padding: 26px 18px !important;
+  }
+  .sec-card.amin-card.wirdi-span-full .overlay h4 {
+    font-size: 22px !important;
+  }
+  .sec-card.amin-card.wirdi-span-full .overlay h4 .card-title {
+    font-size: 21px !important;
+  }
+  .sec-card.amin-card.wirdi-span-full .amin-desc {
+    font-size: 14px !important;
+  }
+}
