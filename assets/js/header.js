@@ -1,4 +1,4 @@
-/* ============ الهيدر الموحّد - نسخة عربية ============ */
+/* ============ الهيدر الموحّد المتكامل - مع أوقات الصلاة ============ */
 
 (function () {
   const IS_HOME = (() => {
@@ -139,7 +139,7 @@
     
     return `
       <div class="unified-header">
-        <!-- الصف العلوي: الشعار + الوضع الليلي + المستخدم -->
+        <!-- الصف العلوي: الشعار + التحية + الإجراءات -->
         <div class="header-top">
           <div class="brand-section">
             <img src="assets/img/logo.png" alt="وِرْدِي" class="main-logo" />
@@ -150,12 +150,16 @@
           </div>
           
           <div class="header-actions">
-            <button class="action-btn theme-btn" id="themeToggle" aria-label="الوضع الليلي"></button>
-            <button class="action-btn user-btn" aria-label="حسابي">👤</button>
+            <div class="greeting-badge">
+              <span class="greeting-ico">${g.icon}</span>
+              <span class="greeting-text">${g.text}</span>
+            </div>
+            <button class="action-btn theme-btn" id="themeToggle" aria-label="الوضع الليلي">🌙</button>
+            <button class="action-btn user-btn" aria-label="حسابي"></button>
           </div>
         </div>
 
-        <!-- الشريط الأخضر: التاريخ والساعة والصلاة -->
+        <!-- القسم الأوسط: التاريخ والساعة وأوقات الصلاة -->
         <div class="header-info-bar">
           <div class="info-item">
             <span class="info-ico">📅</span>
@@ -171,14 +175,33 @@
             <span class="info-ico">🕐</span>
             <span id="liveClock" class="info-text clock-text">00:00</span>
           </div>
-          <span class="info-sep">•</span>
-          <div class="info-item prayer-next">
-            <span class="info-ico">🕌</span>
-            <span id="nextPrayerTxt" class="info-text">—</span>
+          
+          <!-- أوقات الصلاة المدمجة في الهيدر -->
+          <div class="header-prayer-times" id="headerPrayerTimes">
+            <div class="header-prayer-item">
+              <span class="header-prayer-name">الفجر</span>
+              <span class="header-prayer-time" id="hdrFajr">--:--</span>
+            </div>
+            <div class="header-prayer-item">
+              <span class="header-prayer-name">الظهر</span>
+              <span class="header-prayer-time" id="hdrDhuhr">--:--</span>
+            </div>
+            <div class="header-prayer-item">
+              <span class="header-prayer-name">العصر</span>
+              <span class="header-prayer-time" id="hdrAsr">--:--</span>
+            </div>
+            <div class="header-prayer-item">
+              <span class="header-prayer-name">المغرب</span>
+              <span class="header-prayer-time" id="hdrMaghrib">--:--</span>
+            </div>
+            <div class="header-prayer-item">
+              <span class="header-prayer-name">العشاء</span>
+              <span class="header-prayer-time" id="hdrIsha">--:--</span>
+            </div>
           </div>
         </div>
 
-        <!-- شريط التنقل + زر القائمة -->
+        <!-- شريط التنقل -->
         <nav class="nav-bar-wrapper">
           <nav class="nav-bar" role="navigation" aria-label="التنقل الرئيسي">
             ${buildNavBar()}
@@ -236,49 +259,64 @@
   }
 
   function initNextPrayer() {
-    const txt = document.getElementById('nextPrayerTxt');
-    if (!txt) return;
-
     const ORDER = [
-      { key: 'Fajr', ar: 'الفجر' },
-      { key: 'Dhuhr', ar: 'الظهر' },
-      { key: 'Asr', ar: 'العصر' },
-      { key: 'Maghrib', ar: 'المغرب' },
-      { key: 'Isha', ar: 'العشاء' }
+      { key: 'Fajr', ar: 'الفجر', el: 'hdrFajr' },
+      { key: 'Dhuhr', ar: 'الظهر', el: 'hdrDhuhr' },
+      { key: 'Asr', ar: 'العصر', el: 'hdrAsr' },
+      { key: 'Maghrib', ar: 'المغرب', el: 'hdrMaghrib' },
+      { key: 'Isha', ar: 'العشاء', el: 'hdrIsha' }
     ];
 
     function update() {
       const cached = readCachedTimings();
       
       if (!cached) {
-        txt.textContent = '—';
         fetchAndCachePrayerTimings().then(t => {
-          if (t) computeAndDisplay(t);
+          if (t) displayPrayerTimes(t);
         });
         return;
       }
       
-      computeAndDisplay(cached);
+      displayPrayerTimes(cached);
     }
 
-    function computeAndDisplay(timings) {
+    function displayPrayerTimes(timings) {
       const now = new Date();
       const nowMin = now.getHours() * 60 + now.getMinutes();
-      
-      for (let p of ORDER) {
-        const t = timings[p.key];
-        if (!t) continue;
-        const parts = t.split(':');
-        const tMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
-        if (tMin > nowMin) {
-          const diff = tMin - nowMin;
-          const h = Math.floor(diff / 60);
-          const m = diff % 60;
-          txt.textContent = `${p.ar} بعد ${h > 0 ? toAr(h) + ' س ' : ''}${toAr(m)} د`;
-          return;
+      let nextKey = null;
+
+      // عرض جميع الأوقات وتحديد القادمة
+      ORDER.forEach(p => {
+        const el = document.getElementById(p.el);
+        if (el && timings[p.key]) {
+          const [h, m] = timings[p.key].split(':');
+          el.textContent = `${h}:${m}`;
+          
+          // تحديد الصلاة القادمة
+          const tMin = parseInt(h, 10) * 60 + parseInt(m, 10);
+          if (tMin > nowMin && !nextKey) {
+            nextKey = p.key;
+          }
         }
+      });
+
+      // تمييز الصلاة القادمة
+      ORDER.forEach(p => {
+        const item = document.getElementById(p.el)?.parentElement;
+        if (item) {
+          if (p.key === nextKey) {
+            item.classList.add('next');
+          } else {
+            item.classList.remove('next');
+          }
+        }
+      });
+
+      // إذا انتهت كل صلوات اليوم، القادمة هي الفجر
+      if (!nextKey) {
+        const fajrItem = document.getElementById('hdrFajr')?.parentElement;
+        if (fajrItem) fajrItem.classList.add('next');
       }
-      txt.textContent = 'الفجر غداً';
     }
 
     update();
