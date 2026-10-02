@@ -1,4 +1,4 @@
-/* ============ الهيدر الموحّد المتكامل ============ */
+/* ============ الهيدر الموحّد - نسخة عربية ============ */
 
 (function () {
   const IS_HOME = (() => {
@@ -6,12 +6,16 @@
     return p === '' || p === 'index.html';
   })();
 
+  const PRAYER_CACHE_KEY = 'wirdi_prayer_timings';
+  const PRAYER_CITY_KEY = 'wirdi_prayer_city';
+  const DEFAULT_CITY = { lat: 24.7136, lng: 46.6753, name: 'الرياض' };
+
   const ALL_NAV_ITEMS = [
     { href: 'index.html',          icon: '🏠', label: 'الرئيسية',     key: 'home' },
     { href: 'quran.html',          icon: '📖', label: 'القرآن الكريم', key: 'quran' },
     { href: 'athkar-morning.html', icon: '🌅', label: 'أذكار الصباح', key: 'morning' },
-    { href: 'athkar-evening.html', icon: '🌆', label: 'أذكار المساء', key: 'evening' },
-    { href: 'prayer.html',         icon: '', label: 'مواقيت الصلاة', key: 'prayer' },
+    { href: 'athkar-evening.html', icon: '', label: 'أذكار المساء', key: 'evening' },
+    { href: 'prayer.html',         icon: '🕌', label: 'مواقيت الصلاة', key: 'prayer' },
     { href: 'tasbih.html',         icon: '📿', label: 'التسبيح',      key: 'tasbih' },
     { href: 'salah-method.html',   icon: '🤲', label: 'طريقة الصلاة', key: 'salah' },
     { href: 'tafsir.html',         icon: '📚', label: 'التفسير',      key: 'tafsir' },
@@ -51,14 +55,64 @@
 
   function getTimeGreeting() {
     const h = new Date().getHours();
-    if (h >= 4 && h < 12)  return { text: 'صباح مبارك',  icon: '🌅' };
-    if (h >= 12 && h < 17) return { text: 'نهار طيب',    icon: '☀️' };
+    if (h >= 4 && h < 12)  return { text: 'صباح مبارك',  icon: '' };
+    if (h >= 12 && h < 17) return { text: 'نهار طيب',    icon: '️' };
     if (h >= 17 && h < 21) return { text: 'مساء مبارك',  icon: '🌆' };
     return { text: 'ليلة هادئة', icon: '🌙' };
   }
 
   function toAr(s) {
-    return String(s).replace(/[0-9]/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]);
+    return String(s).replace(/[0-9]/g, d => ['٠','١','٢','','٤','٥','٦','','٨','٩'][d]);
+  }
+
+  function todayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+
+  async function fetchAndCachePrayerTimings() {
+    let city = DEFAULT_CITY;
+    try {
+      const saved = localStorage.getItem(PRAYER_CITY_KEY);
+      if (saved) {
+        const obj = JSON.parse(saved);
+        if (obj && typeof obj.lat === 'number') city = obj;
+      }
+    } catch (e) {}
+
+    const today = todayKey();
+    const url = 'https://api.aladhan.com/v1/timings/' + today +
+      '?latitude=' + city.lat + '&longitude=' + city.lng + '&method=4';
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return null;
+      const data = await res.json();
+      if (!data || !data.data || !data.data.timings) return null;
+
+      const raw = data.data.timings;
+      const clean = {
+        Fajr: raw.Fajr, Sunrise: raw.Sunrise, Dhuhr: raw.Dhuhr,
+        Asr: raw.Asr, Maghrib: raw.Maghrib, Isha: raw.Isha
+      };
+
+      localStorage.setItem(PRAYER_CACHE_KEY, JSON.stringify({
+        date: today, city: city.name || 'الرياض', timings: clean
+      }));
+      return clean;
+    } catch (e) { return null; }
+  }
+
+  function readCachedTimings() {
+    try {
+      const raw = localStorage.getItem(PRAYER_CACHE_KEY);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj || obj.date !== todayKey() || !obj.timings) return null;
+      return obj.timings;
+    } catch (e) { return null; }
   }
 
   function buildMobileMenu() {
@@ -85,7 +139,7 @@
     
     return `
       <div class="unified-header">
-        <!-- القسم العلوي: الشعار + التحية + الإجراءات -->
+        <!-- الصف العلوي: الشعار + الوضع الليلي + المستخدم -->
         <div class="header-top">
           <div class="brand-section">
             <img src="assets/img/logo.png" alt="وِرْدِي" class="main-logo" />
@@ -96,45 +150,43 @@
           </div>
           
           <div class="header-actions">
-            <div class="greeting-badge">
-              <span class="greeting-ico">${g.icon}</span>
-              <span class="greeting-text">${g.text}</span>
-            </div>
-            <button class="action-btn theme-btn" id="themeToggle" aria-label="الوضع الليلي">🌙</button>
-            <button class="action-btn lang-btn" id="langToggle" aria-label="اللغة">EN</button>
-            <button class="menu-btn" id="menuToggle" aria-label="القائمة">
-              <span class="hamburger">☰</span>
-              <span class="menu-text">القائمة</span>
-            </button>
+            <button class="action-btn theme-btn" id="themeToggle" aria-label="الوضع الليلي"></button>
+            <button class="action-btn user-btn" aria-label="حسابي">👤</button>
           </div>
         </div>
 
-        <!-- القسم الأوسط: التاريخ والساعة والصلاة القادمة -->
+        <!-- الشريط الأخضر: التاريخ والساعة والصلاة -->
         <div class="header-info-bar">
           <div class="info-item">
             <span class="info-ico">📅</span>
             <span id="gregDate" class="info-text">...</span>
           </div>
-          <div class="info-separator">•</div>
+          <span class="info-sep">•</span>
           <div class="info-item">
             <span class="info-ico">🕌</span>
             <span id="hijriDate" class="info-text">...</span>
           </div>
-          <div class="info-separator">•</div>
+          <span class="info-sep">•</span>
           <div class="info-item">
             <span class="info-ico">🕐</span>
             <span id="liveClock" class="info-text clock-text">00:00</span>
           </div>
-          <div class="info-separator">•</div>
+          <span class="info-sep">•</span>
           <div class="info-item prayer-next">
             <span class="info-ico">🕌</span>
-            <span id="nextPrayerTxt" class="info-text">جاري التحميل...</span>
+            <span id="nextPrayerTxt" class="info-text">—</span>
           </div>
         </div>
 
-        <!-- شريط التنقل الرئيسي -->
-        <nav class="nav-bar" role="navigation" aria-label="التنقل الرئيسي">
-          ${buildNavBar()}
+        <!-- شريط التنقل + زر القائمة -->
+        <nav class="nav-bar-wrapper">
+          <nav class="nav-bar" role="navigation" aria-label="التنقل الرئيسي">
+            ${buildNavBar()}
+          </nav>
+          <button class="menu-btn" id="menuToggle" aria-label="القائمة">
+            <span class="hamburger">☰</span>
+            <span class="menu-text">القائمة</span>
+          </button>
         </nav>
 
         <!-- القائمة المنزلاقة -->
@@ -196,31 +248,37 @@
     ];
 
     function update() {
-      const cached = localStorage.getItem('wirdi_prayer_timings');
-      if (!cached) { txt.textContent = '—'; return; }
+      const cached = readCachedTimings();
       
-      try {
-        const obj = JSON.parse(cached);
-        if (!obj.timings) return;
-        
-        const now = new Date();
-        const nowMin = now.getHours() * 60 + now.getMinutes();
-        
-        for (let p of ORDER) {
-          const t = obj.timings[p.key];
-          if (!t) continue;
-          const parts = t.split(':');
-          const tMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
-          if (tMin > nowMin) {
-            const diff = tMin - nowMin;
-            const h = Math.floor(diff / 60);
-            const m = diff % 60;
-            txt.textContent = `${p.ar} بعد ${h > 0 ? toAr(h) + ' س ' : ''}${toAr(m)} د`;
-            return;
-          }
+      if (!cached) {
+        txt.textContent = '—';
+        fetchAndCachePrayerTimings().then(t => {
+          if (t) computeAndDisplay(t);
+        });
+        return;
+      }
+      
+      computeAndDisplay(cached);
+    }
+
+    function computeAndDisplay(timings) {
+      const now = new Date();
+      const nowMin = now.getHours() * 60 + now.getMinutes();
+      
+      for (let p of ORDER) {
+        const t = timings[p.key];
+        if (!t) continue;
+        const parts = t.split(':');
+        const tMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+        if (tMin > nowMin) {
+          const diff = tMin - nowMin;
+          const h = Math.floor(diff / 60);
+          const m = diff % 60;
+          txt.textContent = `${p.ar} بعد ${h > 0 ? toAr(h) + ' س ' : ''}${toAr(m)} د`;
+          return;
         }
-        txt.textContent = 'الفجر غداً';
-      } catch (e) {}
+      }
+      txt.textContent = 'الفجر غداً';
     }
 
     update();
