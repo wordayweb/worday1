@@ -1670,3 +1670,81 @@ html, body {
 .dashboard-embedded {
   display: none !important;
 }
+
+/* ============================================================
+   🎯 تصميم بسيط وأنيق لبطاقة الأذكار
+   ============================================================ */
+
+/* عرض 3 أذكار فقط */
+#smartHero .adhkar-item:nth-child(n+4),
+#smartHero .dhikr-item:nth-child(n+4),
+#smartHero .sa-item:nth-child(n+4),
+#smartHero ul li:nth-child(n+4) {
+  display: none !important;
+}
+
+/* تدرج سفلي بسيط */
+#smartHero .adhkar-list,
+#smartHero .adhkar-items,
+#smartHero ul {
+  position: relative;
+}
+
+#smartHero .adhkar-list::after,
+#smartHero .adhkar-items::after,
+#smartHero ul::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, rgba(30, 20, 40, 0.9));
+  pointer-events: none;
+}
+
+/* زر "عرض الكل" بسيط وأنيق */
+.smart-show-all-btn {
+  display: block;
+  width: 200px;
+  margin: 16px auto 12px;
+  padding: 10px 20px;
+  background: rgba(228, 204, 110, 0.15);
+  border: 1px solid rgba(228, 204, 110, 0.4);
+  border-radius: 999px;
+  color: #F5E5A0;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+
+.smart-show-all-btn:hover {
+  background: rgba(228, 204, 110, 0.25);
+  border-color: rgba(228, 204, 110, 0.7);
+  transform: translateY(-1px);
+}
+
+/* تصغير زر الموقع */
+#smartHero .location-btn,
+#smartHero button[onclick*="location"],
+#smartHero .set-location-btn {
+  padding: 6px 14px !important;
+  font-size: 12px !important;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 999px !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+#smartHero .location-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #F5E5A0 !important;
+}
+
+/* إخفاء لوحة المتابعة المدمجة */
+.dashboard-embedded {
+  display: none !important;
+}

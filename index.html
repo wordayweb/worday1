@@ -342,6 +342,43 @@
   setTimeout(setupSmartHero, 500);
 })();
 </script>
+
+<!-- 🎯 سكريبت بسيط لبطاقة الأذكار -->
+<script>
+(function() {
+  function setupSmartHero() {
+    var hero = document.getElementById('smartHero');
+    if (!hero) return;
+    
+    // إضافة زر "عرض الكل"
+    if (!hero.querySelector('.smart-show-all-btn')) {
+      var btn = document.createElement('a');
+      btn.className = 'smart-show-all-btn';
+      
+      var hour = new Date().getHours();
+      btn.href = (hour >= 4 && hour < 17) ? 'athkar-morning.html' : 'athkar-evening.html';
+      btn.textContent = 'عرض كل الأذكار ←';
+      
+      var adhkarList = hero.querySelector('.adhkar-list, .adhkar-items, ul');
+      if (adhkarList) {
+        adhkarList.parentNode.insertBefore(btn, adhkarList.nextSibling);
+      }
+    }
+    
+    // تصغير زر الموقع
+    var locationBtn = hero.querySelector('.location-btn, button[onclick*="location"]');
+    if (locationBtn) {
+      locationBtn.textContent = '📍 حدد الموقع';
+      locationBtn.onclick = function() {
+        window.location.href = 'prayer-settings.html';
+      };
+    }
+  }
+  
+  setTimeout(setupSmartHero, 500);
+})();
+</script>
 </body>
 </html>
+
 
