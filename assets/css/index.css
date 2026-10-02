@@ -568,7 +568,7 @@ body.dark .sec-card.amin-card .amin-desc {
 
 /* ═══════════════════════════════════════════════════════════
    🏷️ بطاقات "قريبًا" — التصميم النهائي
-   ═════════════════════════════════════════════════════════ */
+   ════════════════════════════════════════════════════════ */
 html body .sec-card.soon {
   display: flex !important;
   align-items: center !important;
@@ -991,4 +991,18 @@ body.dark .mpc-countdown .cd-box {
 
 body.dark .mpc-time-item {
   background: rgba(255, 255, 255, 0.03);
+}
+
+/* ============================================================
+   🚫 إخفاء سلسلة الأيام نهائياً
+   ============================================================ */
+#streakSlot,
+.streak-card,
+.streak-container,
+.streak-widget,
+.streak-section {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
