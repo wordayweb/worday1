@@ -1,159 +1,417 @@
-function buildHeader() {
-  const g = getTimeGreeting();
-  
-  return `
-    <div class="unified-header">
-      <!-- الصف العلوي: الشعار + التحية + الإجراءات -->
-      <div class="header-top">
-        <div class="brand-section">
-          <img src="assets/img/logo.png" alt="وِرْدِي" class="main-logo" />
-          <div class="brand-info">
-            <h1 class="brand-title">وِرْدِي</h1>
-            <p class="brand-subtitle">رفيقك اليومي لذكر الله</p>
-          </div>
-        </div>
-        
-        <div class="header-actions">
-          <div class="greeting-badge">
-            <span class="greeting-ico">${g.icon}</span>
-            <span class="greeting-text">${g.text}</span>
-          </div>
-          <button class="action-btn theme-btn" id="themeToggle" aria-label="الوضع الليلي">🌙</button>
-          <button class="action-btn user-btn" aria-label="حسابي"></button>
-        </div>
-      </div>
+/* ============ الهيدر الموحّد المتكامل ============ */
 
-      <!-- القسم الأوسط: التاريخ والساعة وأوقات الصلاة -->
-      <div class="header-info-bar">
-        <div class="info-item">
-          <span class="info-ico">📅</span>
-          <span id="gregDate" class="info-text">...</span>
-        </div>
-        <span class="info-sep">•</span>
-        <div class="info-item">
-          <span class="info-ico">🕌</span>
-          <span id="hijriDate" class="info-text">...</span>
-        </div>
-        <span class="info-sep">•</span>
-        <div class="info-item">
-          <span class="info-ico"></span>
-          <span id="liveClock" class="info-text clock-text">00:00</span>
-        </div>
-        
-        <!-- أوقات الصلاة المدمجة -->
-        <div class="header-prayer-times" id="headerPrayerTimes">
-          <div class="header-prayer-item">
-            <span class="header-prayer-name">الفجر</span>
-            <span class="header-prayer-time" id="hdrFajr">--:--</span>
-          </div>
-          <div class="header-prayer-item">
-            <span class="header-prayer-name">الظهر</span>
-            <span class="header-prayer-time" id="hdrDhuhr">--:--</span>
-          </div>
-          <div class="header-prayer-item">
-            <span class="header-prayer-name">العصر</span>
-            <span class="header-prayer-time" id="hdrAsr">--:--</span>
-          </div>
-          <div class="header-prayer-item">
-            <span class="header-prayer-name">المغرب</span>
-            <span class="header-prayer-time" id="hdrMaghrib">--:--</span>
-          </div>
-          <div class="header-prayer-item">
-            <span class="header-prayer-name">العشاء</span>
-            <span class="header-prayer-time" id="hdrIsha">--:--</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- شريط التنقل -->
-      <nav class="nav-bar-wrapper">
-        <nav class="nav-bar" role="navigation" aria-label="التنقل الرئيسي">
-          ${buildNavBar()}
-        </nav>
-        <button class="menu-btn" id="menuToggle" aria-label="القائمة">
-          <span class="hamburger">☰</span>
-          <span class="menu-text">القائمة</span>
-        </button>
-      </nav>
-
-      <!-- القائمة المنزلاقة -->
-      <div class="mobile-menu-overlay" id="mobileMenu" hidden>
-        <div class="mobile-menu-backdrop" id="menuBackdrop"></div>
-        <div class="mobile-menu-content">
-          <div class="mobile-menu-header">
-            <h3>القائمة الرئيسية</h3>
-            <button class="close-menu-btn" id="closeMenu">✕</button>
-          </div>
-          <div class="mobile-nav-items">
-            ${buildMobileMenu()}
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
+.unified-header {
+  width: 100%;
+  background: var(--white, #fff);
+  box-shadow: 0 2px 12px rgba(31, 78, 61, 0.06);
 }
 
-function initNextPrayer() {
-  const ORDER = [
-    { key: 'Fajr', ar: 'الفجر', el: 'hdrFajr' },
-    { key: 'Dhuhr', ar: 'الظهر', el: 'hdrDhuhr' },
-    { key: 'Asr', ar: 'العصر', el: 'hdrAsr' },
-    { key: 'Maghrib', ar: 'المغرب', el: 'hdrMaghrib' },
-    { key: 'Isha', ar: 'العشاء', el: 'hdrIsha' }
-  ];
-
-  function update() {
-    const cached = readCachedTimings();
-    
-    if (!cached) {
-      fetchAndCachePrayerTimings().then(t => {
-        if (t) displayPrayerTimes(t);
-      });
-      return;
-    }
-    
-    displayPrayerTimes(cached);
-  }
-
-  function displayPrayerTimes(timings) {
-    const now = new Date();
-    const nowMin = now.getHours() * 60 + now.getMinutes();
-    let nextKey = null;
-
-    // عرض جميع الأوقات
-    ORDER.forEach(p => {
-      const el = document.getElementById(p.el);
-      if (el && timings[p.key]) {
-        const [h, m] = timings[p.key].split(':');
-        el.textContent = `${h}:${m}`;
-        
-        // تحديد الصلاة القادمة
-        const tMin = parseInt(h, 10) * 60 + parseInt(m, 10);
-        if (tMin > nowMin && !nextKey) {
-          nextKey = p.key;
-        }
-      }
-    });
-
-    // تمييز الصلاة القادمة
-    ORDER.forEach(p => {
-      const item = document.getElementById(p.el)?.parentElement;
-      if (item) {
-        if (p.key === nextKey) {
-          item.classList.add('next');
-        } else {
-          item.classList.remove('next');
-        }
-      }
-    });
-
-    // إذا انتهت كل صلوات اليوم، القادمة هي الفجر
-    if (!nextKey) {
-      const fajrItem = document.getElementById('hdrFajr')?.parentElement;
-      if (fajrItem) fajrItem.classList.add('next');
-    }
-  }
-
-  update();
-  setInterval(update, 60000);
+/* ===== الصف العلوي ===== */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  gap: 12px;
 }
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.main-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(201, 162, 39, 0.25));
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brand-title {
+  font-family: 'Amiri', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--green, #1F4E3D);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.brand-subtitle {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 11px;
+  color: var(--ink-soft, #6B6B6B);
+  margin: 2px 0 0;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.greeting-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--gold-light, #E4CC6E), var(--gold, #C9A227));
+  color: var(--green, #1F4E3D);
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 3px 10px rgba(201, 162, 39, 0.25);
+}
+
+.greeting-ico { font-size: 15px; }
+
+.action-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--cream, #FBF8F1);
+  border: 2px solid var(--line, #EAE6DD);
+  font-size: 17px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: var(--green, #1F4E3D);
+  color: #fff;
+  border-color: var(--green);
+  transform: translateY(-2px);
+}
+
+/* ===== الشريط الأخضر: المعلومات + أوقات الصلاة ===== */
+.header-info-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, var(--green, #1F4E3D) 0%, var(--green-2, #2d6b4f) 100%);
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.info-ico { font-size: 14px; opacity: 0.9; }
+.info-text { white-space: nowrap; }
+
+.clock-text {
+  font-family: 'Amiri', serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  direction: ltr;
+}
+
+.info-sep {
+  color: var(--gold-light, #E4CC6E);
+  opacity: 0.5;
+  font-size: 11px;
+}
+
+/* ===== أوقات الصلاة المدمجة ===== */
+.header-prayer-times {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  margin-right: 8px;
+}
+
+.header-prayer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: all 0.3s;
+  min-width: 42px;
+}
+
+.header-prayer-item.next {
+  background: rgba(201, 162, 39, 0.35);
+  border: 1px solid rgba(201, 162, 39, 0.6);
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.4);
+}
+
+.header-prayer-name {
+  font-size: 9px;
+  opacity: 0.85;
+  font-weight: 600;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.header-prayer-time {
+  font-family: 'Amiri', serif;
+  font-size: 12px;
+  font-weight: 700;
+  direction: ltr;
+}
+
+.header-prayer-item.next .header-prayer-name,
+.header-prayer-item.next .header-prayer-time {
+  color: var(--gold-light, #E4CC6E);
+  font-weight: 700;
+  opacity: 1;
+}
+
+/* ===== شريط التنقل ===== */
+.nav-bar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: var(--white, #fff);
+  border-top: 1px solid var(--line, #EAE6DD);
+  gap: 12px;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold, #C9A227) transparent;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+.nav-bar::-webkit-scrollbar { height: 3px; }
+.nav-bar::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+.nav-bar-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--ink, #2B2B2B);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s;
+  border: 1.5px solid transparent;
+  flex-shrink: 0;
+}
+
+.nav-bar-link:hover {
+  background: var(--cream, #FBF8F1);
+  border-color: var(--gold);
+  color: var(--green);
+  transform: translateY(-1px);
+}
+
+.nav-bar-link.active {
+  background: var(--green, #1F4E3D);
+  color: #fff;
+  border-color: var(--green);
+  box-shadow: 0 3px 10px rgba(31, 78, 61, 0.25);
+  font-weight: 700;
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--green);
+  border: none;
+  border-radius: 12px;
+  padding: 9px 16px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(201, 162, 39, 0.3);
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.menu-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(201, 162, 39, 0.45);
+}
+
+.hamburger { font-size: 20px; line-height: 1; font-weight: 900; }
+
+/* ===== القائمة المنزلاقة ===== */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+}
+
+.mobile-menu-overlay[hidden] { display: none; }
+
+.mobile-menu-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+.mobile-menu-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(320px, 85vw);
+  height: 100%;
+  background: var(--white);
+  box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+  animation: slideFromRight 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideFromRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  background: linear-gradient(135deg, var(--green), var(--green-2));
+  color: #fff;
+  border-bottom: 2px solid var(--gold);
+}
+
+.mobile-menu-header h3 {
+  margin: 0;
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+}
+
+.close-menu-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.mobile-nav-items {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.mobile-nav-link:hover {
+  background: var(--cream);
+  border-color: var(--gold);
+  transform: translateX(-4px);
+}
+
+.mobile-nav-link.active {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--green);
+  font-weight: 700;
+  border-color: var(--gold);
+  box-shadow: 0 3px 10px rgba(201, 162, 39, 0.25);
+}
+
+.link-ico { font-size: 24px; width: 36px; text-align: center; }
+
+/* ===== التجاوب ===== */
+@media (max-width: 767px) {
+  .header-top { padding: 10px 14px; }
+  .main-logo { width: 44px; height: 44px; }
+  .brand-title { font-size: 22px; }
+  .brand-subtitle { font-size: 10px; }
+  .action-btn { width: 34px; height: 34px; font-size: 15px; }
+  .header-info-bar { padding: 8px 14px; gap: 6px; }
+  .info-item { font-size: 11px; }
+  .info-ico { font-size: 12px; }
+  .clock-text { font-size: 13px; }
+  .info-sep { font-size: 10px; }
+  .header-prayer-times { gap: 4px; padding: 3px 8px; margin-right: 4px; }
+  .header-prayer-item { padding: 2px 5px; min-width: 36px; }
+  .header-prayer-name { font-size: 8px; }
+  .header-prayer-time { font-size: 10px; }
+  .nav-bar-wrapper { padding: 8px 14px; gap: 8px; }
+  .nav-bar-link { padding: 6px 13px; font-size: 12.5px; }
+  .menu-btn { padding: 8px 14px; font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .brand-subtitle { display: none; }
+  .greeting-text { display: none; }
+  .greeting-badge { padding: 7px; }
+  .greeting-ico { font-size: 17px; }
+  .menu-text { display: none; }
+  .menu-btn { padding: 9px 11px; }
+  .nav-bar-link { padding: 6px 11px; font-size: 12px; }
+  .header-prayer-item { padding: 2px 3px; min-width: 32px; }
+  .header-prayer-name { font-size: 7px; }
+  .header-prayer-time { font-size: 9px; }
+}
+
+/* ===== الوضع الليلي ===== */
+body.dark .unified-header {
+  background: #1F2B26;
+}
+body.dark .brand-title { color: var(--gold-light, #E4CC6E); }
+body.dark .brand-subtitle { color: #A8A8A8; }
+body.dark .action-btn { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #fff; }
+body.dark .action-btn:hover { background: var(--gold); color: #0F2A20; border-color: var(--gold); }
+body.dark .nav-bar-wrapper { background: #1F2B26; border-top-color: rgba(255,255,255,0.1); }
+body.dark .nav-bar-link { color: #E8E8E8; }
+body.dark .nav-bar-link:hover { background: rgba(255,255,255,0.05); border-color: var(--gold); color: var(--gold-light); }
+body.dark .nav-bar-link.active { background: linear-gradient(135deg, var(--gold), #a8871d); color: #0F2A20; border-color: var(--gold); }
+body.dark .mobile-menu-content { background: #1F2B26; }
+body.dark .mobile-nav-link { color: #E8E8E8; }
+body.dark .mobile-nav-link:hover { background: rgba(255,255,255,0.05); }
+body.dark .mobile-nav-link.active { background: linear-gradient(135deg, var(--gold), #a8871d); color: #0F2A20; }
+body.dark .header-prayer-times { background: rgba(255,255,255,0.08); }
+body.dark .header-prayer-item.next { background: rgba(201, 162, 39, 0.25); }

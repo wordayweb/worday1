@@ -1,4 +1,4 @@
-/* ============ الهيدر الموحّد المتكامل - مع أوقات الصلاة ============ */
+/* ============ الهيدر الموحّد المتكامل ============ */
 
 (function () {
   const IS_HOME = (() => {
@@ -14,10 +14,10 @@
     { href: 'index.html',          icon: '🏠', label: 'الرئيسية',     key: 'home' },
     { href: 'quran.html',          icon: '📖', label: 'القرآن الكريم', key: 'quran' },
     { href: 'athkar-morning.html', icon: '🌅', label: 'أذكار الصباح', key: 'morning' },
-    { href: 'athkar-evening.html', icon: '', label: 'أذكار المساء', key: 'evening' },
+    { href: 'athkar-evening.html', icon: '🌆', label: 'أذكار المساء', key: 'evening' },
     { href: 'prayer.html',         icon: '🕌', label: 'مواقيت الصلاة', key: 'prayer' },
     { href: 'tasbih.html',         icon: '📿', label: 'التسبيح',      key: 'tasbih' },
-    { href: 'salah-method.html',   icon: '🤲', label: 'طريقة الصلاة', key: 'salah' },
+    { href: 'salah-method.html',   icon: '', label: 'طريقة الصلاة', key: 'salah' },
     { href: 'tafsir.html',         icon: '📚', label: 'التفسير',      key: 'tafsir' },
     { href: 'calendar.html',       icon: '📅', label: 'التقويم',      key: 'calendar' },
     { href: 'zakat.html',          icon: '💰', label: 'الزكاة',      key: 'zakat' },
@@ -55,14 +55,14 @@
 
   function getTimeGreeting() {
     const h = new Date().getHours();
-    if (h >= 4 && h < 12)  return { text: 'صباح مبارك',  icon: '' };
-    if (h >= 12 && h < 17) return { text: 'نهار طيب',    icon: '️' };
+    if (h >= 4 && h < 12)  return { text: 'صباح مبارك',  icon: '🌅' };
+    if (h >= 12 && h < 17) return { text: 'نهار طيب',    icon: '☀️' };
     if (h >= 17 && h < 21) return { text: 'مساء مبارك',  icon: '🌆' };
     return { text: 'ليلة هادئة', icon: '🌙' };
   }
 
   function toAr(s) {
-    return String(s).replace(/[0-9]/g, d => ['٠','١','٢','','٤','٥','٦','','٨','٩'][d]);
+    return String(s).replace(/[0-9]/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]);
   }
 
   function todayKey() {
@@ -139,7 +139,6 @@
     
     return `
       <div class="unified-header">
-        <!-- الصف العلوي: الشعار + التحية + الإجراءات -->
         <div class="header-top">
           <div class="brand-section">
             <img src="assets/img/logo.png" alt="وِرْدِي" class="main-logo" />
@@ -155,11 +154,10 @@
               <span class="greeting-text">${g.text}</span>
             </div>
             <button class="action-btn theme-btn" id="themeToggle" aria-label="الوضع الليلي">🌙</button>
-            <button class="action-btn user-btn" aria-label="حسابي"></button>
+            <button class="action-btn user-btn" aria-label="حسابي">👤</button>
           </div>
         </div>
 
-        <!-- القسم الأوسط: التاريخ والساعة وأوقات الصلاة -->
         <div class="header-info-bar">
           <div class="info-item">
             <span class="info-ico">📅</span>
@@ -176,7 +174,6 @@
             <span id="liveClock" class="info-text clock-text">00:00</span>
           </div>
           
-          <!-- أوقات الصلاة المدمجة في الهيدر -->
           <div class="header-prayer-times" id="headerPrayerTimes">
             <div class="header-prayer-item">
               <span class="header-prayer-name">الفجر</span>
@@ -201,7 +198,6 @@
           </div>
         </div>
 
-        <!-- شريط التنقل -->
         <nav class="nav-bar-wrapper">
           <nav class="nav-bar" role="navigation" aria-label="التنقل الرئيسي">
             ${buildNavBar()}
@@ -212,7 +208,6 @@
           </button>
         </nav>
 
-        <!-- القائمة المنزلاقة -->
         <div class="mobile-menu-overlay" id="mobileMenu" hidden>
           <div class="mobile-menu-backdrop" id="menuBackdrop"></div>
           <div class="mobile-menu-content">
@@ -285,14 +280,12 @@
       const nowMin = now.getHours() * 60 + now.getMinutes();
       let nextKey = null;
 
-      // عرض جميع الأوقات وتحديد القادمة
       ORDER.forEach(p => {
         const el = document.getElementById(p.el);
         if (el && timings[p.key]) {
           const [h, m] = timings[p.key].split(':');
           el.textContent = `${h}:${m}`;
           
-          // تحديد الصلاة القادمة
           const tMin = parseInt(h, 10) * 60 + parseInt(m, 10);
           if (tMin > nowMin && !nextKey) {
             nextKey = p.key;
@@ -300,7 +293,6 @@
         }
       });
 
-      // تمييز الصلاة القادمة
       ORDER.forEach(p => {
         const item = document.getElementById(p.el)?.parentElement;
         if (item) {
@@ -312,7 +304,6 @@
         }
       });
 
-      // إذا انتهت كل صلوات اليوم، القادمة هي الفجر
       if (!nextKey) {
         const fajrItem = document.getElementById('hdrFajr')?.parentElement;
         if (fajrItem) fajrItem.classList.add('next');
