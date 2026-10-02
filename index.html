@@ -40,19 +40,18 @@
 
   <!-- ===== بطاقة أذكار الوقت الحالي + لوحة المتابعة المدمجة ===== -->
   <!-- ===== بطاقة الذكر العصرية 2026 ===== -->
+<!-- ===== بطاقة الأذكار - تصميم نظيف 2026 ===== -->
 <section id="smartHero" class="hero-dhikr-card fade-in" aria-label="الذكر اليومي">
-  <div class="hero-bg-animation"></div>
-  
   <div class="hero-content">
     <div class="hero-badge">
-      <span class="badge-icon">🌙</span>
+      <span class="badge-icon"></span>
       <span class="badge-text">أذكار المساء</span>
       <span class="badge-counter"><span id="currentDhikrNum">1</span> / <span id="totalDhikrNum">6</span></span>
     </div>
 
     <div class="dhikr-display">
       <div class="dhikr-number" id="dhikrNumber">١</div>
-      <p class="dhikr-text" id="dhikrText">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ، اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ...</p>
+      <p class="dhikr-text" id="dhikrText">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ، اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...</p>
     </div>
 
     <div class="hero-progress">
@@ -63,24 +62,20 @@
 
     <div class="hero-controls">
       <button class="control-btn prev-btn" id="prevDhikr" aria-label="الذكر السابق">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
       </button>
       <button class="control-btn play-btn" id="autoPlayBtn" aria-label="تشغيل تلقائي">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
       </button>
       <button class="control-btn next-btn" id="nextDhikr" aria-label="الذكر التالي">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
     </div>
 
     <div class="hero-actions">
       <a href="athkar-evening.html" class="action-btn primary">
-        <span>عرض كل الأذكار</span>
+        <span>أكمل متابعة الأذكار</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="prayer-settings.html" class="action-btn secondary">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span>تحديد الموقع</span>
       </a>
     </div>
   </div>
@@ -356,11 +351,13 @@
 
 
 
-<!-- 🎨 Hero Dhikr Card - JavaScript 2026 -->
+
+
+<!--  بطاقة الأذكار - JavaScript -->
 <script>
 (function() {
   const adhkarData = [
-    { text: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ، اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ  لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ...' },
+    { text: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ، اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ...' },
     { text: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ...' },
     { text: 'اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ' },
     { text: 'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ * مِن شَرِّ مَا خَلَقَ' },
@@ -404,43 +401,36 @@
   const nextBtn = document.getElementById('nextDhikr');
   const playBtn = document.getElementById('autoPlayBtn');
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + adhkarData.length) % adhkarData.length;
-      updateDhikr(currentIndex);
-    });
-  }
+  if (prevBtn) prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + adhkarData.length) % adhkarData.length;
+    updateDhikr(currentIndex);
+  });
 
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % adhkarData.length;
-      updateDhikr(currentIndex);
-    });
-  }
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % adhkarData.length;
+    updateDhikr(currentIndex);
+  });
 
-  if (playBtn) {
-    playBtn.addEventListener('click', () => {
-      if (autoPlayInterval) {
-        clearInterval(autoPlayInterval);
-        autoPlayInterval = null;
-        playBtn.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
-      } else {
-        autoPlayInterval = setInterval(() => {
-          currentIndex = (currentIndex + 1) % adhkarData.length;
-          updateDhikr(currentIndex);
-        }, 5000);
-        playBtn.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
-      }
-    });
-  }
+  if (playBtn) playBtn.addEventListener('click', () => {
+    if (autoPlayInterval) {
+      clearInterval(autoPlayInterval);
+      autoPlayInterval = null;
+      playBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    } else {
+      autoPlayInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % adhkarData.length;
+        updateDhikr(currentIndex);
+      }, 5000);
+      playBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+    }
+  });
 
   let touchStartX = 0;
   const heroCard = document.getElementById('smartHero');
   if (heroCard) {
     heroCard.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
     heroCard.addEventListener('touchend', (e) => {
-      const touchEndX = e.changedTouches[0].clientX;
-      const diff = touchStartX - touchEndX;
+      const diff = touchStartX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 50) {
         currentIndex = diff > 0 ? (currentIndex + 1) % adhkarData.length : (currentIndex - 1 + adhkarData.length) % adhkarData.length;
         updateDhikr(currentIndex);
@@ -456,6 +446,7 @@
 </script>
 </body>
 </html>
+
 
 
 
