@@ -544,6 +544,8 @@ html, body { margin: 0 !important; padding: 0 !important; min-height: auto !impo
   display: none !important;
 }
 
+
+
 /* ===== بطاقة الأذكار: شفافة + مؤشر تمرير ===== */
 #smartHero {
   background: linear-gradient(135deg,
