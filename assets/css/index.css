@@ -617,3 +617,84 @@ html, body { margin: 0 !important; padding: 0 !important; min-height: auto !impo
   transform: translateY(-3px) scale(1.03) !important;
   box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 0 6px rgba(228,204,110,0.35) !important;
 }
+
+/* ===== تكبير بطاقات الأقسام للشاشات الكبيرة ===== */
+.sections-grid {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+  gap: 18px !important;
+}
+
+.sec-card {
+  min-height: 190px !important;
+  padding: 28px 18px 22px !important;
+}
+
+.sec-card .overlay h4 {
+  font-size: 21px !important;
+}
+
+.sec-card .overlay h4 .card-emoji {
+  width: 60px !important;
+  height: 60px !important;
+  font-size: 30px !important;
+}
+
+.sec-card .overlay h4 .card-title {
+  font-size: 20px !important;
+}
+
+/* بطاقة "طريقة الصلاة" العريضة — أكبر وأجمل */
+.sec-card.amin-card {
+  min-height: 175px !important;
+  padding: 34px 28px !important;
+}
+
+.sec-card.amin-card .overlay {
+  padding: 26px 30px !important;
+}
+
+.sec-card.amin-card .overlay h4 {
+  font-size: 27px !important;
+}
+
+.sec-card.amin-card .overlay h4 .card-emoji {
+  width: 70px !important;
+  height: 70px !important;
+  font-size: 36px !important;
+}
+
+.sec-card.amin-card .overlay h4 .card-title {
+  font-size: 26px !important;
+}
+
+.sec-card.amin-card .amin-desc {
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+  margin-top: 8px !important;
+}
+
+/* عناوين المجموعات أكبر */
+.group-title {
+  font-size: 26px !important;
+}
+
+.group-ico {
+  font-size: 28px !important;
+}
+
+/* على الشاشات الكبيرة جداً — 4 أعمدة عريضة */
+@media (min-width: 1200px) {
+  .sections-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 20px !important;
+  }
+  .sec-card { min-height: 210px !important; }
+  .sec-card.amin-card { min-height: 190px !important; }
+}
+
+/* على الشاشات المتوسطة — 3 أعمدة */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .sections-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
