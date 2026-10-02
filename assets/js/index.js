@@ -227,3 +227,60 @@
     init();
   }
 })();
+/* ============================================================
+   🎯 تحسينات بطاقة الأذكار المصغرة
+   ============================================================ */
+(function() {
+  function enhanceSmartHero() {
+    var hero = document.getElementById('smartHero');
+    if (!hero) return;
+    
+    // 1. إضافة زر "أكمل متابعة الأذكار"
+    if (!hero.querySelector('.smart-continue-btn')) {
+      var continueBtn = document.createElement('a');
+      continueBtn.className = 'smart-continue-btn';
+      
+      // تحديد الصفحة المناسبة حسب وقت اليوم
+      var hour = new Date().getHours();
+      if (hour >= 4 && hour < 17) {
+        continueBtn.href = 'athkar-morning.html';
+        continueBtn.innerHTML = '<span>أكمل متابعة الأذكار</span><span class="arrow">←</span>';
+      } else {
+        continueBtn.href = 'athkar-evening.html';
+        continueBtn.innerHTML = '<span>أكمل متابعة الأذكار</span><span class="arrow">←</span>';
+      }
+      
+      var adhkarList = hero.querySelector('.adhkar-list, .adhkar-items, ul');
+      if (adhkarList) {
+        adhkarList.parentNode.insertBefore(continueBtn, adhkarList.nextSibling);
+      } else {
+        hero.appendChild(continueBtn);
+      }
+    }
+    
+    // 2. تحويل زر "تحديد الموقع" إلى رابط صغير
+    var locationBtn = hero.querySelector('.location-btn, button[onclick*="location"], .set-location-btn');
+    if (locationBtn && !locationBtn.classList.contains('location-processed')) {
+      locationBtn.innerHTML = '📍 تحديد الموقع';
+      locationBtn.classList.add('location-processed');
+      locationBtn.onclick = function(e) {
+        e.preventDefault();
+        window.location.href = 'prayer-settings.html';
+      };
+    }
+    
+    // 3. إخفاء لوحة المتابعة المدمجة
+    var embeddedTracker = document.getElementById('embeddedTracker');
+    if (embeddedTracker) {
+      embeddedTracker.style.display = 'none';
+    }
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(enhanceSmartHero, 600);
+    });
+  } else {
+    setTimeout(enhanceSmartHero, 600);
+  }
+})();

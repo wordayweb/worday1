@@ -1587,3 +1587,143 @@ html, body {
   align-self: center !important;
   display: block !important;
 }
+
+/* ============================================================
+   🎯 تحسينات بطاقة الأذكار المصغرة - الإصدار النهائي
+   ============================================================ */
+
+/* إخفاء قسم "مساء مبارك" والصورة العلوية */
+#smartHero .greeting-section,
+#smartHero .hero-image,
+#smartHero .hero-title,
+#smartHero .hero-subtitle,
+#smartHero .greeting-block,
+#smartHero .time-greeting,
+#smartHero .smart-hero-greeting {
+  display: none !important;
+}
+
+/* إخفاء الأذكار بعد الثالث */
+#smartHero .adhkar-list .adhkar-item:nth-child(n+4),
+#smartHero .adhkar-items .adhkar-item:nth-child(n+4),
+#smartHero ul li:nth-child(n+4),
+#smartHero .dhikr-item:nth-child(n+4),
+#smartHero .sa-item:nth-child(n+4) {
+  display: none !important;
+}
+
+/* إضافة تدرج سفلي للإيحاء بوجود المزيد */
+#smartHero .adhkar-list,
+#smartHero .adhkar-items,
+#smartHero ul {
+  position: relative;
+  max-height: 220px;
+  overflow: hidden;
+}
+
+#smartHero .adhkar-list::after,
+#smartHero .adhkar-items::after,
+#smartHero ul::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient(to bottom, transparent, rgba(30, 20, 30, 0.95));
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* زر "أكمل متابعة الأذكار" */
+.smart-continue-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: calc(100% - 32px);
+  margin: 12px auto 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #E4CC6E, #C9A227);
+  color: #1F4E3D;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s;
+  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.3);
+  position: relative;
+  z-index: 3;
+}
+
+.smart-continue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(201, 162, 39, 0.45);
+  background: linear-gradient(135deg, #F5E5A0, #E4CC6E);
+}
+
+.smart-continue-btn .arrow {
+  font-size: 16px;
+  transition: transform 0.25s;
+}
+
+.smart-continue-btn:hover .arrow {
+  transform: translateX(-4px);
+}
+
+/* تحويل زر "تحديد الموقع" إلى رابط صغير */
+#smartHero .location-btn,
+#smartHero button[onclick*="location"],
+#smartHero .set-location-btn,
+#smartHero .location-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px !important;
+  background: transparent !important;
+  border: 1px solid rgba(201, 162, 39, 0.3) !important;
+  border-radius: 6px !important;
+  color: #A8C4B8 !important;
+  font-size: 11px !important;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin: 8px auto !important;
+  box-shadow: none !important;
+}
+
+#smartHero .location-btn:hover,
+#smartHero .location-link:hover {
+  background: rgba(201, 162, 39, 0.1) !important;
+  border-color: rgba(201, 162, 39, 0.5) !important;
+  color: #F5E5A0 !important;
+}
+
+/* إخفاء نص "حدد موقعك لعرض الأوقات" الكبير */
+#smartHero .location-text,
+#smartHero .set-location-text {
+  display: none !important;
+}
+
+/* إخفاء لوحة المتابعة المدمجة */
+.dashboard-embedded {
+  display: none !important;
+}
+
+/* ===== التجاوب ===== */
+@media (max-width: 480px) {
+  .smart-continue-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  #smartHero .location-btn,
+  #smartHero .location-link {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+  }
+}
