@@ -858,3 +858,53 @@
   .hero-dhikr-card { padding: 20px 14px; }
   .dhikr-text { font-size: 18px; }
 }
+
+
+/* ===== التصميم الجديد - قوي جداً ===== */
+#smartHero {
+  background: rgba(251, 248, 241, 0.7) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1.5px solid rgba(201, 162, 39, 0.25) !important;
+  border-radius: 24px !important;
+  padding: 30px 24px !important;
+  margin: 20px auto !important;
+  max-width: 900px !important;
+  box-shadow: 0 8px 32px rgba(31, 78, 61, 0.08) !important;
+  min-height: auto !important;
+}
+
+#smartHero * {
+  color: #1F4E3D !important;
+}
+
+#smartHero .greeting-section,
+#smartHero .hero-image,
+#smartHero .hero-title,
+#smartHero .hero-subtitle,
+#smartHero .smart-hero-greeting,
+#smartHero .location-btn,
+#smartHero .set-location-btn,
+#smartHero .location-link,
+#smartHero .location-text,
+#smartHero .adhkar-list,
+#smartHero .adhkar-items,
+#smartHero ul,
+#smartHero .smart-more-btn {
+  display: none !important;
+}
+
+#smartHero .adhkar-item:nth-child(n+4),
+#smartHero .dhikr-item:nth-child(n+4) {
+  display: none !important;
+}
+
+#smartHero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, rgba(251, 248, 241, 0.95));
+  pointer-events: none;
+}
