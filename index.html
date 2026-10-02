@@ -38,26 +38,17 @@
   <!-- ===== الهيدر الموحّد (يتم حقنه ديناميكياً) ===== -->
   <div data-header-target></div>
 
-  <!-- ===== أذكار الوقت الحالي ===== -->
+  <!-- ===== بطاقة أذكار الوقت الحالي + لوحة المتابعة المدمجة ===== -->
   <section id="smartHero" class="fade-in" aria-label="أذكار الوقت الحالي"></section>
 
-  <!-- ===== لوحة اليوم الموحّدة ===== -->
-  <section class="dashboard-unified fade-in" aria-label="لوحة اليوم">
-    <a href="quran.html" class="dash-resume-header" aria-label="اذهب إلى آخر ما قرأت">
-      <span class="drh-ico" aria-hidden="true">📖</span>
-      <div class="drh-info">
-        <span class="drh-lbl">واصل القراءة</span>
-        <span class="drh-val" id="lastRead">سورة الجن — آية ٢٢</span>
-      </div>
-      <span class="drh-btn">انتقال ←</span>
-    </a>
-
+  <!-- ===== لوحة المتابعة المدمجة (تُنقل تلقائياً داخل smartHero) ===== -->
+  <section class="dashboard-unified dashboard-embedded fade-in" aria-label="لوحة المتابعة" id="embeddedTracker">
     <div class="dash-body">
 
       <div class="dash-panel dash-panel-tracker" aria-label="بطاقة الالتزام">
         <div class="tracker-head">
           <div class="progress-ring" id="progressRing">
-            <span id="progressTxt">٪</span>
+            <span id="progressTxt">٠٪</span>
           </div>
           <div class="headline">
             <h3 id="dayGreeting">🌙 ليلة هادئة بذكر الله</h3>
@@ -88,14 +79,13 @@
       <div class="dash-panel dash-panel-streak" id="streakSlot" aria-label="سلسلة الأيام"></div>
 
     </div>
-
   </section>
 
   <!-- ===== الورد اليومي ===== -->
   <section class="section-group" aria-labelledby="groupWird">
     <header class="group-head">
       <h2 class="group-title" id="groupWird">
-        <span class="group-ico" aria-hidden="true"></span>
+        <span class="group-ico" aria-hidden="true">📿</span>
         الورد اليومي
       </h2>
       <span class="group-line" aria-hidden="true"></span>
@@ -108,7 +98,7 @@
       </a>
       <a href="athkar-evening.html" class="sec-card fade-in" data-period="evening">
         <div class="bg" style="background:linear-gradient(160deg,#2C4A6B,#16293A);"></div>
-        <div class="overlay"><h4>🌆 أذكار المساء</h4><div class="underline"></div></div>
+        <div class="overlay"><h4> أذكار المساء</h4><div class="underline"></div></div>
       </a>
       <a href="quran.html" class="sec-card fade-in">
         <div class="bg" style="background:linear-gradient(160deg,#4a6b52,#1a2b22);"></div>
@@ -125,7 +115,7 @@
   <section class="section-group" aria-labelledby="groupSalah">
     <header class="group-head">
       <h2 class="group-title" id="groupSalah">
-        <span class="group-ico" aria-hidden="true">🕌</span>
+        <span class="group-ico" aria-hidden="true"></span>
         تعلم الصلاة
       </h2>
       <span class="group-line" aria-hidden="true"></span>
@@ -134,7 +124,7 @@
       <a href="salah-method.html" class="sec-card amin-card fade-in wirdi-span-full" aria-label="طريقة صلاة النبي صلى الله عليه وسلم">
         <div class="bg" style="background:linear-gradient(140deg,#1F4E3D 0%,#0F2A20 60%,#071510 100%);"></div>
         <div class="overlay">
-          <h4>🕌 طريقة صلاة النبي ﷺ الشاملة</h4>
+          <h4> طريقة صلاة النبي ﷺ الشاملة</h4>
           <p class="amin-desc">دليلك التفاعلي المفصل للفرائض، السنن، التراويح، قيام الليل، والصلوات الخاصة</p>
           <div class="underline"></div>
         </div>
@@ -167,7 +157,7 @@
       </a>
       <a href="calendar.html" class="sec-card fade-in">
         <div class="bg" style="background:linear-gradient(160deg,#8a7231,#3a2c08);"></div>
-        <div class="overlay"><h4>📅 التقويم</h4><div class="underline"></div></div>
+        <div class="overlay"><h4> التقويم</h4><div class="underline"></div></div>
       </a>
       <a href="notifications.html" class="sec-card fade-in">
         <div class="bg" style="background:linear-gradient(160deg,#5b4a7a,#1f1530);"></div>
@@ -180,7 +170,7 @@
   <section class="section-group" aria-labelledby="groupMaarifa">
     <header class="group-head">
       <h2 class="group-title" id="groupMaarifa">
-        <span class="group-ico" aria-hidden="true"></span>
+        <span class="group-ico" aria-hidden="true">📚</span>
         المعرفة
       </h2>
       <span class="group-line" aria-hidden="true"></span>
@@ -245,7 +235,7 @@
 
 </div>
 
-<!-- ═══════════ الفوتر الوحيد (بعرض متناسق مع الهيدر) ══════════ -->
+<!-- ═══════════ الفوتر ══════════ -->
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
@@ -297,6 +287,36 @@
 <script src="assets/js/notifications.js"></script>
 <script src="assets/js/streak.js" defer></script>
 <script src="assets/js/index.js" defer></script>
+
+<!-- سكريبت دمج لوحة المتابعة داخل بطاقة الأذكار -->
+<script>
+(function() {
+  function embedTracker() {
+    var hero = document.getElementById('smartHero');
+    var tracker = document.getElementById('embeddedTracker');
+    if (!hero || !tracker) return;
+    
+    // إضافة فاصل ذهبي قبل لوحة المتابعة
+    var divider = document.createElement('div');
+    divider.className = 'smart-hero-divider';
+    divider.innerHTML = '<span class="divider-line"></span><span class="divider-text">📊 لوحة المتابعة اليومية</span><span class="divider-line"></span>';
+    hero.appendChild(divider);
+    
+    // نقل لوحة المتابعة داخل smartHero
+    hero.appendChild(tracker);
+    tracker.classList.add('embedded');
+  }
+  
+  // تنفيذ بعد تحميل الأذكار
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(embedTracker, 800);
+    });
+  } else {
+    setTimeout(embedTracker, 800);
+  }
+})();
+</script>
 
 <script>
 (function(){
