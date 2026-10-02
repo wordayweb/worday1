@@ -801,8 +801,39 @@
   });
 })();
 </script>
+
+<!-- ️ حذف زر الموقع بالنص - مضمون 100% -->
+<script>
+(function killLocationBtn() {
+  function run() {
+    document.querySelectorAll('#smartHero button, #smartHero a').forEach(function(el) {
+      var t = (el.textContent || '').trim();
+      if (t.indexOf('الموقع') !== -1 || t.indexOf('موقعك') !== -1 || t.indexOf('تحديد') !== -1) {
+        el.remove();
+      }
+    });
+    // حذف سطر "حدّد موقعك لعرض الأوقات"
+    document.querySelectorAll('#smartHero p, #smartHero div, #smartHero span').forEach(function(el) {
+      var t = (el.textContent || '').trim();
+      if (t.indexOf('حدّد موقعك') !== -1 || t.indexOf('حدد موقعك') !== -1) {
+        el.remove();
+      }
+    });
+  }
+  run();
+  // راقب أي إضافة جديدة للزر وأحذفها فوراً
+  var hero = document.getElementById('smartHero');
+  if (hero) {
+    new MutationObserver(run).observe(hero, { childList: true, subtree: true });
+  }
+  setTimeout(run, 500);
+  setTimeout(run, 1500);
+  setTimeout(run, 3000);
+})();
+</script>
 </body>
 </html>
+
 
 
 
